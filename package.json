@@ -1,0 +1,51 @@
+{
+  "name": "saleshwak-server",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "dev-start": "nodemon ./bin/www",
+    "test": "ava",
+    "sequelize": "node ./node_modules/.bin/sequelize"
+  },
+  "dependencies": {
+    "axios": "^0.17.1",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.2",
+    "cookie-parser": "~1.4.3",
+    "debug": "^2.6.9",
+    "express": "^4.16.3",
+    "jade": "~1.11.0",
+    "jwt-simple": "^0.5.1",
+    "method-override": "^3.0.0",
+    "minimist": "^1.2.0",
+    "moment": "^2.22.0",
+    "morgan": "^1.9.1",
+    "multer": "^1.3.0",
+    "node-schedule": "^1.3.0",
+    "node-xmpp": "^1.1.0",
+    "nodemailer": "^4.6.7",
+    "p-iteration": "^1.1.5",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "pg-promise": "^8.5.3",
+    "point-in-polygon": "^1.0.1",
+    "sequelize": "^4.37.5",
+    "sequelize-cli": "^3.2.0",
+    "serve-favicon": "^2.4.5",
+    "swagger-node-express": "^2.1.3",
+    "tcomb": "^3.2.25",
+    "tcomb-additional-types": "0.0.1",
+    "tcomb-form-types": "^1.1.0",
+    "tcomb-validation": "^3.4.1",
+    "tunnel": "0.0.5",
+    "uuid": "^3.2.1",
+    "xls-to-json-lc": "^0.3.4",
+    "xlsx-to-json-lc": "^0.5.0"
+  },
+  "devDependencies": {
+    "ava": "^0.25.0",
+    "nodemon": "^1.18.10",
+    "supertest": "^3.0.0"
+  }
+}

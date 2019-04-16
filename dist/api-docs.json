@@ -1,0 +1,1092 @@
+{
+	"swagger": "2.0",
+	"basePath": "/api",
+	"tags": [
+		{
+			"name": "MPI API",
+			"description": ""
+		}
+	],
+	"consumes": [
+		"application/json",
+		"multipart/form-data"
+	],
+	"produces": [
+		"application/json"
+	],
+	"paths": {
+		"/token": {
+			"post": {
+				"tags": [
+					"User"
+				],
+				"description": "Authenticates the user and provides token for the session if authentication is successful",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Job Parameters",
+						"in": "body",
+						"description": "Authenticate user",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/token"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "token response",
+						"schema": {
+							"$ref": "#/definitions/tokenResponse"
+						}
+					}
+				}
+			}
+		},
+		"/users?{propertyName}&{propertyValue}": {
+			"get": {
+				"tags": [
+					"User"
+				],
+				"description": "Get All users ",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "propertyName",
+						"in": "query",
+						"enum": [
+							"userName",
+							"firstName",
+							"lastName",
+							"email",
+							"designation",
+							"mobileNumber"
+						],
+						"description": "PropertyName",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "propertyValue",
+						"in": "query",
+						"description": "propertyValue",
+						"required": false,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Users response",
+						"schema": {
+							"$ref": "#/definitions/userResponse"
+						}
+					}
+				}
+			}
+		},
+		"/users/list?{pageIndex}&{pageSize}": {
+			"get": {
+				"tags": [
+					"User"
+				],
+				"summary": "Get list of users with pagination for the logged in user",
+				"description": "only accessible to Admin & Managers",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "pageIndex",
+						"in": "query",
+						"description": "page index",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "pageSize",
+						"in": "query",
+						"description": "page size",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "propertyName",
+						"in": "query",
+						"enum": [
+							"name",
+							"employeeId",
+							"supervisor",
+							"role"
+						],
+						"description": "PropertyName",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "propertyValue",
+						"in": "query",
+						"description": "propertyValue",
+						"required": false,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Users response",
+						"schema": {
+							"$ref": "#/definitions/userListResponse"
+						}
+					}
+				}
+			}
+		},
+		"/users/profileimage/{userId}": {
+			"put": {
+				"tags": [
+					"User"
+				],
+				"description": "Upload User Profile Image",
+				"consumes": [
+					"multipart/form-data"
+				],
+				"operationId": "for the URL",
+				"paramType": "form",
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "userId",
+						"in": "path",
+						"description": "1",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "file",
+						"in": "formData",
+						"paramType": "form",
+						"description": "file",
+						"required": true,
+						"type": "file"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"$ref": "#/definitions/successMessageResponse"
+						}
+					}
+				}
+			}
+		},
+		"/users/{userId}/assignManager": {
+			"put": {
+				"tags": [
+					"User"
+				],
+				"summary": "Assign manager to sales agent",
+				"description": "only admin can assign",
+				"consumes": [
+					"application/json"
+				],
+				"operationId": "for the URL",
+				"paramType": "form",
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "userId",
+						"in": "path",
+						"description": "sales agent id",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "Job Parameters",
+						"in": "body",
+						"description": "manager id",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/assignManager"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"$ref": "#/definitions/successMessageResponse"
+						}
+					}
+				}
+			}
+		},
+		"/users/{userId}/changeStatus": {
+			"put": {
+				"tags": [
+					"User"
+				],
+				"summary": "Activate or Deactivate user",
+				"description": "only admin have permissions",
+				"consumes": [
+					"application/json"
+				],
+				"operationId": "for the URL",
+				"paramType": "form",
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "userId",
+						"in": "path",
+						"description": "sales agent id",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "status",
+						"in": "query",
+						"description": "status",
+						"required": true,
+						"type": "string",
+						"enum": [
+							"Activate",
+							"Deactivate"
+						]
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"$ref": "#/definitions/successMessageResponse"
+						}
+					}
+				}
+			}
+		},
+		"/users/assign/manager/{managerId}/agentsTo/newManager/{newManagerId}": {
+			"put": {
+				"tags": [
+					"User"
+				],
+				"summary": "Assign manager sales agents to new manager",
+				"description": "only admin can assign",
+				"consumes": [
+					"application/json"
+				],
+				"operationId": "for the URL",
+				"paramType": "form",
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "managerId",
+						"in": "path",
+						"description": "manager id",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "newManagerId",
+						"in": "path",
+						"description": "new manager id",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"$ref": "#/definitions/successMessageResponse"
+						}
+					}
+				}
+			}
+		},
+		"/users/locations?{searchBy}&{searchByValue}": {
+			"get": {
+				"tags": [
+					"User"
+				],
+				"summary": "Get logged in manager users locations",
+				"description": "only accessible to manager role, when searchBy is selected, search by value required else 400 will be thrown",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "searchBy",
+						"in": "query",
+						"enum": [
+							"firstName",
+							"lastName"
+						],
+						"description": "searchBy",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "searchByValue",
+						"in": "query",
+						"description": "searchByValue",
+						"required": false,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Users response",
+						"schema": {
+							"$ref": "#/definitions/userLocations"
+						}
+					}
+				}
+			}
+		},
+		"/users/{userId}/locations": {
+			"get": {
+				"tags": [
+					"User"
+				],
+				"summary": "Get logged in manager selected user locations of the day",
+				"description": "only accessible to manager role, if user is not found 404 will be thrown",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "userId",
+						"in": "path",
+						"description": "user Id",
+						"required": true,
+						"type": "number"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Users response",
+						"schema": {
+							"$ref": "#/definitions/selectedUserLocations"
+						}
+					}
+				}
+			}
+		},
+		"/users/{userId}/last/location": {
+			"get": {
+				"tags": [
+					"User"
+				],
+				"summary": "Get logged in manager selected user last location",
+				"description": "only accessible to manager role, if user is not found or last location is not found 404 will be thrown",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "userId",
+						"in": "path",
+						"description": "user Id",
+						"required": true,
+						"type": "number"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Users response",
+						"schema": {
+							"$ref": "#/definitions/lastLocation"
+						}
+					}
+				}
+			}
+		},
+		"/users/{userId}/details": {
+			"get": {
+				"tags": [
+					"User"
+				],
+				"description": "get by id ",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "userId",
+						"in": "path",
+						"description": "userId",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "User response",
+						"schema": {
+							"$ref": "#/definitions/userDetails"
+						}
+					}
+				}
+			}
+		},
+		"/users/{userId}": {
+			"put": {
+				"tags": [
+					"User"
+				],
+				"summary": "update user",
+				"description": "only accessible to Admin",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "userId",
+						"in": "path",
+						"description": "",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "Job Parameters",
+						"in": "body",
+						"description": "",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/userUpdate"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Users update response",
+						"schema": {
+							"$ref": "#/definitions/successMessageResponse"
+						}
+					}
+				}
+			}
+		},
+		"/users/lastLocations": {
+			"get": {
+				"tags": [
+					"User"
+				],
+				"summary": "Get last location of  each user who are under logged in user",
+				"description": "only accessible to manager,admin roles",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Users response",
+						"schema": {
+							"$ref": "#/definitions/usersLastLocations"
+						}
+					}
+				}
+			}
+		},
+		"/users/{type}": {
+			"get": {
+				"tags": [
+					"User"
+				],
+				"summary": "Get all users if user is admin else gets users under manager",
+				"description": "only accessible to manager,admin roles",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "type",
+						"in": "path",
+						"description": "",
+						"type": "string",
+						"enum": [
+							"All",
+							"SalesAgent",
+							"Manager"
+						],
+						"required": true
+					},
+					{
+						"name": "searchText",
+						"in": "query",
+						"description": "",
+						"type": "string",
+						"required": false
+					},
+					{
+						"name": "userStatus",
+						"in": "query",
+						"description": "",
+						"type": "string",
+						"required": false,
+						"enum": [
+							"All",
+							"Active",
+							"Deactive"
+						]
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Users response",
+						"schema": {
+							"$ref": "#/definitions/Users"
+						}
+					}
+				}
+			}
+		}
+	},
+	"definitions": {
+		"successMessageResponse": {
+			"properties": {
+				"message": {
+					"type": "string"
+				}
+			}
+		},
+		"token": {
+			"properties": {
+				"email": {
+					"required": true,
+					"type": "string",
+					"example": "krish@gmail.com"
+				},
+				"password": {
+					"required": true,
+					"type": "string",
+					"example": "Design_20"
+				}
+			}
+		},
+		"tokenResponse": {
+			"properties": {
+				"token": {
+					"required": true,
+					"type": "string"
+				},
+				"user": {
+					"title": "User",
+					"type": "object",
+					"properties": {
+						"id": {
+							"required": true,
+							"type": "integer",
+							"example": 1
+						},
+						"userName": {
+							"required": true,
+							"type": "string"
+						},
+						"firstName": {
+							"required": true,
+							"type": "string"
+						},
+						"lastName": {
+							"required": true,
+							"type": "string",
+							"example": "abc@gmail.com"
+						},
+						"email": {
+							"required": true,
+							"type": "string"
+						},
+						"userRole": {
+							"required": true,
+							"type": "string"
+						},
+						"designation": {
+							"required": true,
+							"type": "string"
+						},
+						"avatar": {
+							"required": true,
+							"type": "string"
+						},
+						"mobileNumber": {
+							"required": true,
+							"type": "string"
+						}
+					}
+				}
+			}
+		},
+		"user": {
+			"properties": {
+				"id": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"name": {
+					"required": true,
+					"type": "string"
+				},
+				"firstName": {
+					"required": true,
+					"type": "string"
+				},
+				"lastName": {
+					"required": true,
+					"type": "string",
+					"example": "abc@gmail.com"
+				},
+				"email": {
+					"required": true,
+					"type": "string"
+				},
+				"userRole": {
+					"required": true,
+					"type": "string"
+				},
+				"designation": {
+					"required": true,
+					"type": "string"
+				},
+				"avatar": {
+					"required": true,
+					"type": "string"
+				},
+				"mobileNumber": {
+					"required": true,
+					"type": "string"
+				},
+				"target": {
+					"required": false,
+					"type": "number"
+				},
+				"supervisior": {
+					"required": false,
+					"type": "string"
+				},
+				"dateOfJoin": {
+					"required": true,
+					"type": "string",
+					"example": "2019-02-01"
+				},
+				"employeeId": {
+					"required": true,
+					"type": "string",
+					"example": ""
+				},
+				"isActive": {
+					"required": true,
+					"type": "boolean",
+					"example": true
+				},
+				"deactivatedDate": {
+					"required": false,
+					"type": "string",
+					"example": "2018-01-10"
+				},
+				"hasAgents": {
+					"required": true,
+					"type": "boolean",
+					"example": true
+				}
+			}
+		},
+		"userDetails": {
+			"properties": {
+				"id": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"firstName": {
+					"required": true,
+					"type": "string"
+				},
+				"lastName": {
+					"required": true,
+					"type": "string",
+					"example": "abc@gmail.com"
+				},
+				"email": {
+					"required": true,
+					"type": "string"
+				},
+				"userName": {
+					"required": true,
+					"type": "string"
+				},
+				"userRole": {
+					"required": true,
+					"type": "string"
+				},
+				"designation": {
+					"required": true,
+					"type": "string"
+				},
+				"avatar": {
+					"required": true,
+					"type": "string"
+				},
+				"mobileNumber": {
+					"required": true,
+					"type": "string"
+				},
+				"address": {
+					"required": false,
+					"type": "string"
+				},
+				"dateOfJoin": {
+					"required": true,
+					"type": "string",
+					"example": "2019-02-01"
+				},
+				"employeeId": {
+					"required": true,
+					"type": "string",
+					"example": ""
+				}
+			}
+		},
+		"userResponse": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/user"
+			}
+		},
+		"userListResponse": {
+			"properties": {
+				"count": {
+					"type": "integer",
+					"required": true
+				},
+				"rows": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/user"
+					}
+				}
+			}
+		},
+		"usersLocation": {
+			"properties": {
+				"userId": {
+					"required": true,
+					"type": "number",
+					"example": 1
+				},
+				"id": {
+					"required": true,
+					"type": "number",
+					"example": 1
+				},
+				"longitude": {
+					"required": true,
+					"type": "number",
+					"example": 10.6758
+				},
+				"latitude": {
+					"required": true,
+					"type": "number",
+					"example": -122.3445
+				},
+				"createdAt": {
+					"required": true,
+					"type": "string",
+					"example": "2019-02-02T10:18:16.397Z"
+				}
+			}
+		},
+		"assignManager": {
+			"properties": {
+				"managerId": {
+					"type": "integer",
+					"required": true
+				}
+			}
+		},
+		"Users": {
+			"type": "array",
+			"items": {
+				"properties": {
+					"id": {
+						"required": true,
+						"type": "integer"
+					},
+					"firstName": {
+						"required": true,
+						"type": "string"
+					},
+					"lastName": {
+						"required": true,
+						"type": "string"
+					},
+					"userRole": {
+						"required": true,
+						"type": "string"
+					}
+				}
+			}
+		},
+		"userUpdate": {
+			"properties": {
+				"firstName": {
+					"type": "string",
+					"required": true
+				},
+				"lastName": {
+					"type": "string",
+					"required": true
+				},
+				"email": {
+					"type": "string",
+					"required": true
+				},
+				"userName": {
+					"type": "string",
+					"required": true
+				},
+				"employeeId": {
+					"type": "string",
+					"required": true
+				},
+				"mobileNumber": {
+					"type": "string",
+					"required": true
+				},
+				"dateOfJoin": {
+					"type": "string",
+					"required": true
+				}
+			}
+		},
+		"userLocations": {
+			"type": "array",
+			"items": {
+				"properties": {
+					"id": {
+						"required": true,
+						"type": "number",
+						"example": 1
+					},
+					"firstName": {
+						"required": true,
+						"type": "string",
+						"example": "john"
+					},
+					"lastName": {
+						"required": true,
+						"type": "string",
+						"example": "john"
+					},
+					"avatar": {
+						"required": true,
+						"type": "string",
+						"example": ""
+					},
+					"email": {
+						"required": true,
+						"type": "string",
+						"example": "john"
+					},
+					"userRole": {
+						"required": true,
+						"type": "string",
+						"example": ""
+					},
+					"locations": {
+						"required": true,
+						"type": "array",
+						"items": {
+							"$ref": "#/definitions/usersLocation"
+						}
+					}
+				}
+			}
+		},
+		"usersLastLocations": {
+			"type": "array",
+			"items": {
+				"properties": {
+					"id": {
+						"type": "integer",
+						"required": true
+					},
+					"userName": {
+						"type": "string",
+						"required": true
+					},
+					"name": {
+						"type": "string",
+						"required": true
+					},
+					"latitude": {
+						"type": "number",
+						"required": true
+					},
+					"longitude": {
+						"type": "number",
+						"required": true
+					},
+					"locationDateTime": {
+						"type": "string",
+						"required": true,
+						"example": "2019-02-21 07:52:01.747+00"
+					}
+				}
+			}
+		},
+		"selectedUserLocations": {
+			"properties": {
+				"id": {
+					"required": true,
+					"type": "number",
+					"example": 1
+				},
+				"firstName": {
+					"required": true,
+					"type": "string",
+					"example": "john"
+				},
+				"lastName": {
+					"required": true,
+					"type": "string",
+					"example": "john"
+				},
+				"avatar": {
+					"required": true,
+					"type": "string",
+					"example": ""
+				},
+				"email": {
+					"required": true,
+					"type": "string",
+					"example": "john"
+				},
+				"userRole": {
+					"required": true,
+					"type": "string",
+					"example": ""
+				},
+				"locations": {
+					"required": true,
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/usersLocation"
+					}
+				}
+			}
+		},
+		"lastLocation": {
+			"properties": {
+				"id": {
+					"required": true,
+					"type": "number",
+					"example": 1
+				},
+				"longitude": {
+					"required": true,
+					"type": "number",
+					"example": 10.6758
+				},
+				"latitude": {
+					"required": true,
+					"type": "number",
+					"example": -122.3445
+				},
+				"createdAt": {
+					"required": true,
+					"type": "string",
+					"example": "2019-02-02T10:18:16.397Z"
+				}
+			}
+		}
+	}
+}

@@ -4,6 +4,8 @@ const sequelize = require('sequelize');
 const auth = require('../authentication/auth')();
 const pagination = require('../dtos/pagination').Pagination;
 const companies = require('../models').companies;
+const reqBodyValidation = require('../utils/req_generic_validations').reqBodyValidation;
+const companyDTO = require('../dtos/company')
 const reqQueryValidate = require('../utils/req_generic_validations').reqqueryvalidation;
 const asyncErrorHandlerMiddleWare = require('../utils/async_custom_handlers').asyncErrorHandler;
 
@@ -84,7 +86,7 @@ router.get('/all', asyncErrorHandlerMiddleWare(async (req, res, next) => {
 }));
 router.post(
     '/',
-    [auth.authenticate()],
+    [auth.authenticate(), reqBodyValidation(companyDTO.companyPost)],
     asyncErrorHandlerMiddleWare(async (req, res, next) => {
         const company = await companies.create({
             name: req.body.name,
@@ -146,7 +148,7 @@ router.get(
 
 router.put(
     '/:id',
-    [auth.authenticate()],
+    [auth.authenticate(), reqBodyValidation(companyDTO.companyPost)],
     asyncErrorHandlerMiddleWare(async (req, res, next) => {
         const upa = await companies.update(
             {

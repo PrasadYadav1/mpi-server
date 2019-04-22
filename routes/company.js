@@ -89,20 +89,7 @@ router.post(
     [auth.authenticate(), reqBodyValidation(companyDTO.companyPost)],
     asyncErrorHandlerMiddleWare(async (req, res, next) => {
         const company = await companies.create({
-            name: req.body.name,
-            buildingName: req.body.buildingName,
-            city: req.body.city,
-            province: req.body.province,
-            areaCode: req.body.areaCode,
-            phoneNumber: req.body.phoneNumber,
-            primaryContactPerson: req.body.primaryContactPerson,
-            primaryContactNumber: req.body.primaryContactNumber,
-            secondaryContactPerson: req.body.secondaryContactPerson,
-            secondaryContactNumber: req.body.secondaryContactNumber,
-            address: req.body.address,
-            description: req.body.description ? req.body.description : "",
-            latitude: req.body.latitude,
-            longitude: req.body.longitude,
+            ...req.body,
             createdBy: req.user.userId,
             updatedBy: req.user.userId,
             isActive: true,
@@ -152,20 +139,7 @@ router.put(
     asyncErrorHandlerMiddleWare(async (req, res, next) => {
         const upa = await companies.update(
             {
-                name: req.body.name,
-                buildingName: req.body.buildingName,
-                city: req.body.city,
-                province: req.body.province,
-                areaCode: req.body.areaCode,
-                phoneNumber: req.body.phoneNumber,
-                primaryContactPerson: req.body.primaryContactPerson,
-                primaryContactNumber: req.body.primaryContactNumber,
-                secondaryContactPerson: req.body.secondaryContactPerson,
-                secondaryContactNumber: req.body.secondaryContactNumber,
-                address: req.body.address,
-                description: req.body.description ? req.body.description : "",
-                latitude: req.body.latitude,
-                longitude: req.body.longitude,
+                ...req.body,
                 updatedBy: req.user.userId,
             },
             {

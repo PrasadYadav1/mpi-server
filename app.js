@@ -8,6 +8,8 @@ const index = require('./routes/index');
 const user = require('./routes/user');
 const userlocation = require('./routes/userlocation')
 const auth = require('./authentication/auth')();
+const company = require('./routes/company')
+const customer = require('./routes/customer')
 const app = express();
 const argv = require('minimist')(process.argv.slice(2));
 const subpath = express();
@@ -53,6 +55,8 @@ swagger.setApiInfo({
 app.use('/', index);
 app.use('/api/users', user);
 app.use('/api/userlocations', userlocation);
+app.use('/api/companies', company);
+app.use('/api/customers', customer);
 app.use('/hintimages', express.static(__dirname + '/public/images/hintimages'));
 app.use('/assets/*', express.static(__dirname + '/public/clientApp/assets'));
 app.use('/css', express.static(__dirname + '/public/css/'));

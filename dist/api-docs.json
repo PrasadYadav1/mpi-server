@@ -628,6 +628,441 @@
 					}
 				}
 			}
+		},
+		"/companies?pageIndex={pageIndex}&pageSize={pageSize}&{propertyName}&{propertyValue}": {
+			"get": {
+				"tags": [
+					"Company"
+				],
+				"description": "Get All Companies",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "pageIndex",
+						"in": "query",
+						"description": "PageIndex",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "pageSize",
+						"in": "query",
+						"description": "PageSize",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "propertyName",
+						"in": "query",
+						"enum": [
+							"name",
+							"buildingName",
+							"city",
+							"province",
+							"areaCode",
+							"phoneNumber",
+							"primaryContactPerson",
+							"primaryContactNumber",
+							"secondaryContactPerson",
+							"secondaryContactNumber",
+							"address"
+						],
+						"description": "PropertyName",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "propertyValue",
+						"in": "query",
+						"description": "propertyValue",
+						"required": false,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Company response",
+						"schema": {
+							"$ref": "#/definitions/companyResponseWithPagination"
+						}
+					}
+				}
+			}
+		},
+		"/companies": {
+			"post": {
+				"tags": [
+					"Company"
+				],
+				"description": "Create new company",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "Job Parameters",
+						"in": "body",
+						"description": "Customer",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/company"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Company response",
+						"schema": {
+							"$ref": "#/definitions/companyData"
+						}
+					}
+				}
+			}
+		},
+		"/companies/{id}/details": {
+			"get": {
+				"tags": [
+					"Company"
+				],
+				"description": "get by id ",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"description": "id",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Company response",
+						"schema": {
+							"$ref": "#/definitions/companyData"
+						}
+					}
+				}
+			}
+		},
+		"/companies/{id}": {
+			"put": {
+				"tags": [
+					"Company"
+				],
+				"description": "Update Company",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"description": "id",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "Job Parameters",
+						"in": "body",
+						"description": "company",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/company"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Company response",
+						"schema": {
+							"$ref": "#/definitions/successMessageResponse"
+						}
+					}
+				}
+			}
+		},
+		"/companies/{companyId}": {
+			"delete": {
+				"tags": [
+					"Company"
+				],
+				"description": "delete the comapny by id ",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "companyId",
+						"in": "path",
+						"description": "companyId",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Ok"
+					}
+				}
+			}
+		},
+		"/customers?pageIndex={pageIndex}&pageSize={pageSize}&{propertyName}&{propertyValue}": {
+			"get": {
+				"tags": [
+					"Customer"
+				],
+				"description": "Get All Customers",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "pageIndex",
+						"in": "query",
+						"description": "PageIndex",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "pageSize",
+						"in": "query",
+						"description": "PageSize",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "propertyName",
+						"in": "query",
+						"enum": [
+							"name",
+							"customerType",
+							"buildingName",
+							"city",
+							"province",
+							"areaCode",
+							"phoneNumber",
+							"primaryContactPerson",
+							"primaryContactNumber",
+							"secondaryContactPerson",
+							"secondaryContactNumber",
+							"address"
+						],
+						"description": "PropertyName",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "propertyValue",
+						"in": "query",
+						"description": "propertyValue",
+						"required": false,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Customer response",
+						"schema": {
+							"$ref": "#/definitions/customerResponseWithPagination"
+						}
+					}
+				}
+			}
+		},
+		"/customers": {
+			"post": {
+				"tags": [
+					"Customer"
+				],
+				"description": "Create new Customer",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "Job Parameters",
+						"in": "body",
+						"description": "Customer",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/customer"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Customer response",
+						"schema": {
+							"$ref": "#/definitions/customerData"
+						}
+					}
+				}
+			}
+		},
+		"/customers/{id}/details": {
+			"get": {
+				"tags": [
+					"Customer"
+				],
+				"description": "get by id ",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"description": "id",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Customer response",
+						"schema": {
+							"$ref": "#/definitions/customerData"
+						}
+					}
+				}
+			}
+		},
+		"/customers/{id}": {
+			"put": {
+				"tags": [
+					"Customer"
+				],
+				"description": "Update Customer",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"description": "id",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "Job Parameters",
+						"in": "body",
+						"description": "Customer",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/customer"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Customer response",
+						"schema": {
+							"$ref": "#/definitions/successMessageResponse"
+						}
+					}
+				}
+			}
+		},
+		"/customers/{coustmerId}": {
+			"delete": {
+				"tags": [
+					"Customer"
+				],
+				"description": "delete the Customer by id ",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "coustmerId",
+						"in": "path",
+						"description": "coustmerId",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Ok"
+					}
+				}
+			}
 		}
 	},
 	"definitions": {
@@ -1086,6 +1521,384 @@
 					"type": "string",
 					"example": "2019-02-02T10:18:16.397Z"
 				}
+			}
+		},
+		"company": {
+			"properties": {
+				"name": {
+					"required": true,
+					"type": "string",
+					"example": "techno"
+				},
+				"buildingName": {
+					"required": true,
+					"type": "string",
+					"example": "buildingName"
+				},
+				"city": {
+					"required": true,
+					"type": "string",
+					"example": "city"
+				},
+				"province": {
+					"required": true,
+					"type": "string",
+					"example": "province"
+				},
+				"areaCode": {
+					"required": true,
+					"type": "string",
+					"example": "areaCode"
+				},
+				"phoneNumber": {
+					"required": true,
+					"type": "string",
+					"example": "phoneNumber"
+				},
+				"primaryContactPerson": {
+					"required": true,
+					"type": "string",
+					"example": "primaryContactPerson"
+				},
+				"primaryContactNumber": {
+					"required": true,
+					"type": "string",
+					"example": "primaryContactNumber"
+				},
+				"secondaryContactPerson": {
+					"required": true,
+					"type": "string",
+					"example": "secondaryContactPerson"
+				},
+				"secondaryContactNumber": {
+					"required": true,
+					"type": "string",
+					"example": "secondaryContactNumber"
+				},
+				"address": {
+					"required": true,
+					"type": "string",
+					"example": "address"
+				},
+				"description": {
+					"required": true,
+					"type": "string",
+					"example": "pharmacy"
+				},
+				"longitude": {
+					"required": true,
+					"type": "number",
+					"example": 10.6758
+				},
+				"latitude": {
+					"required": true,
+					"type": "number",
+					"example": -122.3445
+				}
+			}
+		},
+		"companyData": {
+			"properties": {
+				"id": {
+					"required": true,
+					"type": "number",
+					"example": 1
+				},
+				"name": {
+					"required": true,
+					"type": "string",
+					"example": "techno"
+				},
+				"buildingName": {
+					"required": true,
+					"type": "string",
+					"example": "buildingName"
+				},
+				"city": {
+					"required": true,
+					"type": "string",
+					"example": "city"
+				},
+				"province": {
+					"required": true,
+					"type": "string",
+					"example": "province"
+				},
+				"areaCode": {
+					"required": true,
+					"type": "string",
+					"example": "areaCode"
+				},
+				"phoneNumber": {
+					"required": true,
+					"type": "string",
+					"example": "phoneNumber"
+				},
+				"primaryContactPerson": {
+					"required": true,
+					"type": "string",
+					"example": "primaryContactPerson"
+				},
+				"primaryContactNumber": {
+					"required": true,
+					"type": "string",
+					"example": "primaryContactNumber"
+				},
+				"secondaryContactPerson": {
+					"required": true,
+					"type": "string",
+					"example": "secondaryContactPerson"
+				},
+				"secondaryContactNumber": {
+					"required": true,
+					"type": "string",
+					"example": "secondaryContactNumber"
+				},
+				"address": {
+					"required": true,
+					"type": "string",
+					"example": "address"
+				},
+				"description": {
+					"required": true,
+					"type": "string",
+					"example": "pharmacy"
+				},
+				"longitude": {
+					"required": true,
+					"type": "number",
+					"example": 10.6758
+				},
+				"latitude": {
+					"required": true,
+					"type": "number",
+					"example": -122.3445
+				},
+				"updatedBy": {
+					"required": true,
+					"type": "number",
+					"example": 1
+				},
+				"createdAt": {
+					"required": true,
+					"type": "string",
+					"example": "2019-02-02T10:18:16.397Z"
+				}
+			}
+		},
+		"companyResponseWithPagination": {
+			"properties": {
+				"count": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"rows": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/companyData"
+					}
+				}
+			}
+		},
+		"companyResponse": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/companyData"
+			}
+		},
+		"customer": {
+			"properties": {
+				"name": {
+					"required": true,
+					"type": "string",
+					"example": "techno"
+				},
+				"customerType": {
+					"required": true,
+					"type": "string",
+					"example": "customerType"
+				},
+				"buildingName": {
+					"required": true,
+					"type": "string",
+					"example": "buildingName"
+				},
+				"city": {
+					"required": true,
+					"type": "string",
+					"example": "city"
+				},
+				"province": {
+					"required": true,
+					"type": "string",
+					"example": "province"
+				},
+				"areaCode": {
+					"required": true,
+					"type": "string",
+					"example": "areaCode"
+				},
+				"phoneNumber": {
+					"required": true,
+					"type": "string",
+					"example": "phoneNumber"
+				},
+				"primaryContactPerson": {
+					"required": true,
+					"type": "string",
+					"example": "primaryContactPerson"
+				},
+				"primaryContactNumber": {
+					"required": true,
+					"type": "string",
+					"example": "primaryContactNumber"
+				},
+				"secondaryContactPerson": {
+					"required": true,
+					"type": "string",
+					"example": "secondaryContactPerson"
+				},
+				"secondaryContactNumber": {
+					"required": true,
+					"type": "string",
+					"example": "secondaryContactNumber"
+				},
+				"address": {
+					"required": true,
+					"type": "string",
+					"example": "address"
+				},
+				"description": {
+					"required": true,
+					"type": "string",
+					"example": "pharmacy"
+				},
+				"longitude": {
+					"required": true,
+					"type": "number",
+					"example": 10.6758
+				},
+				"latitude": {
+					"required": true,
+					"type": "number",
+					"example": -122.3445
+				}
+			}
+		},
+		"customerData": {
+			"properties": {
+				"id": {
+					"required": true,
+					"type": "number",
+					"example": 1
+				},
+				"name": {
+					"required": true,
+					"type": "string",
+					"example": "techno"
+				},
+				"customerType": {
+					"required": true,
+					"type": "string",
+					"example": "customerType"
+				},
+				"buildingName": {
+					"required": true,
+					"type": "string",
+					"example": "buildingName"
+				},
+				"city": {
+					"required": true,
+					"type": "string",
+					"example": "city"
+				},
+				"province": {
+					"required": true,
+					"type": "string",
+					"example": "province"
+				},
+				"areaCode": {
+					"required": true,
+					"type": "string",
+					"example": "areaCode"
+				},
+				"phoneNumber": {
+					"required": true,
+					"type": "string",
+					"example": "phoneNumber"
+				},
+				"primaryContactPerson": {
+					"required": true,
+					"type": "string",
+					"example": "primaryContactPerson"
+				},
+				"primaryContactNumber": {
+					"required": true,
+					"type": "string",
+					"example": "primaryContactNumber"
+				},
+				"secondaryContactPerson": {
+					"required": true,
+					"type": "string",
+					"example": "secondaryContactPerson"
+				},
+				"secondaryContactNumber": {
+					"required": true,
+					"type": "string",
+					"example": "secondaryContactNumber"
+				},
+				"address": {
+					"required": true,
+					"type": "string",
+					"example": "address"
+				},
+				"description": {
+					"required": true,
+					"type": "string",
+					"example": "pharmacy"
+				},
+				"longitude": {
+					"required": true,
+					"type": "number",
+					"example": 10.6758
+				},
+				"latitude": {
+					"required": true,
+					"type": "number",
+					"example": -122.3445
+				},
+				"updatedBy": {
+					"required": true,
+					"type": "number",
+					"example": 1
+				},
+				"createdAt": {
+					"required": true,
+					"type": "string",
+					"example": "2019-02-02T10:18:16.397Z"
+				}
+			}
+		},
+		"customerResponseWithPagination": {
+			"properties": {
+				"count": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"rows": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/customerData"
+					}
+				}
+			}
+		},
+		"customerResponse": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/customerData"
 			}
 		}
 	}

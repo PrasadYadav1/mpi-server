@@ -1063,6 +1063,609 @@
 					}
 				}
 			}
+		},
+		"/categories": {
+			"post": {
+				"tags": [
+					"category"
+				],
+				"description": "Create new category",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "Job Parameters",
+						"in": "body",
+						"description": "category",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/category"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "category response",
+						"schema": {
+							"$ref": "#/definitions/category"
+						}
+					}
+				}
+			}
+		},
+		"/categories/all": {
+			"get": {
+				"tags": [
+					"category"
+				],
+				"description": "get all categories",
+				"operationId": "",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/categoryresponse"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/categories/subcategories": {
+			"post": {
+				"tags": [
+					"category"
+				],
+				"description": "Create new subcategory",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "Job Parameters",
+						"in": "body",
+						"description": "subcategory",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/subcategory"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "category response",
+						"schema": {
+							"$ref": "#/definitions/subcategory"
+						}
+					}
+				}
+			}
+		},
+		"/categories/{id}/subcategories": {
+			"get": {
+				"tags": [
+					"category"
+				],
+				"description": "get all subcategories by category id",
+				"operationId": "",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "",
+						"required": true,
+						"type": "number"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/subcategoryresponse"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/products?pageIndex={pageIndex}&pageSize={pageSize}&{propertyName}&{propertyValue}": {
+			"get": {
+				"tags": [
+					"Product"
+				],
+				"description": "Get All Product ",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "pageIndex",
+						"in": "query",
+						"description": "PageIndex",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "pageSize",
+						"in": "query",
+						"description": "PageSize",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "propertyName",
+						"in": "query",
+						"enum": [
+							"name",
+							"companyId",
+							"categoryId",
+							"subCategoryId",
+							"units",
+							"unitsofMeasurement"
+						],
+						"description": "PropertyName",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "propertyValue",
+						"in": "query",
+						"description": "propertyValue",
+						"required": false,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Product response",
+						"schema": {
+							"$ref": "#/definitions/productResponseWithPagination"
+						}
+					}
+				}
+			}
+		},
+		"/products/all?{propertyName}&{propertyValue}": {
+			"get": {
+				"tags": [
+					"Product"
+				],
+				"description": "Get All Product ",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "propertyName",
+						"in": "query",
+						"enum": [
+							"name",
+							"companyName",
+							"injectionType",
+							"formType",
+							"packSize",
+							"dosageValue",
+							"dosageType"
+						],
+						"description": "PropertyName",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "propertyValue",
+						"in": "query",
+						"description": "propertyValue",
+						"required": false,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Product response",
+						"schema": {
+							"$ref": "#/definitions/productsResponse"
+						}
+					}
+				}
+			}
+		},
+		"/products": {
+			"post": {
+				"tags": [
+					"Product"
+				],
+				"description": "Create new Product,injectionType(Oral, Rectal),formType(Tablet, capsule, suspension, softgel)",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "Job Parameters",
+						"in": "body",
+						"description": "product",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/products"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Product response",
+						"schema": {
+							"$ref": "#/definitions/successMessageResponse"
+						}
+					}
+				}
+			}
+		},
+		"/products/{productId}/details": {
+			"get": {
+				"tags": [
+					"Product"
+				],
+				"description": "get by id ",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "productId",
+						"in": "path",
+						"description": "productId",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Product response",
+						"schema": {
+							"$ref": "#/definitions/productsp"
+						}
+					}
+				}
+			}
+		},
+		"/products/{productId}/priceCatalogue": {
+			"get": {
+				"tags": [
+					"Product"
+				],
+				"description": "get product price catalogue ",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "productId",
+						"in": "path",
+						"description": "productId",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Product response",
+						"schema": {
+							"$ref": "#/definitions/priceCatalogueByProduct"
+						}
+					}
+				}
+			}
+		},
+		"/productprices?pageIndex={pageIndex}&pageSize={pageSize}&{propertyName}&{propertyValue}": {
+			"get": {
+				"tags": [
+					"ProductPrice"
+				],
+				"description": "Get All ProductPrice ",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "pageIndex",
+						"in": "query",
+						"description": "PageIndex",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "pageSize",
+						"in": "query",
+						"description": "PageSize",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "propertyName",
+						"in": "query",
+						"enum": [
+							"productId",
+							"fromRange",
+							"toRange",
+							"price"
+						],
+						"description": "PropertyName",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "propertyValue",
+						"in": "query",
+						"description": "propertyValue",
+						"required": false,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Product Price response",
+						"schema": {
+							"$ref": "#/definitions/productPriceWithPagination"
+						}
+					}
+				}
+			}
+		},
+		"/productprices": {
+			"post": {
+				"tags": [
+					"ProductPrice"
+				],
+				"description": "Create new ProductPrice",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "Job Parameters",
+						"in": "body",
+						"description": "product price",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/productPrice"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Product response",
+						"schema": {
+							"$ref": "#/definitions/productPrice"
+						}
+					}
+				}
+			}
+		},
+		"/productprices/{id}/details": {
+			"get": {
+				"tags": [
+					"ProductPrice"
+				],
+				"description": "get by id ",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"description": "id",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Product Price response",
+						"schema": {
+							"$ref": "#/definitions/productPrice"
+						}
+					}
+				}
+			}
+		},
+		"/productprices/{id}/product/{quantity}/range": {
+			"get": {
+				"tags": [
+					"ProductPrice"
+				],
+				"description": "get quantity range and price by quantity, if no range 404 will be thrown",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"description": "id",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "quantity",
+						"in": "path",
+						"description": "quantity",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "",
+						"schema": {
+							"$ref": "#/definitions/productPriceQuantityRangeByQuantity"
+						}
+					}
+				}
+			}
+		},
+		"/productprices/{id}": {
+			"put": {
+				"tags": [
+					"ProductPrice"
+				],
+				"description": "Update ProductPrice",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"description": "id",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "Job Parameters",
+						"in": "body",
+						"description": "Customer",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/productPrice"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "ProductPrice response",
+						"schema": {
+							"$ref": "#/definitions/successMessageResponse"
+						}
+					}
+				}
+			}
+		},
+		"/productprices/{productPriceId}": {
+			"delete": {
+				"tags": [
+					"ProductPrice"
+				],
+				"description": "delete the ProductPrice by id ",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "productPriceId",
+						"in": "path",
+						"description": "productPriceId",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Ok"
+					}
+				}
+			}
 		}
 	},
 	"definitions": {
@@ -1899,6 +2502,287 @@
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/customerData"
+			}
+		},
+		"categoryresponse": {
+			"properties": {
+				"id": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"name": {
+					"required": true,
+					"type": "string",
+					"example": ""
+				}
+			}
+		},
+		"category": {
+			"properties": {
+				"name": {
+					"required": true,
+					"type": "string",
+					"example": "techno"
+				},
+				"industry": {
+					"required": true,
+					"type": "string",
+					"example": "pharmacy"
+				}
+			}
+		},
+		"subcategory": {
+			"properties": {
+				"categoryId": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"name": {
+					"required": true,
+					"type": "string",
+					"example": "techno"
+				}
+			}
+		},
+		"subcategoryresponse": {
+			"properties": {
+				"categoryId": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"id": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"name": {
+					"required": true,
+					"type": "string",
+					"example": ""
+				}
+			}
+		},
+		"products": {
+			"properties": {
+				"name": {
+					"required": true,
+					"type": "string",
+					"example": "Combiflam"
+				},
+				"companyId": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"categoryId": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"subCategoryId": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"units": {
+					"required": true,
+					"type": "double",
+					"example": 1.1
+				},
+				"unitsofMeasurement": {
+					"required": true,
+					"type": "string",
+					"example": ""
+				},
+				"description": {
+					"required": true,
+					"type": "string",
+					"example": "mg"
+				}
+			}
+		},
+		"productsp": {
+			"properties": {
+				"id": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"name": {
+					"required": true,
+					"type": "string",
+					"example": "Combiflam"
+				},
+				"companyId": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"companyName": {
+					"required": true,
+					"type": "string",
+					"example": "techno"
+				},
+				"categoryId": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"categoryName": {
+					"required": true,
+					"type": "string",
+					"example": ""
+				},
+				"subCategoryId": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"subCategoryName": {
+					"required": true,
+					"type": "string",
+					"example": ""
+				},
+				"units": {
+					"required": true,
+					"type": "double",
+					"example": 1.1
+				},
+				"unitsofMeasurement": {
+					"required": true,
+					"type": "string",
+					"example": ""
+				},
+				"description": {
+					"required": true,
+					"type": "string",
+					"example": "mg"
+				}
+			}
+		},
+		"productsResponse": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/productsp"
+			}
+		},
+		"productResponseWithPagination": {
+			"properties": {
+				"count": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"rows": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/productsp"
+					}
+				}
+			}
+		},
+		"productPrice": {
+			"properties": {
+				"productId": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"fromRange": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"toRange": {
+					"required": true,
+					"type": "integer",
+					"example": 10
+				},
+				"price": {
+					"required": true,
+					"type": "double",
+					"example": 2
+				},
+				"productName": {
+					"required": true,
+					"type": "string",
+					"example": ""
+				}
+			}
+		},
+		"priceCatalogueByProduct": {
+			"type": "array",
+			"items": {
+				"properties": {
+					"id": {
+						"required": true,
+						"type": "integer",
+						"example": 1
+					},
+					"productId": {
+						"required": true,
+						"type": "integer",
+						"example": 1
+					},
+					"productName": {
+						"required": true,
+						"type": "string",
+						"example": ""
+					},
+					"fromRange": {
+						"required": true,
+						"type": "number",
+						"example": 1
+					},
+					"toRange": {
+						"required": true,
+						"type": "number",
+						"example": 100
+					},
+					"price": {
+						"required": true,
+						"type": "number",
+						"example": 100.23
+					}
+				}
+			}
+		},
+		"productPriceQuantityRangeByQuantity": {
+			"properties": {
+				"id": {
+					"type": "integer",
+					"required": true
+				},
+				"fromRange": {
+					"type": "integer",
+					"required": true
+				},
+				"toRange": {
+					"type": "integer",
+					"required": true
+				},
+				"price": {
+					"type": "number",
+					"required": true
+				}
+			}
+		},
+		"productPriceWithPagination": {
+			"properties": {
+				"count": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"rows": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/productPrice"
+					}
+				}
 			}
 		}
 	}

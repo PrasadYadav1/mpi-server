@@ -2168,6 +2168,11 @@
 					"type": "string",
 					"example": "primaryContactNumber"
 				},
+				"primaryEmail": {
+					"required": true,
+					"type": "string",
+					"example": "inturi99@gmail.com"
+				},
 				"secondaryContactPerson": {
 					"required": true,
 					"type": "string",
@@ -2177,6 +2182,11 @@
 					"required": true,
 					"type": "string",
 					"example": "secondaryContactNumber"
+				},
+				"secondaryEmail": {
+					"required": true,
+					"type": "string",
+					"example": "krishna@gmail.com"
 				},
 				"address": {
 					"required": true,
@@ -2247,6 +2257,11 @@
 					"type": "string",
 					"example": "primaryContactNumber"
 				},
+				"primaryEmail": {
+					"required": true,
+					"type": "string",
+					"example": "inturi99@gmail.com"
+				},
 				"secondaryContactPerson": {
 					"required": true,
 					"type": "string",
@@ -2256,6 +2271,11 @@
 					"required": true,
 					"type": "string",
 					"example": "secondaryContactNumber"
+				},
+				"secondaryEmail": {
+					"required": true,
+					"type": "string",
+					"example": "krishna@gmail.com"
 				},
 				"address": {
 					"required": true,
@@ -2357,6 +2377,11 @@
 					"type": "string",
 					"example": "primaryContactNumber"
 				},
+				"primaryEmail": {
+					"required": true,
+					"type": "string",
+					"example": "inturi99@gmail.com"
+				},
 				"secondaryContactPerson": {
 					"required": true,
 					"type": "string",
@@ -2366,6 +2391,11 @@
 					"required": true,
 					"type": "string",
 					"example": "secondaryContactNumber"
+				},
+				"secondaryEmail": {
+					"required": true,
+					"type": "string",
+					"example": "krishna@gmail.com"
 				},
 				"address": {
 					"required": true,
@@ -2441,6 +2471,11 @@
 					"type": "string",
 					"example": "primaryContactNumber"
 				},
+				"primaryEmail": {
+					"required": true,
+					"type": "string",
+					"example": "inturi99@gmail.com"
+				},
 				"secondaryContactPerson": {
 					"required": true,
 					"type": "string",
@@ -2450,6 +2485,11 @@
 					"required": true,
 					"type": "string",
 					"example": "secondaryContactNumber"
+				},
+				"secondaryEmail": {
+					"required": true,
+					"type": "string",
+					"example": "krishna@gmail.com"
 				},
 				"address": {
 					"required": true,

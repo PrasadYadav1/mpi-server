@@ -35,10 +35,16 @@ module.exports = {
       primaryContactNumber: {
         type: Sequelize.STRING
       },
+      primaryEmail: {
+        type: Sequelize.STRING
+      },
       secondaryContactPerson: {
         type: Sequelize.STRING
       },
       secondaryContactNumber: {
+        type: Sequelize.STRING
+      },
+      secondaryEmail: {
         type: Sequelize.STRING
       },
       address: {

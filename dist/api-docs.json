@@ -1666,6 +1666,244 @@
 					}
 				}
 			}
+		},
+		"/warehouses?pageIndex={pageIndex}&pageSize={pageSize}&{propertyName}&{propertyValue}": {
+			"get": {
+				"tags": [
+					"Warehouse"
+				],
+				"description": "Get All Warehouses",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "pageIndex",
+						"in": "query",
+						"description": "PageIndex",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "pageSize",
+						"in": "query",
+						"description": "PageSize",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "propertyName",
+						"in": "query",
+						"enum": [
+							"name",
+							"email",
+							"phoneNumber",
+							"warehouseType",
+							"province",
+							"address",
+							"areaCode",
+							"buildingName",
+							"city"
+						],
+						"description": "PropertyName",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "propertyValue",
+						"in": "query",
+						"description": "propertyValue",
+						"required": false,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Warehouse response",
+						"schema": {
+							"$ref": "#/definitions/warehouseResponseWithPagination"
+						}
+					}
+				}
+			}
+		},
+		"/warehouses/all": {
+			"get": {
+				"tags": [
+					"Warehouse"
+				],
+				"description": "get all Warehouses",
+				"operationId": "",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/categoryresponse"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/warehouses": {
+			"post": {
+				"tags": [
+					"Warehouse"
+				],
+				"description": "Create new Warehouse",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "Job Parameters",
+						"in": "body",
+						"description": "Warehouse",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/warehouse"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Warehouse response",
+						"schema": {
+							"$ref": "#/definitions/warehouseData"
+						}
+					}
+				}
+			}
+		},
+		"/warehouses/{id}/details": {
+			"get": {
+				"tags": [
+					"Warehouse"
+				],
+				"description": "get by id ",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"description": "id",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Warehouse response",
+						"schema": {
+							"$ref": "#/definitions/warehouseData"
+						}
+					}
+				}
+			}
+		},
+		"/warehouses/{id}": {
+			"put": {
+				"tags": [
+					"Warehouse"
+				],
+				"description": "Update Warehouse",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"description": "id",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "Job Parameters",
+						"in": "body",
+						"description": "Warehouse",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/warehouse"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Warehouse response",
+						"schema": {
+							"$ref": "#/definitions/successMessageResponse"
+						}
+					}
+				}
+			}
+		},
+		"/warehouses/{warehouseId}": {
+			"delete": {
+				"tags": [
+					"Warehouse"
+				],
+				"description": "delete the Warehouse by id ",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "warehouseId",
+						"in": "path",
+						"description": "warehouseId",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Ok"
+					}
+				}
+			}
 		}
 	},
 	"definitions": {
@@ -2823,6 +3061,180 @@
 						"$ref": "#/definitions/productPrice"
 					}
 				}
+			}
+		},
+		"warehouse": {
+			"properties": {
+				"name": {
+					"required": true,
+					"type": "string",
+					"example": "techno"
+				},
+				"email": {
+					"required": true,
+					"type": "string",
+					"example": "inturi99@gmail.com"
+				},
+				"phoneNumber": {
+					"required": true,
+					"type": "string",
+					"example": "phoneNumber"
+				},
+				"warehouseType": {
+					"required": true,
+					"type": "string",
+					"example": "Primary"
+				},
+				"primaryWarehouse": {
+					"required": true,
+					"type": "string",
+					"example": ""
+				},
+				"province": {
+					"required": true,
+					"type": "string",
+					"example": "province"
+				},
+				"address": {
+					"required": true,
+					"type": "string",
+					"example": "address"
+				},
+				"longitude": {
+					"required": true,
+					"type": "number",
+					"example": 10.6758
+				},
+				"latitude": {
+					"required": true,
+					"type": "number",
+					"example": -122.3445
+				},
+				"areaCode": {
+					"required": true,
+					"type": "string",
+					"example": "areaCode"
+				},
+				"buildingName": {
+					"required": true,
+					"type": "string",
+					"example": "buildingName"
+				},
+				"city": {
+					"required": true,
+					"type": "string",
+					"example": "city"
+				},
+				"description": {
+					"required": true,
+					"type": "string",
+					"example": "pharmacy"
+				}
+			}
+		},
+		"warehouseData": {
+			"properties": {
+				"id": {
+					"required": true,
+					"type": "number",
+					"example": 1
+				},
+				"name": {
+					"required": true,
+					"type": "string",
+					"example": "techno"
+				},
+				"email": {
+					"required": true,
+					"type": "string",
+					"example": "inturi99@gmail.com"
+				},
+				"phoneNumber": {
+					"required": true,
+					"type": "string",
+					"example": "phoneNumber"
+				},
+				"warehouseType": {
+					"required": true,
+					"type": "string",
+					"example": "Primary"
+				},
+				"primaryWarehouse": {
+					"required": true,
+					"type": "string",
+					"example": ""
+				},
+				"province": {
+					"required": true,
+					"type": "string",
+					"example": "province"
+				},
+				"address": {
+					"required": true,
+					"type": "string",
+					"example": "address"
+				},
+				"longitude": {
+					"required": true,
+					"type": "number",
+					"example": 10.6758
+				},
+				"latitude": {
+					"required": true,
+					"type": "number",
+					"example": -122.3445
+				},
+				"areaCode": {
+					"required": true,
+					"type": "string",
+					"example": "areaCode"
+				},
+				"buildingName": {
+					"required": true,
+					"type": "string",
+					"example": "buildingName"
+				},
+				"city": {
+					"required": true,
+					"type": "string",
+					"example": "city"
+				},
+				"description": {
+					"required": true,
+					"type": "string",
+					"example": "pharmacy"
+				},
+				"updatedBy": {
+					"required": true,
+					"type": "number",
+					"example": 1
+				},
+				"createdAt": {
+					"required": true,
+					"type": "string",
+					"example": "2019-02-02T10:18:16.397Z"
+				}
+			}
+		},
+		"warehouseResponseWithPagination": {
+			"properties": {
+				"count": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"rows": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/warehouseData"
+					}
+				}
+			}
+		},
+		"warehouseResponse": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/warehouseData"
 			}
 		}
 	}

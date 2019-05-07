@@ -37,6 +37,11 @@ module.exports = {
       description: {
         type: Sequelize.STRING
       },
+      isValid: {
+        type: Sequelize.BOOLEAN,
+        allowNull: true,
+        defaultValue: false
+      },
       createdBy: {
         type: Sequelize.INTEGER
       },

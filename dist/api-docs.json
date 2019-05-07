@@ -594,8 +594,9 @@
 						"type": "string",
 						"enum": [
 							"All",
-							"SalesAgent",
-							"Manager"
+							"ZonalManager",
+							"RegionalManager",
+							"SalesAgent"
 						],
 						"required": true
 					},

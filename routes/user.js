@@ -137,7 +137,7 @@ router.get(
 router.get('/locations', [auth.authenticate()],
     reqQueryValidate(userDto.usersearch),
     asyncErrorHandlerMiddleWare(async (req, res, next) => {
-        if (!userUtils.verifyRole(req.user.userRole, 'Manager'))
+        if (!userUtils.verifyRole(req.user.userRole, 'ZonalManager'))
             return res.status(403).json({ message: 'you dont have permission to access this resource' });
         const searchByRequired = req.query && req.query.searchBy;
         if (searchByRequired && !req.query.searchByValue)
@@ -197,7 +197,7 @@ router.get('/locations', [auth.authenticate()],
 router.get('/:userId/locations', [auth.authenticate()],
     reqpathNewvalidation(userDto.userPathParm),
     asyncErrorHandlerMiddleWare(async (req, res, next) => {
-        if (!verifyRoles(['Manager', 'Admin'], req.user.userRole))
+        if (!verifyRoles(['ZonalManager', 'RegionalManager', 'Admin'], req.user.userRole))
             return res.status(403).json({ message: 'you dont have permission to access this resource' });
         const userData = (req.user.userRole === 'Admin') ? { id: parseInt(req.params.userId) }
             : await userUtils.getUserUnderAManager(
@@ -245,7 +245,7 @@ router.get('/:userId/locations', [auth.authenticate()],
 router.get('/:userId/last/location', [auth.authenticate()],
     reqpathNewvalidation(userDto.userPathParm),
     asyncErrorHandlerMiddleWare(async (req, res, next) => {
-        if (!userUtils.verifyRole(req.user.userRole, 'Manager'))
+        if (!userUtils.verifyRole(req.user.userRole, 'ZonalManager'))
             return res.status(403).json({ message: 'you dont have permission to access this resource' });
         const userData = await userUtils.getUserUnderAManager(
             req.user.userId,
@@ -282,7 +282,7 @@ router.get('/:userId/last/location', [auth.authenticate()],
 router.get('/lastLocations', [auth.authenticate()],
     // reqQueryValidate(userDto.usersearch),
     asyncErrorHandlerMiddleWare(async (req, res, next) => {
-        if (!authUtils.verifyRoles(['Manager', 'Admin'], req.user.userRole))
+        if (!authUtils.verifyRoles(['ZonalManager', 'RegionalManager', 'Admin'], req.user.userRole))
             return res.status(403).json({ message: 'you dont have permission to access this resource' });
         const searchByRequired = req.query && req.query.searchBy;
         if (searchByRequired && !req.query.searchByValue)

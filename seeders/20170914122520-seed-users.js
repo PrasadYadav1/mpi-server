@@ -30,7 +30,7 @@ module.exports = {
 				password: '$2a$10$PAEJN4ijFXT6tnm3QPo1lOADa4XU7Sre15srGS0XUjmgPFpLeTEOm',
 				headUserId: 1,
 				userRole: 'ZonalManager',
-				designation: 'Manager',
+				designation: 'ZonalManager',
 				avatar: '',
 				mobileNumber: '9966126757',
 				dateOfJoin: new Date(),

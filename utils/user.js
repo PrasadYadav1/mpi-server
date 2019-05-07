@@ -13,7 +13,8 @@ const getRelatedUsers = async (usr, attributesArray) => {
                     { isActive: true },
                     {
                         $or: [
-                            { userRole: { $eq: 'Manager' } },
+                            { userRole: { $eq: 'ZonalManager' } },
+                            { userRole: { $eq: 'RegionalManager' } },
                             { userRole: { $eq: 'SalesAgent' } }
                         ]
                     },
@@ -21,7 +22,17 @@ const getRelatedUsers = async (usr, attributesArray) => {
             },
             raw: true
         });
-    } else if (usr.userRole === "Manager") {
+    } else if (usr.userRole === "ZonalManager") {
+        const regionalManager = await users.findAll({
+            attributes: attributesArray,
+            where: {
+                isActive: true,
+                headUserId: usr.userId
+            },
+            raw: true
+        });
+        return regionalManager;
+    } else if (usr.userRole === "RegionalManager") {
         const salesAgents = await users.findAll({
             attributes: attributesArray,
             where: {
@@ -45,7 +56,8 @@ const getRelatedUsersBySearch = async (usr, attributesArray, searchBy, value) =>
                     { isActive: true },
                     {
                         $or: [
-                            { userRole: { $eq: 'Manager' } },
+                            { userRole: { $eq: 'ZonalManager' } },
+                            { userRole: { $eq: 'RegionalManager' } },
                             { userRole: { $eq: 'SalesAgent' } }
                         ]
                     },
@@ -58,7 +70,20 @@ const getRelatedUsersBySearch = async (usr, attributesArray, searchBy, value) =>
             },
             raw: true
         });
-    } else if (usr.userRole === "Manager") {
+    } else if (usr.userRole === "ZonalManager") {
+        const regionalManager = await users.findAll({
+            attributes: attributesArray,
+            where: {
+                isActive: true,
+                headUserId: usr.userId,
+                [searchBy]: {
+                    $like: `%${value}%`
+                }
+            },
+            raw: true
+        });
+        return regionalManager;
+    } else if (usr.userRole === "RegionalManager") {
         const salesAgents = await users.findAll({
             attributes: attributesArray,
             where: {

@@ -11,7 +11,7 @@ const userPost = t.struct({
   lastName: t.String,
   email: t.String,
   password: t.String,
-  userRole: t.enums.of(['Manager', 'SalesAgent']),
+  userRole: t.enums.of(['ZonalManager', 'RegionalManager', 'SalesAgent']),
   userName: t.String,
   password: t.String,
   mobileNumber: t.String,
@@ -21,16 +21,16 @@ const userPost = t.struct({
 });
 
 const userPathParm = t.struct({
-    userId: types.StringPositiveInteger
+  userId: types.StringPositiveInteger
 });
 
 const userType = t.struct({
-  type: t.enums.of(['All', 'SalesAgent', 'Manager']) 
+  type: t.enums.of(['All', 'ZonalManager', 'RegionalManager', 'SalesAgent'])
 });
 
 const userTypeQuery = t.struct({
   searchText: t.maybe(t.String),
-  userStatus: t.maybe(t.enums.of(['All','Active','Deactive']))  
+  userStatus: t.maybe(t.enums.of(['All', 'Active', 'Deactive']))
 });
 
 const managerAssign = t.struct({
@@ -63,14 +63,14 @@ const newManagerAssign = t.struct({
 });
 
 module.exports = {
-   userSearch,
-   userPathParm,
-   userPost,
-   userType,
-   managerAssign,
-   usersListQueryParams,
-   userStatusChangeQueryParams,
-   userUpdateBody,
-   newManagerAssign,
-   userTypeQuery
+  userSearch,
+  userPathParm,
+  userPost,
+  userType,
+  managerAssign,
+  usersListQueryParams,
+  userStatusChangeQueryParams,
+  userUpdateBody,
+  newManagerAssign,
+  userTypeQuery
 };

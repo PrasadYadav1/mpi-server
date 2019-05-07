@@ -580,6 +580,43 @@ reqpathNewvalidation(userType)], reqQueryValidate(userTypeQuery),
 
     });
 
+router.get("/headusers/:type", [auth.authenticate(),
+reqpathNewvalidation(userType)], reqQueryValidate(userTypeQuery),
+    async (req, res) => {
+        try {
+            let whereStatement = {};
+            if (req.params.type === 'SalesAgent') {
+                whereStatement = {
+                    isActive: true,
+                    userRole: 'RegionalManager'
+                };
+            } else if (req.params.type === 'RegionalManager') {
+                whereStatement = {
+                    isActive: true,
+                    userRole: 'ZonalManager'
+                };
+            } else if (req.params.type === 'ZonalManager') {
+                whereStatement = {
+                    isActive: true,
+                    userRole: 'Admin'
+                };
+            }
+
+
+            return res.status(200).json(await users.findAll({
+                attributes: ['id', 'firstName', 'lastName', 'userRole'],
+                where: whereStatement
+            }));
+
+        } catch (error) {
+            return res.status(500).json({
+                message: error.message
+            });
+        }
+
+    });
+
+
 router.put("/:userId/assignManager",
     [auth.authenticate(), reqpathNewvalidation(userPathParm),
     reqBodyValidation(managerAssign)], async (req, res) => {

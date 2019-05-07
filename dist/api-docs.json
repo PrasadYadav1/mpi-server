@@ -630,6 +630,48 @@
 				}
 			}
 		},
+		"/users/headusers/{type}": {
+			"get": {
+				"tags": [
+					"User"
+				],
+				"summary": "Get all head users ",
+				"description": "only accessible to ZonalManager,RegionalManager,SalesAgent roles",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "type",
+						"in": "path",
+						"description": "",
+						"type": "string",
+						"enum": [
+							"--",
+							"ZonalManager",
+							"RegionalManager",
+							"SalesAgent"
+						],
+						"required": true
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Users response",
+						"schema": {
+							"$ref": "#/definitions/Users"
+						}
+					}
+				}
+			}
+		},
 		"/companies?pageIndex={pageIndex}&pageSize={pageSize}&{propertyName}&{propertyValue}": {
 			"get": {
 				"tags": [

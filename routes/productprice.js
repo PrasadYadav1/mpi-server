@@ -32,7 +32,7 @@ router.get(
 
 		const result = (propertyNameDefault || propertyNameData) && propertyValueDefault;
 		const result1 = propertyNameData && propertyValueData;
-
+		let whereStatement = {};
 		if (result) {
 			whereStatement = {
 				isActive: true,
@@ -91,23 +91,23 @@ router.get(
 				'price',
 				'updatedBy',
 				'createdAt'],
-				include: [
-					{
-						model: products,
-						attributes: ['name'],
-						required: true,
-					},
-				],
+			include: [
+				{
+					model: products,
+					attributes: ['name'],
+					required: true,
+				},
+			],
 			where: {
 				isActive: true,
 				id: req.params.id,
 			},
 		});
-		if(!productPrice) return res.status(404).json({ message: 'not found'});
-		const { product, ...remaining } = productPrice.get({plain: true});
+		if (!productPrice) return res.status(404).json({ message: 'not found' });
+		const { product, ...remaining } = productPrice.get({ plain: true });
 		return res.json({
-		  ...remaining,
-		  productName: product.name
+			...remaining,
+			productName: product.name
 		});
 	})
 );

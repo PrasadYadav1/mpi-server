@@ -117,7 +117,7 @@ router.get(
 
 		const result = (propertyNameDefault || propertyNameData) && propertyValueDefault;
 		const result1 = propertyNameData && propertyValueData;
-
+		let whereStatement = {};
 		if (result) {
 			whereStatement = {
 				isActive: true,

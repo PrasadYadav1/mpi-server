@@ -597,7 +597,7 @@ router.put("/:userId/assignManager",
                 raw: true
             });
             let salesAgent = usersData.find((u) => u.id === salesAgentId && u.userRole === 'SalesAgent');
-            let manager = usersData.find((u) => u.id === managerId && u.userRole === 'Manager')
+            let manager = usersData.find((u) => u.id === managerId && u.userRole === 'RegionalManager')
             if (!salesAgent) return res.status(404).json({ message: "sales agent not found" });
             if (!manager) return res.status(404).json({ message: "manager not found" });
             // if(salesAgent.headUserId) return res.status(409).json({ message: "you cannot change manager at this time"});
@@ -755,9 +755,9 @@ router.put(
             },
             raw: true
         });
-        if (!managersAndAgents.some((m) => m.id === managerId && m.userRole === 'Manager'))
+        if (!managersAndAgents.some((m) => m.id === managerId && m.userRole === 'RegionalManager'))
             return res.status(404).json({ message: 'manager not found' });
-        if (!managersAndAgents.some((m) => m.id === newManagerId && m.userRole === 'Manager'))
+        if (!managersAndAgents.some((m) => m.id === newManagerId && m.userRole === 'RegionalManager'))
             return res.status(404).json({ message: 'newManager not found' });
 
         if (managersAndAgents.filter((ma) => ma.headUserId === managerId).length === 0)

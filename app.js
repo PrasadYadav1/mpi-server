@@ -14,6 +14,7 @@ const customer = require('./routes/customer')
 const products = require('./routes/product');
 const productprices = require('./routes/productprice');
 const warehouses = require('./routes/warehouse');
+const inventories = require('./routes/inventory');
 const app = express();
 const argv = require('minimist')(process.argv.slice(2));
 const subpath = express();
@@ -65,6 +66,7 @@ app.use('/api/products', products);
 app.use('/api/customers', customer);
 app.use('/api/productprices', productprices);
 app.use('/api/warehouses', warehouses);
+app.use('/api/inventories', inventories);
 app.use('/hintimages', express.static(__dirname + '/public/images/hintimages'));
 app.use('/assets/*', express.static(__dirname + '/public/clientApp/assets'));
 app.use('/css', express.static(__dirname + '/public/css/'));

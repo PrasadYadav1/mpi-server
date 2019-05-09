@@ -1947,6 +1947,262 @@
 					}
 				}
 			}
+		},
+		"/inventories?pageIndex={pageIndex}&pageSize={pageSize}&{propertyName}&{propertyValue}": {
+			"get": {
+				"tags": [
+					"Inventory"
+				],
+				"description": "Get All Inventory ",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "pageIndex",
+						"in": "query",
+						"description": "PageIndex",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "pageSize",
+						"in": "query",
+						"description": "PageSize",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "propertyName",
+						"in": "query",
+						"enum": [
+							"grn",
+							"inventoryDate",
+							"warehouseId",
+							"withPo",
+							"orderNumber",
+							"principalName"
+						],
+						"description": "PropertyName",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "propertyValue",
+						"in": "query",
+						"description": "propertyValue",
+						"required": false,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Inventory response",
+						"schema": {
+							"$ref": "#/definitions/inventoryResponseWithPagination"
+						}
+					}
+				}
+			}
+		},
+		"/inventories/all?{propertyName}&{propertyValue}": {
+			"get": {
+				"tags": [
+					"Inventory"
+				],
+				"description": "Get All Inventory ",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "propertyName",
+						"in": "query",
+						"enum": [
+							"grn",
+							"inventoryDate",
+							"warehouseId",
+							"withPo",
+							"orderNumber",
+							"principalName"
+						],
+						"description": "PropertyName",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "propertyValue",
+						"in": "query",
+						"description": "propertyValue",
+						"required": false,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Inventory response",
+						"schema": {
+							"$ref": "#/definitions/inventoryResponse"
+						}
+					}
+				}
+			}
+		},
+		"/inventories": {
+			"post": {
+				"tags": [
+					"Inventory"
+				],
+				"description": "Create new Inventory",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "Job Parameters",
+						"in": "body",
+						"description": "Inventory",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/inventories"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Inventory response",
+						"schema": {
+							"$ref": "#/definitions/successMessageResponse"
+						}
+					}
+				}
+			}
+		},
+		"/inventories/grn/{inventoryId}": {
+			"get": {
+				"tags": [
+					"Inventory"
+				],
+				"description": "GRN Generation ",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "inventoryId",
+						"in": "path",
+						"description": "inventoryId",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Inventory response",
+						"schema": {
+							"$ref": "#/definitions/successMessageResponse"
+						}
+					}
+				}
+			}
+		},
+		"/inventories/{inventoryId}/details": {
+			"get": {
+				"tags": [
+					"Inventory"
+				],
+				"description": "get by id ",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "inventoryId",
+						"in": "path",
+						"description": "inventoryId",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Inventory response",
+						"schema": {
+							"$ref": "#/definitions/inventoryDetails"
+						}
+					}
+				}
+			}
+		},
+		"/inventories/{inventoryId}/stockreceived": {
+			"get": {
+				"tags": [
+					"Inventory"
+				],
+				"description": "get stockreceived ",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "inventoryId",
+						"in": "path",
+						"description": "inventoryId",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Stockreceived response",
+						"schema": {
+							"$ref": "#/definitions/priceCatalogueByProduct"
+						}
+					}
+				}
+			}
 		}
 	},
 	"definitions": {
@@ -3278,6 +3534,264 @@
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/warehouseData"
+			}
+		},
+		"stockReceiveds": {
+			"properties": {
+				"productId": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"dateOfManufacture": {
+					"required": true,
+					"type": "date",
+					"example": "2019-01-10"
+				},
+				"expiryDate": {
+					"required": true,
+					"type": "date",
+					"example": "2019-01-12"
+				},
+				"receivedQuantity": {
+					"required": true,
+					"type": "double",
+					"example": 10
+				},
+				"price": {
+					"required": true,
+					"type": "double",
+					"example": 100.20
+				},
+				"mrp": {
+					"required": true,
+					"type": "double",
+					"example": 100.20
+				},
+				"amount": {
+					"required": true,
+					"type": "double",
+					"example": 120.00
+				}
+			}
+		},
+		"inventories": {
+			"properties": {
+				"inventoryDate": {
+					"required": true,
+					"type": "date",
+					"example": "2019-01-02"
+				},
+				"warehouseId": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"withPo": {
+					"required": true,
+					"type": "boolean",
+					"example": true
+				},
+				"orderNumber": {
+					"required": true,
+					"type": "string",
+					"example": "orderNumber"
+				},
+				"companyId": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"description": {
+					"required": true,
+					"type": "string",
+					"example": "mg"
+				},
+				"stockReceiveds": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/stockReceiveds"
+					}
+				}
+			}
+		},
+		"stockReceivedDetails": {
+			"properties": {
+				"id": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"productId": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"productName": {
+					"required": true,
+					"type": "string",
+					"example": "productName"
+				},
+				"uom": {
+					"required": true,
+					"type": "string",
+					"example": "uom"
+				},
+				"dateOfManufacture": {
+					"required": true,
+					"type": "date",
+					"example": "2019-01-10"
+				},
+				"expiryDate": {
+					"required": true,
+					"type": "date",
+					"example": "2019-01-12"
+				},
+				"receivedQuantity": {
+					"required": true,
+					"type": "double",
+					"example": 10
+				},
+				"price": {
+					"required": true,
+					"type": "double",
+					"example": 100.20
+				},
+				"mrp": {
+					"required": true,
+					"type": "double",
+					"example": 100.20
+				},
+				"amount": {
+					"required": true,
+					"type": "double",
+					"example": 120.00
+				}
+			}
+		},
+		"inventoryDetails": {
+			"properties": {
+				"id": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"grn": {
+					"required": true,
+					"type": "string",
+					"example": "GRN0001"
+				},
+				"isgrn": {
+					"required": true,
+					"type": "boolean",
+					"example": true
+				},
+				"inventoryDate": {
+					"required": true,
+					"type": "date",
+					"example": "2019-01-02"
+				},
+				"warehouseId": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"withPo": {
+					"required": true,
+					"type": "boolean",
+					"example": true
+				},
+				"orderNumber": {
+					"required": true,
+					"type": "string",
+					"example": "orderNumber"
+				},
+				"companyId": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"companyName": {
+					"required": true,
+					"type": "string",
+					"example": "companyName"
+				},
+				"description": {
+					"required": true,
+					"type": "string",
+					"example": "mg"
+				},
+				"stockReceiveds": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/stockReceivedDetails"
+					}
+				}
+			}
+		},
+		"inventoriesp": {
+			"properties": {
+				"id": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"inventoryDate": {
+					"required": true,
+					"type": "date",
+					"example": "2019-01-02"
+				},
+				"warehouseId": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"withPo": {
+					"required": true,
+					"type": "boolean",
+					"example": true
+				},
+				"orderNumber": {
+					"required": true,
+					"type": "string",
+					"example": "orderNumber"
+				},
+				"companyId": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"companyName": {
+					"required": true,
+					"type": "string",
+					"example": "companyName"
+				},
+				"description": {
+					"required": true,
+					"type": "string",
+					"example": "mg"
+				}
+			}
+		},
+		"inventoryResponse": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/inventoriesp"
+			}
+		},
+		"inventoryResponseWithPagination": {
+			"properties": {
+				"count": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"rows": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/inventoriesp"
+					}
+				}
 			}
 		}
 	}

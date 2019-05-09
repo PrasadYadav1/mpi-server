@@ -22,5 +22,11 @@ module.exports = (sequelize, DataTypes) => {
 			}
 		);
 	};
+	products.associate = function (model) {
+		products.hasMany(model.stockreceiveds, {
+			foreignKey: 'productId',
+			targetKey: 'id'
+		});
+	};
 	return products;
 };

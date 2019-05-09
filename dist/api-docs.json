@@ -2203,6 +2203,119 @@
 					}
 				}
 			}
+		},
+		"/stockreceived": {
+			"post": {
+				"tags": [
+					"StockReceived"
+				],
+				"description": "Create new stockreceived",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "Job Parameters",
+						"in": "body",
+						"description": "stockreceived",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/stockReceivedData"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "stockreceived response",
+						"schema": {
+							"$ref": "#/definitions/successMessageResponse"
+						}
+					}
+				}
+			}
+		},
+		"/stockreceived/{id}": {
+			"put": {
+				"tags": [
+					"StockReceived"
+				],
+				"description": "Update StockReceived",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"description": "id",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "Job Parameters",
+						"in": "body",
+						"description": "StockReceived",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/stockReceivedData"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "StockReceived response",
+						"schema": {
+							"$ref": "#/definitions/successMessageResponse"
+						}
+					}
+				}
+			}
+		},
+		"/stockreceived/{stockReceivedId}": {
+			"delete": {
+				"tags": [
+					"StockReceived"
+				],
+				"description": "delete the StockReceived by id ",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "stockReceivedId",
+						"in": "path",
+						"description": "stockReceivedId",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Ok"
+					}
+				}
+			}
 		}
 	},
 	"definitions": {
@@ -3538,6 +3651,50 @@
 		},
 		"stockReceiveds": {
 			"properties": {
+				"productId": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"dateOfManufacture": {
+					"required": true,
+					"type": "date",
+					"example": "2019-01-10"
+				},
+				"expiryDate": {
+					"required": true,
+					"type": "date",
+					"example": "2019-01-12"
+				},
+				"receivedQuantity": {
+					"required": true,
+					"type": "double",
+					"example": 10
+				},
+				"price": {
+					"required": true,
+					"type": "double",
+					"example": 100.20
+				},
+				"mrp": {
+					"required": true,
+					"type": "double",
+					"example": 100.20
+				},
+				"amount": {
+					"required": true,
+					"type": "double",
+					"example": 120.00
+				}
+			}
+		},
+		"stockReceivedData": {
+			"properties": {
+				"inventoryId": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
 				"productId": {
 					"required": true,
 					"type": "integer",

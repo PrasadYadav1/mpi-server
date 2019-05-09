@@ -178,7 +178,7 @@ router.post(
 		if (inventory) {
 			let strc = req.body.stockReceiveds.map(function (n) {
 				(n.inventoryId = inventory.dataValues.id),
-					(n.uom = `MPI${inventory.dataValues.id}00001`),
+					(n.batchNumber = `MPI${inventory.dataValues.id}00001`),
 					(n.createdBy = req.user.userId),
 					(n.updatedBy = req.user.userId),
 					(n.isActive = true);
@@ -264,7 +264,8 @@ router.get(
 							),
 							'productName',
 						],
-						'uom',
+						'batchNumber',
+						'unitofMeasurement',
 						'dateOfManufacture',
 						'expiryDate',
 						'receivedQuantity',
@@ -295,7 +296,8 @@ router.get(
 					),
 					'productName',
 				],
-				'uom',
+				'batchNumber',
+				'unitofMeasurement',
 				'dateOfManufacture',
 				'expiryDate',
 				'receivedQuantity',

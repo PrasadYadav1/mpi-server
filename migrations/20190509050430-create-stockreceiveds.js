@@ -22,7 +22,10 @@ module.exports = {
           key: 'id'
         }
       },
-      uom: {
+      batchNumber: {
+        type: Sequelize.STRING
+      },
+      unitofMeasurement: {
         type: Sequelize.STRING
       },
       dateOfManufacture: {

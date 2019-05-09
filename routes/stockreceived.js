@@ -20,7 +20,8 @@ router.post(
 		const stockReceived = await stockReceiveds.create({
 			inventoryId: req.body.inventoryId,
 			productId: req.body.productId,
-			uom: `MPI${req.body.inventoryId}0000${(stockCount ? stockCount : 0) + 1}`,
+			batchNumber: `MPI${req.body.inventoryId}0000${(stockCount ? stockCount : 0) + 1}`,
+			unitofMeasurement: req.body.unitofMeasurement,
 			dateOfManufacture: req.body.dateOfManufacture,
 			expiryDate: req.body.expiryDate,
 			receivedQuantity: req.body.receivedQuantity,
@@ -45,6 +46,7 @@ router.put(
 			{
 				inventoryId: req.body.inventoryId,
 				productId: req.body.productId,
+				unitofMeasurement: req.body.unitofMeasurement,
 				dateOfManufacture: req.body.dateOfManufacture,
 				expiryDate: req.body.expiryDate,
 				receivedQuantity: req.body.receivedQuantity,

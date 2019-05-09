@@ -3656,6 +3656,11 @@
 					"type": "integer",
 					"example": 1
 				},
+				"unitofMeasurement": {
+					"required": true,
+					"type": "string",
+					"example": "unitofMeasurement"
+				},
 				"dateOfManufacture": {
 					"required": true,
 					"type": "date",
@@ -3699,6 +3704,11 @@
 					"required": true,
 					"type": "integer",
 					"example": 1
+				},
+				"unitofMeasurement": {
+					"required": true,
+					"type": "string",
+					"example": "unitofMeasurement"
 				},
 				"dateOfManufacture": {
 					"required": true,
@@ -3789,10 +3799,15 @@
 					"type": "string",
 					"example": "productName"
 				},
-				"uom": {
+				"batchNumber": {
 					"required": true,
 					"type": "string",
-					"example": "uom"
+					"example": "batchNumber"
+				},
+				"unitofMeasurement": {
+					"required": true,
+					"type": "string",
+					"example": "unitofMeasurement"
 				},
 				"dateOfManufacture": {
 					"required": true,

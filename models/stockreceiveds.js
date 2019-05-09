@@ -3,7 +3,8 @@ module.exports = (sequelize, DataTypes) => {
   var stockreceiveds = sequelize.define('stockreceiveds', {
     inventoryId: DataTypes.INTEGER,
     productId: DataTypes.INTEGER,
-    uom: DataTypes.STRING,
+    batchNumber: DataTypes.STRING,
+    unitofMeasurement: DataTypes.STRING,
     dateOfManufacture: DataTypes.DATEONLY,
     expiryDate: DataTypes.DATEONLY,
     receivedQuantity: DataTypes.DOUBLE,

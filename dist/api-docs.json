@@ -2093,7 +2093,7 @@
 					"200": {
 						"description": "Inventory response",
 						"schema": {
-							"$ref": "#/definitions/successMessageResponse"
+							"$ref": "#/definitions/inventoryData"
 						}
 					}
 				}
@@ -3898,6 +3898,60 @@
 					"items": {
 						"$ref": "#/definitions/stockReceivedDetails"
 					}
+				}
+			}
+		},
+		"inventoryData": {
+			"properties": {
+				"id": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"grn": {
+					"required": true,
+					"type": "string",
+					"example": "GRN0001"
+				},
+				"isgrn": {
+					"required": true,
+					"type": "boolean",
+					"example": true
+				},
+				"inventoryDate": {
+					"required": true,
+					"type": "date",
+					"example": "2019-01-02"
+				},
+				"warehouseId": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"withPo": {
+					"required": true,
+					"type": "boolean",
+					"example": true
+				},
+				"orderNumber": {
+					"required": true,
+					"type": "string",
+					"example": "orderNumber"
+				},
+				"companyId": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"companyName": {
+					"required": true,
+					"type": "string",
+					"example": "companyName"
+				},
+				"description": {
+					"required": true,
+					"type": "string",
+					"example": "mg"
 				}
 			}
 		},

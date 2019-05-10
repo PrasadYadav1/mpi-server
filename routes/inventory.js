@@ -187,8 +187,8 @@ router.post(
 
 			const strceCreate = await stockReceiveds.bulkCreate(strc)
 		}
-		return res.status(200).json({
-			mesage: 'success',
+		return res.json({
+			inventory,
 		});
 	})
 );

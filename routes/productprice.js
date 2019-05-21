@@ -72,9 +72,9 @@ router.post(
 			updatedBy: req.user.userId,
 			isActive: true,
 		});
-		return res.json({
+		return res.json(
 			productprice,
-		});
+		);
 	})
 );
 

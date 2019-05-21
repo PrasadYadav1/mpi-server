@@ -2045,6 +2045,258 @@
 						"type": "string"
 					},
 					{
+						"/productprices?pageIndex={pageIndex}&pageSize={pageSize}&{propertyName}&{propertyValue}": {
+							"get": {
+								"tags": [
+									"ProductPrice"
+								],
+								"description": "Get All ProductPrice ",
+								"operationId": "for the URL",
+								"produces": [
+									"application/json"
+								],
+								"parameters": [
+									{
+										"name": "Authorization",
+										"in": "header",
+										"description": "bearer token",
+										"required": true
+									},
+									{
+										"name": "pageIndex",
+										"in": "query",
+										"description": "PageIndex",
+										"required": true,
+										"type": "integer"
+									},
+									{
+										"name": "pageSize",
+										"in": "query",
+										"description": "PageSize",
+										"required": true,
+										"type": "integer"
+									},
+									{
+										"name": "propertyName",
+										"in": "query",
+										"enum": [
+											"productId",
+											"fromRange",
+											"toRange",
+											"price"
+										],
+										"description": "PropertyName",
+										"required": false,
+										"type": "string"
+									},
+									{
+										"name": "propertyValue",
+										"in": "query",
+										"description": "propertyValue",
+										"required": false,
+										"type": "string"
+									}
+								],
+								"responses": {
+									"200": {
+										"description": "Product Price response",
+										"schema": {
+											"$ref": "#/definitions/productPriceWithPagination"
+										}
+									}
+								}
+							}
+						},
+						"/productprices": {
+							"post": {
+								"tags": [
+									"ProductPrice"
+								],
+								"description": "Create new ProductPrice",
+								"operationId": "for the URL",
+								"produces": [
+									"application/json"
+								],
+								"parameters": [
+									{
+										"name": "Authorization",
+										"in": "header",
+										"description": "bearer token",
+										"required": true
+									},
+									{
+										"name": "Job Parameters",
+										"in": "body",
+										"description": "product price",
+										"required": true,
+										"schema": {
+											"$ref": "#/definitions/productPrice"
+										}
+									}
+								],
+								"responses": {
+									"200": {
+										"description": "Product response",
+										"schema": {
+											"$ref": "#/definitions/productPrice"
+										}
+									}
+								}
+							}
+						},
+						"/productprices/{id}/details": {
+							"get": {
+								"tags": [
+									"ProductPrice"
+								],
+								"description": "get by id ",
+								"operationId": "for the URL",
+								"produces": [
+									"application/json"
+								],
+								"parameters": [
+									{
+										"name": "Authorization",
+										"in": "header",
+										"description": "bearer token",
+										"required": true
+									},
+									{
+										"name": "id",
+										"in": "path",
+										"description": "id",
+										"required": true,
+										"type": "integer"
+									}
+								],
+								"responses": {
+									"200": {
+										"description": "Product Price response",
+										"schema": {
+											"$ref": "#/definitions/productPrice"
+										}
+									}
+								}
+							}
+						},
+						"/productprices/{id}/product/{quantity}/range": {
+							"get": {
+								"tags": [
+									"ProductPrice"
+								],
+								"description": "get quantity range and price by quantity, if no range 404 will be thrown",
+								"operationId": "for the URL",
+								"produces": [
+									"application/json"
+								],
+								"parameters": [
+									{
+										"name": "Authorization",
+										"in": "header",
+										"description": "bearer token",
+										"required": true
+									},
+									{
+										"name": "id",
+										"in": "path",
+										"description": "id",
+										"required": true,
+										"type": "integer"
+									},
+									{
+										"name": "quantity",
+										"in": "path",
+										"description": "quantity",
+										"required": true,
+										"type": "integer"
+									}
+								],
+								"responses": {
+									"200": {
+										"description": "",
+										"schema": {
+											"$ref": "#/definitions/productPriceQuantityRangeByQuantity"
+										}
+									}
+								}
+							}
+						},
+						"/productprices/{id}": {
+							"put": {
+								"tags": [
+									"ProductPrice"
+								],
+								"description": "Update ProductPrice",
+								"operationId": "for the URL",
+								"produces": [
+									"application/json"
+								],
+								"parameters": [
+									{
+										"name": "Authorization",
+										"in": "header",
+										"description": "bearer token",
+										"required": true
+									},
+									{
+										"name": "id",
+										"in": "path",
+										"description": "id",
+										"required": true,
+										"type": "integer"
+									},
+									{
+										"name": "Job Parameters",
+										"in": "body",
+										"description": "Customer",
+										"required": true,
+										"schema": {
+											"$ref": "#/definitions/productPrice"
+										}
+									}
+								],
+								"responses": {
+									"200": {
+										"description": "ProductPrice response",
+										"schema": {
+											"$ref": "#/definitions/successMessageResponse"
+										}
+									}
+								}
+							}
+						},
+						"/productprices/{productPriceId}": {
+							"delete": {
+								"tags": [
+									"ProductPrice"
+								],
+								"description": "delete the ProductPrice by id ",
+								"operationId": "for the URL",
+								"produces": [
+									"application/json"
+								],
+								"parameters": [
+									{
+										"name": "Authorization",
+										"in": "header",
+										"description": "bearer token",
+										"required": true
+									},
+									{
+										"name": "productPriceId",
+										"in": "path",
+										"description": "productPriceId",
+										"required": true,
+										"type": "integer"
+									}
+								],
+								"responses": {
+									"200": {
+										"description": "Ok"
+									}
+								}
+							}
+						},
 						"name": "propertyValue",
 						"in": "query",
 						"description": "propertyValue",
@@ -2306,6 +2558,246 @@
 						"name": "stockReceivedId",
 						"in": "path",
 						"description": "stockReceivedId",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Ok"
+					}
+				}
+			}
+		},
+		"/offers?pageIndex={pageIndex}&pageSize={pageSize}&{propertyName}&{propertyValue}": {
+			"get": {
+				"tags": [
+					"Offer"
+				],
+				"description": "Get All Offers ",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "pageIndex",
+						"in": "query",
+						"description": "PageIndex",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "pageSize",
+						"in": "query",
+						"description": "PageSize",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "propertyName",
+						"in": "query",
+						"enum": [
+							"offerDate",
+							"productId",
+							"offerType"
+						],
+						"description": "PropertyName",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "propertyValue",
+						"in": "query",
+						"description": "propertyValue",
+						"required": false,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Offer response",
+						"schema": {
+							"$ref": "#/definitions/offerWithPagination"
+						}
+					}
+				}
+			}
+		},
+		"/offers/images/upload": {
+			"post": {
+				"tags": [
+					"Offer"
+				],
+				"description": "Upload Offer Image",
+				"consumes": [
+					"multipart/form-data"
+				],
+				"operationId": "for the URL",
+				"paramType": "form",
+				"parameters": [
+					{
+						"name": "file",
+						"in": "formData",
+						"paramType": "form",
+						"description": "file",
+						"required": true,
+						"type": "file"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "offer Response",
+						"schema": {
+							"$ref": "#/definitions/offerImages1"
+						}
+					}
+				}
+			}
+		},
+		"/offers": {
+			"post": {
+				"tags": [
+					"Offer"
+				],
+				"description": "Create new Offer",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "Job Parameters",
+						"in": "body",
+						"description": "offer",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/offerp"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Offer response",
+						"schema": {
+							"$ref": "#/definitions/offer"
+						}
+					}
+				}
+			}
+		},
+		"/offers/{id}/details": {
+			"get": {
+				"tags": [
+					"Offer"
+				],
+				"description": "get by id ",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"description": "id",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Offer response",
+						"schema": {
+							"$ref": "#/definitions/offer"
+						}
+					}
+				}
+			}
+		},
+		"/offers/{id}": {
+			"put": {
+				"tags": [
+					"Offer"
+				],
+				"description": "Update Offer",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"description": "id",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "Job Parameters",
+						"in": "body",
+						"description": "Offer",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/offerp"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Offer response",
+						"schema": {
+							"$ref": "#/definitions/successMessageResponse"
+						}
+					}
+				}
+			}
+		},
+		"/offers/{offerId}": {
+			"delete": {
+				"tags": [
+					"Offer"
+				],
+				"description": "delete the offer by id ",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "offerId",
+						"in": "path",
+						"description": "offerId",
 						"required": true,
 						"type": "integer"
 					}
@@ -4016,6 +4508,120 @@
 					"type": "array",
 					"items": {
 						"$ref": "#/definitions/inventoriesp"
+					}
+				}
+			}
+		},
+		"offerImages": {
+			"title": "offerImages",
+			"type": "object",
+			"properties": {
+				"fileName": {
+					"required": true,
+					"type": "string",
+					"example": "myfile-1508310904423.jpg"
+				},
+				"filePath": {
+					"required": true,
+					"type": "string",
+					"example": "images/news/myfile-1508310904423.jpg"
+				},
+				"displayPath": {
+					"required": true,
+					"type": "string",
+					"example": "https://localhost/images/news/myfile-1508310904423.jpg"
+				}
+			}
+		},
+		"offerImages1": {
+			"properties": {
+				"offerImages": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/offerImages"
+					}
+				}
+			}
+		},
+		"offerp": {
+			"properties": {
+				"offerDate": {
+					"required": true,
+					"type": "date",
+					"example": "2019-01-02"
+				},
+				"productId": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"offerType": {
+					"required": true,
+					"type": "string",
+					"example": "productName"
+				},
+				"imageUrl": {
+					"required": true,
+					"type": "string",
+					"example": "orderNumber"
+				}
+			}
+		},
+		"offer": {
+			"properties": {
+				"id": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"offerDate": {
+					"required": true,
+					"type": "date",
+					"example": "2019-01-02"
+				},
+				"productId": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"productName": {
+					"required": true,
+					"type": "string",
+					"example": "productName"
+				},
+				"offerType": {
+					"required": true,
+					"type": "string",
+					"example": "productName"
+				},
+				"imageUrl": {
+					"required": true,
+					"type": "string",
+					"example": "orderNumber"
+				},
+				"updatedBy": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"createdAt": {
+					"required": true,
+					"type": "date",
+					"example": "2019-01-02"
+				}
+			}
+		},
+		"offerWithPagination": {
+			"properties": {
+				"count": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"rows": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/offer"
 					}
 				}
 			}

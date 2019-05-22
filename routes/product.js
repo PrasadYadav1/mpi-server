@@ -234,6 +234,54 @@ router.get(
 	})
 );
 
+
+router.put(
+	'/:id',
+	[auth.authenticate()],
+	asyncErrorHandlerMiddleWare(async (req, res, next) => {
+		const pId = req.params.id;
+		const product = await products.update(
+			{
+				name: req.body.name,
+				companyId: req.body.companyId,
+				categoryId: req.body.categoryId,
+				subCategoryId: req.body.subCategoryId,
+				units: req.body.units,
+				unitsofMeasurement: req.body.unitsofMeasurement,
+				description: req.body.description,
+				updatedBy: req.user.userId,
+			},
+			{
+				where: {
+					id: req.params.id,
+				},
+			}
+		);
+		return res.status(200).json({
+			mesage: 'success',
+		});
+	})
+);
+
+router.delete(
+	'/:productId',
+	[auth.authenticate()],
+	asyncErrorHandlerMiddleWare(async (req, res, next) => {
+		const offer = await products.update(
+			{
+				isActive: false,
+				updatedBy: req.user.userId,
+			},
+			{
+				where: {
+					id: req.params.productId,
+				},
+			}
+		);
+		return res.sendStatus(200);
+	})
+);
+
 router.get(
 	'/:productId/priceCatalogue',
 	[auth.authenticate(), reqpathNewvalidation(productPriceCatalogueParams)],

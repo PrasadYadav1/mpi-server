@@ -1423,6 +1423,82 @@
 				}
 			}
 		},
+		"/products/{id}": {
+			"put": {
+				"tags": [
+					"Product"
+				],
+				"description": "Update Product",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"description": "id",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "Job Parameters",
+						"in": "body",
+						"description": "Product",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/products"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Product response",
+						"schema": {
+							"$ref": "#/definitions/successMessageResponse"
+						}
+					}
+				}
+			}
+		},
+		"/products/{productId}": {
+			"delete": {
+				"tags": [
+					"Product"
+				],
+				"description": "delete the Product by id ",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "productId",
+						"in": "path",
+						"description": "productId",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Ok"
+					}
+				}
+			}
+		},
 		"/products/{productId}/priceCatalogue": {
 			"get": {
 				"tags": [

@@ -4562,8 +4562,8 @@
 				},
 				"imageUrl": {
 					"required": true,
-					"type": "string",
-					"example": "orderNumber"
+					"type": "array",
+					"items": "images/news/myfile-1508310904423.jpg"
 				}
 			}
 		},
@@ -4596,8 +4596,8 @@
 				},
 				"imageUrl": {
 					"required": true,
-					"type": "string",
-					"example": "orderNumber"
+					"type": "array",
+					"items": "images/news/myfile-1508310904423.jpg"
 				},
 				"updatedBy": {
 					"required": true,

@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     offerDate: DataTypes.DATEONLY,
     productId: DataTypes.INTEGER,
     offerType: DataTypes.STRING,
-    imageUrl: DataTypes.STRING,
+    imageUrl: DataTypes.ARRAY(DataTypes.STRING),
     createdBy: DataTypes.INTEGER,
     updatedBy: DataTypes.INTEGER,
     isActive: DataTypes.BOOLEAN

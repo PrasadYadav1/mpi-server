@@ -22,7 +22,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       imageUrl: {
-        type: Sequelize.STRING
+        type: Sequelize.ARRAY(Sequelize.STRING)
       },
       createdBy: {
         type: Sequelize.INTEGER

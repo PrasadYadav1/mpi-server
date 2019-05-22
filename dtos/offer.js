@@ -5,7 +5,7 @@ const offerPost = t.struct({
     offerDate: types.FormatedDate('YYYY-MM-DD'),
     productId: t.Number,
     offerType: t.String,
-    imageUrl: t.String,
+    imageUrl: t.list(t.String)
 });
 
 module.exports = {

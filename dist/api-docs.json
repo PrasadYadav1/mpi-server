@@ -4524,12 +4524,12 @@
 				"filePath": {
 					"required": true,
 					"type": "string",
-					"example": "images/news/myfile-1508310904423.jpg"
+					"example": "images/offers/myfile-1508310904423.jpg"
 				},
 				"displayPath": {
 					"required": true,
 					"type": "string",
-					"example": "https://localhost/images/news/myfile-1508310904423.jpg"
+					"example": "https://localhost/images/offers/myfile-1508310904423.jpg"
 				}
 			}
 		},
@@ -4563,7 +4563,9 @@
 				"imageUrl": {
 					"required": true,
 					"type": "array",
-					"items": "images/news/myfile-1508310904423.jpg"
+					"items": {
+						"example": "images/offers/myfile-1508310904423.jpg"
+					}
 				}
 			}
 		},
@@ -4597,7 +4599,9 @@
 				"imageUrl": {
 					"required": true,
 					"type": "array",
-					"items": "images/news/myfile-1508310904423.jpg"
+					"items": {
+						"example": "images/offers/myfile-1508310904423.jpg"
+					}
 				},
 				"updatedBy": {
 					"required": true,

@@ -2497,7 +2497,7 @@
 				}
 			}
 		},
-		"/inventories/{inventoryId}/stockreceived": {
+		"/inventories/{inventoryId}/stockreceiveds": {
 			"get": {
 				"tags": [
 					"Inventory"
@@ -2526,7 +2526,84 @@
 					"200": {
 						"description": "Stockreceived response",
 						"schema": {
-							"$ref": "#/definitions/priceCatalogueByProduct"
+							"$ref": "#/definitions/stockReceivedListData"
+						}
+					}
+				}
+			}
+		},
+		"/inventories/{productId}/stockreceiveds": {
+			"get": {
+				"tags": [
+					"Inventory"
+				],
+				"description": "get stockreceived ",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "productId",
+						"in": "path",
+						"description": "productId",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Stockreceived response",
+						"schema": {
+							"$ref": "#/definitions/stockReceivedListData"
+						}
+					}
+				}
+			}
+		},
+		"/inventories/{productId}/stockreceiveds/{batchNumber}": {
+			"get": {
+				"tags": [
+					"Inventory"
+				],
+				"description": "get stockreceived ",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "productId",
+						"in": "path",
+						"description": "productId",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "batchNumber",
+						"in": "path",
+						"description": "batchNumber",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Stockreceived response",
+						"schema": {
+							"$ref": "#/definitions/stockReceivedListData"
 						}
 					}
 				}
@@ -4407,6 +4484,12 @@
 					"type": "double",
 					"example": 120.00
 				}
+			}
+		},
+		"stockReceivedListData": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/stockReceivedDetails"
 			}
 		},
 		"inventoryDetails": {

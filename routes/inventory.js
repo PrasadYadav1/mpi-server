@@ -282,7 +282,7 @@ router.get(
 
 router.get(
 	'/:inventoryId/stockreceiveds',
-	[auth.authenticate(), reqpathNewvalidation(productPriceCatalogueParams)],
+	[auth.authenticate()],
 	asyncErrorHandlerMiddleWare(async (req, res, next) => {
 		const stockReceived = await stockReceiveds.findAll({
 			attributes: [
@@ -292,7 +292,7 @@ router.get(
 				'productId',
 				[
 					sequelize.literal(
-						'(Select name from products where products.id = stockReceiveds."warehouseId")'
+						'(Select name from products where products.id = stockReceiveds."productId")'
 					),
 					'productName',
 				],
@@ -307,7 +307,76 @@ router.get(
 			],
 			where: {
 				isActive: true,
-				productId: req.params.inventoryId,
+				inventoryId: req.params.inventoryId,
+			}
+		});
+		return res.json(stockReceived);
+	})
+);
+router.get(
+	'/:productId/stockreceiveds',
+	[auth.authenticate()],
+	asyncErrorHandlerMiddleWare(async (req, res, next) => {
+		const stockReceived = await stockReceiveds.findAll({
+			attributes: [
+				'id',
+				'inventoryId',
+				[sequelize.literal(`(select grn from inventories where id = stockReceiveds."inventoryId")`), 'grn'],
+				'productId',
+				[
+					sequelize.literal(
+						'(Select name from products where products.id = stockReceiveds."productId")'
+					),
+					'productName',
+				],
+				'batchNumber',
+				'unitofMeasurement',
+				'dateOfManufacture',
+				'expiryDate',
+				'receivedQuantity',
+				'price',
+				'mrp',
+				'amount'
+			],
+			where: {
+				isActive: true,
+				productId: req.params.productId,
+			}
+		});
+		return res.json(stockReceived);
+	})
+);
+router.get(
+	'/:productId/stockreceiveds/:batchNumber',
+	[auth.authenticate()],
+	asyncErrorHandlerMiddleWare(async (req, res, next) => {
+
+		console.log(req.params.batchNumber)
+		const stockReceived = await stockReceiveds.findAll({
+			attributes: [
+				'id',
+				'inventoryId',
+				[sequelize.literal(`(select grn from inventories where id = stockReceiveds."inventoryId")`), 'grn'],
+				'productId',
+				[
+					sequelize.literal(
+						'(Select name from products where products.id = stockReceiveds."productId")'
+					),
+					'productName',
+				],
+				'batchNumber',
+				'unitofMeasurement',
+				'dateOfManufacture',
+				'expiryDate',
+				'receivedQuantity',
+				'price',
+				'mrp',
+				'amount'
+			],
+			where: {
+				isActive: true,
+				productId: req.params.productId,
+				batchNumber: req.params.batchNumber
 			}
 		});
 		return res.json(stockReceived);

@@ -50,8 +50,14 @@ router.get(
 
         const limit = parseInt(req.query.pageSize);
         return res.json(
-            await productprices.findAndCount({
-                attributes: ['id', 'offerDate', 'productId', 'offerType', 'imageUrl', 'updatedBy', 'createdAt'],
+            await offers.findAndCount({
+                attributes: ['id', 'offerDate', 'productId',
+                    [
+                        sequelize.literal(
+                            '(select name from products where id = offers."productId")'
+                        ),
+                        'productName',
+                    ], 'offerType', 'imageUrl', 'updatedBy', 'createdAt'],
                 where: whereStatement,
                 order: [['updatedAt', 'DESC']],
                 limit: limit,

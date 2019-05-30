@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
 		units: DataTypes.DOUBLE,
 		unitsofMeasurement: DataTypes.STRING,
 		description: DataTypes.STRING,
+		classificationName: DataTypes.STRING,
 		createdBy: DataTypes.INTEGER,
 		updatedBy: DataTypes.INTEGER,
 		isActive: DataTypes.BOOLEAN,

@@ -2024,6 +2024,29 @@
 				}
 			}
 		},
+		"/warehouses/branches": {
+			"get": {
+				"tags": [
+					"Warehouse"
+				],
+				"description": "get all branches",
+				"operationId": "",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/categoryresponse"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/inventories?pageIndex={pageIndex}&pageSize={pageSize}&{propertyName}&{propertyValue}": {
 			"get": {
 				"tags": [
@@ -3632,6 +3655,11 @@
 					"type": "string",
 					"example": "techno"
 				},
+				"warehouseId": {
+					"required": true,
+					"type": "number",
+					"example": 1
+				},
 				"customerType": {
 					"required": true,
 					"type": "string",
@@ -3725,6 +3753,11 @@
 					"required": true,
 					"type": "string",
 					"example": "techno"
+				},
+				"warehouseId": {
+					"required": true,
+					"type": "number",
+					"example": 1
 				},
 				"customerType": {
 					"required": true,
@@ -3936,6 +3969,11 @@
 					"required": true,
 					"type": "string",
 					"example": "mg"
+				},
+				"classificationName": {
+					"required": true,
+					"type": "string",
+					"example": "classificationName"
 				}
 			}
 		},
@@ -3995,6 +4033,11 @@
 					"required": true,
 					"type": "string",
 					"example": "mg"
+				},
+				"classificationName": {
+					"required": true,
+					"type": "string",
+					"example": "classificationName"
 				}
 			}
 		},

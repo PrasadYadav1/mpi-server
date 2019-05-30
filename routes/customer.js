@@ -52,6 +52,7 @@ router.get(
                 attributes: [
                     'id',
                     'name',
+                    'warehouseId',
                     'customerType',
                     'buildingName',
                     'city',
@@ -104,6 +105,7 @@ router.get(
             attributes: [
                 'id',
                 'name',
+                'warehouseId',
                 'customerType',
                 'buildingName',
                 'city',

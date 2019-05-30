@@ -174,4 +174,14 @@ router.delete(
     })
 );
 
+router.get('/branches', asyncErrorHandlerMiddleWare(async (req, res, next) => {
+    return res.status(200).json(await warehouses.findAll({
+        attributes: ['id', 'name'],
+        where: {
+            warehouseType: 'Secondary',
+            isActive: true
+        }
+    }));
+}));
+
 module.exports = router;

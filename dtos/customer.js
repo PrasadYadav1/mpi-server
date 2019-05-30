@@ -4,6 +4,7 @@ const types = require('../utils/types');
 const email = t.refinement(t.String, s => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(s))
 const customerPost = t.struct({
     name: t.String,
+    warehouseId: t.maybe(t.Integer),
     customerType: t.String,
     buildingName: t.String,
     city: t.String,

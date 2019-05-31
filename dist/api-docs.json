@@ -1236,6 +1236,177 @@
 				}
 			}
 		},
+		"/unitsofmeasurements": {
+			"post": {
+				"tags": [
+					"Units of measurement"
+				],
+				"description": "Create new unitsofmeasurement",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "Job Parameters",
+						"in": "body",
+						"description": "Units of measurement",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/unitsofMeasurement"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Units of measurement response",
+						"schema": {
+							"$ref": "#/definitions/unitsofMeasurements"
+						}
+					}
+				}
+			}
+		},
+		"/unitsofmeasurements/all": {
+			"get": {
+				"tags": [
+					"Units of measurement"
+				],
+				"description": "get all unitsofmeasurements",
+				"operationId": "",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/unitsofmeasurementResponse"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/unitsofmeasurements/{id}/details": {
+			"get": {
+				"tags": [
+					"Units of measurement"
+				],
+				"description": "get by id ",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"description": "id",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Units of Measurement response",
+						"schema": {
+							"$ref": "#/definitions/unitsofMeasurements"
+						}
+					}
+				}
+			}
+		},
+		"/unitsofmeasurements/{id}": {
+			"put": {
+				"tags": [
+					"Units of measurement"
+				],
+				"description": "Update unitsofmeasurement",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"description": "id",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "Job Parameters",
+						"in": "body",
+						"description": "unitsofmeasurement",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/unitsofMeasurements"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "unitsofmeasurement response",
+						"schema": {
+							"$ref": "#/definitions/successMessageResponse"
+						}
+					}
+				}
+			}
+		},
+		"/unitsofmeasurements/{uId}": {
+			"delete": {
+				"tags": [
+					"Units of measurement"
+				],
+				"description": "delete the unitsofmeasurement by id ",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "uId",
+						"in": "path",
+						"description": "uId",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Ok"
+					}
+				}
+			}
+		},
 		"/products?pageIndex={pageIndex}&pageSize={pageSize}&{propertyName}&{propertyValue}": {
 			"get": {
 				"tags": [
@@ -3930,6 +4101,53 @@
 					"required": true,
 					"type": "string",
 					"example": ""
+				}
+			}
+		},
+		"unitsofmeasurementResponse": {
+			"properties": {
+				"id": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"name": {
+					"required": true,
+					"type": "string",
+					"example": ""
+				}
+			}
+		},
+		"unitsofMeasurement": {
+			"properties": {
+				"name": {
+					"required": true,
+					"type": "string",
+					"example": "techno"
+				},
+				"description": {
+					"required": false,
+					"type": "string",
+					"example": "description"
+				}
+			}
+		},
+		"unitsofMeasurements": {
+			"properties": {
+				"id": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"name": {
+					"required": true,
+					"type": "string",
+					"example": "Combiflam"
+				},
+				"description": {
+					"required": true,
+					"type": "string",
+					"example": "mg"
 				}
 			}
 		},

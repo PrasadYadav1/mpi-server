@@ -9,6 +9,7 @@ const user = require('./routes/user');
 const userlocation = require('./routes/userlocation')
 const auth = require('./authentication/auth')();
 const categories = require('./routes/categories');
+const unitsofmeasurements = require('./routes/unitsofmeasurement')
 const company = require('./routes/company')
 const customer = require('./routes/customer')
 const products = require('./routes/product');
@@ -64,6 +65,7 @@ app.use('/api/users', user);
 app.use('/api/userlocations', userlocation);
 app.use('/api/companies', company);
 app.use('/api/categories', categories);
+app.use('/api/unitsofmeasurements', unitsofmeasurements);
 app.use('/api/products', products);
 app.use('/api/customers', customer);
 app.use('/api/productprices', productprices);

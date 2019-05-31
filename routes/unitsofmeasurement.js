@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../authentication/auth')();
-
+const sequelize = require('sequelize');
 const { pathParam } = require('../dtos/formtypes');
 const unitsofmeasurements = require('../models').unitsofmeasurements;
 const {
@@ -15,14 +15,29 @@ router.post(
     '/',
     [auth.authenticate()],
     asyncErrorHandlerMiddleWare(async (req, res, next) => {
-        const unitsofmeasurement = await unitsofmeasurements.create({
-            name: req.body.name,
-            description: req.body.description,
-            createdBy: req.user.userId,
-            updatedBy: req.user.userId,
-            isActive: true,
-        });
-        return res.json(unitsofmeasurement);
+        let dataCount = await unitsofmeasurements.count(
+            {
+                where: {
+                    $and: [
+                        { isActive: true },
+                        sequelize.where(sequelize.fn('lower', sequelize.col('name')), {
+                            $eq: req.body.name.toLowerCase()
+                        })]
+                }
+            });
+        if (dataCount === 0) {
+            const unitsofmeasurement = await unitsofmeasurements.create({
+                name: req.body.name,
+                description: req.body.description,
+                createdBy: req.user.userId,
+                updatedBy: req.user.userId,
+                isActive: true,
+            });
+            return res.json(unitsofmeasurement);
+        } else {
+            return res.status(409).json({ message: 'units of measurement already exists with name' })
+        }
+
     })
 );
 
@@ -59,21 +74,40 @@ router.put(
     '/:id',
     [auth.authenticate()],
     asyncErrorHandlerMiddleWare(async (req, res, next) => {
-        const unitsofmeasurement = await unitsofmeasurements.update(
-            {
-                name: req.body.name,
-                description: req.body.description,
-                updatedBy: req.user.userId,
-            },
+        let dataCount = await unitsofmeasurements.count(
             {
                 where: {
-                    id: req.params.id,
+                    id: { $ne: req.params.id },
+                    $and: [
+                        {
+                            isActive: true
+                        },
+                        sequelize.where(sequelize.fn('lower', sequelize.col('name')), {
+                            $eq: req.body.name.toLowerCase()
+                        })],
+
+                }
+            });
+        if (dataCount === 0) {
+            const unitsofmeasurement = await unitsofmeasurements.update(
+                {
+                    name: req.body.name,
+                    description: req.body.description,
+                    updatedBy: req.user.userId,
                 },
-            }
-        );
-        return res.status(200).json({
-            mesage: 'success',
-        });
+                {
+                    where: {
+                        id: req.params.id,
+                    },
+                }
+            );
+            return res.status(200).json({
+                mesage: 'success',
+            });
+        } else {
+            return res.status(409).json({ message: 'units of measurement already exists with name' })
+        }
+
     })
 );
 

@@ -224,6 +224,29 @@ router.put(
     })
 );
 
+router.put(
+    '/:id/branch',
+    [auth.authenticate(), reqBodyValidation(customerDTO.branchPost)],
+    asyncErrorHandlerMiddleWare(async (req, res, next) => {
+        const upa = await customers.update(
+            {
+                warehouseId: req.body.warehouseId,
+                updatedBy: req.user.userId,
+            },
+            {
+                where: {
+                    id: {
+                        $eq: req.params.id,
+                    },
+                },
+            }
+        );
+        return res.status(200).json({
+            mesage: 'success',
+        });
+    })
+);
+
 router.delete(
     '/:customerId',
     [auth.authenticate()],

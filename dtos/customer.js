@@ -23,6 +23,12 @@ const customerPost = t.struct({
     longitude: t.Number
 });
 
+const branchPost = t.struct({
+    warehouseId: t.maybe(t.Integer)
+
+});
+
 module.exports = {
-    customerPost
+    customerPost,
+    branchPost
 };

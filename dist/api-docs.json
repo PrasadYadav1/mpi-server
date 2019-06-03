@@ -1131,6 +1131,50 @@
 				}
 			}
 		},
+		"/customers/{id}/branch": {
+			"put": {
+				"tags": [
+					"Customer"
+				],
+				"description": "Assign branch",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"description": "id",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "Job Parameters",
+						"in": "body",
+						"description": "Customer",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/customerBranch"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Customer response",
+						"schema": {
+							"$ref": "#/definitions/successMessageResponse"
+						}
+					}
+				}
+			}
+		},
 		"/customers/{coustmerId}": {
 			"delete": {
 				"tags": [
@@ -4032,6 +4076,15 @@
 					"required": true,
 					"type": "number",
 					"example": -122.3445
+				}
+			}
+		},
+		"customerBranch": {
+			"properties": {
+				"warehouseId": {
+					"required": true,
+					"type": "number",
+					"example": 1
 				}
 			}
 		},

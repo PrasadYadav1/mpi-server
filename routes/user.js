@@ -125,7 +125,9 @@ router.get(
                  Order By "updatedAt" DESC limit 1)`)
                     , 'target'],
                 "headUserId",
-                "dateOfJoin"
+                "dateOfJoin",
+                "warehouseId",
+                "customerIds"
             ],
             where: whereStatement,
             order: [["createdAt", "DESC"]],
@@ -507,6 +509,8 @@ router.get("/list",
                     "headUserId",
                     "dateOfJoin",
                     "employeeId",
+                   "warehouseId",
+                   "customerIds",
                     "isActive"
                 ],
                 where: {
@@ -814,6 +818,30 @@ router.put(
         );
         return res.status(200).json({ message: 'success' });
 
+    })
+);
+
+router.put(
+    '/:userId/assing/branch/customer',
+    [auth.authenticate()],
+    asyncErrorHandlerMiddleWare(async (req, res, next) => {
+        const upa = await users.update(
+            {
+                warehouseId: req.body.warehouseId,
+                customerIds: req.body.customerIds,
+                updatedBy: req.user.userId,
+            },
+            {
+                where: {
+                    id: {
+                        $eq: req.params.userId,
+                    },
+                },
+            }
+        );
+        return res.status(200).json({
+            mesage: 'success',
+        });
     })
 );
 

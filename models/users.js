@@ -14,7 +14,9 @@ module.exports = (sequelize, DataTypes) => {
 		mobileNumber: DataTypes.STRING,
 		isActive: DataTypes.BOOLEAN,
 		dateOfJoin: DataTypes.DATEONLY,
-		address: DataTypes.TEXT
+		address: DataTypes.TEXT,
+		warehouseId: DataTypes.INTEGER,
+		customerIds: DataTypes.ARRAY(DataTypes.INTEGER)
 	});
 
 	return users;

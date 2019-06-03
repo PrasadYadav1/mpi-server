@@ -247,6 +247,24 @@ router.put(
     })
 );
 
+router.get(
+    '/:warehouseId/all',
+    [auth.authenticate()],
+    asyncErrorHandlerMiddleWare(async (req, res, next) => {
+        const customer = await customers.findAll({
+            attributes: [
+                'id',
+                'name'
+            ],
+            where: {
+                isActive: true,
+                id: req.params.warehouseId,
+            },
+        });
+        return res.json(customer);
+    })
+);
+
 router.delete(
     '/:customerId',
     [auth.authenticate()],

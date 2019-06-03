@@ -672,6 +672,51 @@
 				}
 			}
 		},
+		"/users/{userId}/assing/branch/customer": {
+			"put": {
+				"tags": [
+					"User"
+				],
+				"summary": "assing Branch and customer by userId",
+				"description": "only accessible to Admin",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "userId",
+						"in": "path",
+						"description": "",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "Job Parameters",
+						"in": "body",
+						"description": "",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/userAssingBranch"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Assing Branch and customer",
+						"schema": {
+							"$ref": "#/definitions/successMessageResponse"
+						}
+					}
+				}
+			}
+		},
 		"/companies?pageIndex={pageIndex}&pageSize={pageSize}&{propertyName}&{propertyValue}": {
 			"get": {
 				"tags": [
@@ -1170,6 +1215,44 @@
 						"description": "Customer response",
 						"schema": {
 							"$ref": "#/definitions/successMessageResponse"
+						}
+					}
+				}
+			}
+		},
+		"/customers/{warehouseId}/all": {
+			"get": {
+				"tags": [
+					"Customer"
+				],
+				"description": "get all Customers by branch id",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "warehouseId",
+						"in": "path",
+						"description": "warehouseId",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Customer response",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/categoryresponse"
+							}
 						}
 					}
 				}
@@ -3469,6 +3552,18 @@
 					"required": true,
 					"type": "boolean",
 					"example": true
+				},
+				"warehouseId": {
+					"required": false,
+					"type": "integer",
+					"example": 1
+				},
+				"customerIds": {
+					"required": true,
+					"type": "array",
+					"example": [
+						1
+					]
 				}
 			}
 		},
@@ -3637,6 +3732,23 @@
 				"dateOfJoin": {
 					"type": "string",
 					"required": true
+				}
+			}
+		},
+		"userAssingBranch": {
+			"properties": {
+				"warehouseId": {
+					"required": true,
+					"type": "number",
+					"example": 1
+				},
+				"customerIds": {
+					"required": true,
+					"type": "array",
+					"example": [
+						1,
+						2
+					]
 				}
 			}
 		},

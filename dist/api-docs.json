@@ -959,6 +959,62 @@
 				}
 			}
 		},
+		"/customers/all?{propertyName}&{propertyValue}": {
+			"get": {
+				"tags": [
+					"Customer"
+				],
+				"description": "Get All Customer ",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "propertyName",
+						"in": "query",
+						"enum": [
+							"name",
+							"customerType",
+							"buildingName",
+							"city",
+							"province",
+							"areaCode",
+							"phoneNumber",
+							"primaryContactPerson",
+							"primaryContactNumber",
+							"secondaryContactPerson",
+							"secondaryContactNumber",
+							"address"
+						],
+						"description": "PropertyName",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "propertyValue",
+						"in": "query",
+						"description": "propertyValue",
+						"required": false,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Customer response",
+						"schema": {
+							"$ref": "#/definitions/customerResponse"
+						}
+					}
+				}
+			}
+		},
 		"/customers": {
 			"post": {
 				"tags": [

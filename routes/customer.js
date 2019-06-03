@@ -81,6 +81,73 @@ router.get(
     })
 );
 
+router.get(
+    '/all',
+    [auth.authenticate()],
+    asyncErrorHandlerMiddleWare(async (req, res, next) => {
+        const propertyNameDefault =
+            req.query.propertyName === undefined || req.query.propertyName === 'null' || req.query.propertyName === '';
+
+        const propertyValueDefault =
+            req.query.propertyValue === undefined ||
+            req.query.propertyValue === 'null' ||
+            req.query.propertyValue === '';
+
+        const propertyNameData =
+            req.query.propertyName != undefined && req.query.propertyName != 'null' && req.query.propertyName != '';
+
+        const propertyValueData =
+            req.query.propertyValue != undefined && req.query.propertyValue != 'null' && req.query.propertyValue != '';
+
+        const propertyName = req.query.propertyName;
+        const propertyValue = req.query.propertyValue;
+
+        const result = (propertyNameDefault || propertyNameData) && propertyValueDefault;
+        const result1 = propertyNameData && propertyValueData;
+        let whereStatement = {};
+        if (result) {
+            whereStatement = {
+                isActive: true,
+            };
+        } else if (result1) {
+            whereStatement = {
+                isActive: true,
+                [propertyName]: {
+                    $like: `%${req.query.propertyValue}%`,
+                },
+            };
+        }
+        return res.json(
+            await customers.findAll({
+                attributes: [
+                    'id',
+                    'name',
+                    'warehouseId',
+                    'customerType',
+                    'buildingName',
+                    'city',
+                    'province',
+                    'areaCode',
+                    'phoneNumber',
+                    'primaryContactPerson',
+                    'primaryContactNumber',
+                    'primaryEmail',
+                    'secondaryContactPerson',
+                    'secondaryContactNumber',
+                    'secondaryEmail',
+                    'address',
+                    'description',
+                    'latitude',
+                    'longitude',
+                    'updatedBy',
+                    'createdAt',
+                ],
+                where: whereStatement
+            })
+        );
+    })
+);
+
 router.post(
     '/',
     [auth.authenticate(), reqBodyValidation(customerDTO.customerPost)],

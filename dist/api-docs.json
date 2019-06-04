@@ -4212,6 +4212,11 @@
 					"type": "string",
 					"example": "address"
 				},
+				"creditLimit": {
+					"required": true,
+					"type": "number",
+					"example": 200.00
+				},
 				"description": {
 					"required": true,
 					"type": "string",
@@ -4324,6 +4329,11 @@
 					"required": true,
 					"type": "string",
 					"example": "address"
+				},
+				"creditLimit": {
+					"required": true,
+					"type": "number",
+					"example": 200.00
 				},
 				"description": {
 					"required": true,

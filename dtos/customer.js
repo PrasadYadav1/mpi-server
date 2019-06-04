@@ -18,6 +18,7 @@ const customerPost = t.struct({
     secondaryContactNumber: t.String,
     secondaryEmail: email,
     address: t.String,
+    creditLimit: t.maybe(t.Double),
     description: t.maybe(t.String),
     latitude: t.Number,
     longitude: t.Number

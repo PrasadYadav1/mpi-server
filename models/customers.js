@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     secondaryContactNumber: DataTypes.STRING,
     secondaryEmail: DataTypes.STRING,
     address: DataTypes.STRING,
+    creditLimit: DataTypes.DOUBLE,
     description: DataTypes.STRING,
     latitude: DataTypes.DOUBLE,
     longitude: DataTypes.DOUBLE,

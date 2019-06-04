@@ -2,7 +2,7 @@
 module.exports = {
     up: (queryInterface, Sequelize) => {
         return [
-            queryInterface.changeColumn('customers', 'creditLimit', {
+            queryInterface.addColumn('customers', 'creditLimit', {
                 type: Sequelize.DOUBLE,
                 allowNull: true
             })
@@ -10,7 +10,7 @@ module.exports = {
     },
     down: (queryInterface, Sequelize) => {
         return [
-            queryInterface.changeColumn('customers', 'creditLimit', {
+            queryInterface.removeColumn('customers', 'creditLimit', {
                 type: Sequelize.DOUBLE,
                 allowNull: true
             })

@@ -199,6 +199,7 @@ router.get(
                 'phoneNumber',
                 'warehouseType',
                 'primaryWarehouseId',
+                [sequelize.literal(`(select name from warehouses where id = ${req.params.primaryWarehouseId})`), 'primaryWarehouseName'],
                 'province',
                 'address',
                 'latitude',

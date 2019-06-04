@@ -2235,7 +2235,7 @@
 				"tags": [
 					"Warehouse"
 				],
-				"description": "Create new Warehouse",
+				"description": "Create new Warehouse,  warehouseType:(Primary, Secondary)",
 				"operationId": "for the URL",
 				"produces": [
 					"application/json"
@@ -2307,7 +2307,7 @@
 				"tags": [
 					"Warehouse"
 				],
-				"description": "Update Warehouse",
+				"description": "Update Warehouse warehouseType:(Primary, Secondary)",
 				"operationId": "for the URL",
 				"produces": [
 					"application/json"
@@ -4145,7 +4145,7 @@
 				"warehouseId": {
 					"required": true,
 					"type": "number",
-					"example": 1
+					"example": null
 				},
 				"customerType": {
 					"required": true,
@@ -4253,7 +4253,12 @@
 				"warehouseId": {
 					"required": true,
 					"type": "number",
-					"example": 1
+					"example": null
+				},
+				"warehouseName": {
+					"required": true,
+					"type": "string",
+					"example": null
 				},
 				"customerType": {
 					"required": true,
@@ -4731,7 +4736,7 @@
 				"primaryWarehouseId": {
 					"required": false,
 					"type": "number",
-					"example": 1
+					"example": null
 				},
 				"province": {
 					"required": true,
@@ -4805,7 +4810,7 @@
 				"primaryWarehouseId": {
 					"required": false,
 					"type": "number",
-					"example": 1
+					"example": null
 				},
 				"province": {
 					"required": true,

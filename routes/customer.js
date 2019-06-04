@@ -53,6 +53,7 @@ router.get(
                     'id',
                     'name',
                     'warehouseId',
+                    [sequelize.literal(`(select name from warehouses where id = customers."warehouseId")`), 'warehouseName'],
                     'customerType',
                     'buildingName',
                     'city',

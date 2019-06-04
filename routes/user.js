@@ -127,7 +127,9 @@ router.get(
                 "headUserId",
                 "dateOfJoin",
                 "warehouseId",
-                "customerIds"
+                [sequelize.literal(`(select name from warehouses where id = users."warehouseId")`), 'branchName'],
+                "customerIds",
+                [sequelize.literal(`(select Array(select name from customers where id = ANY (users."customerIds")))`), 'customerNames']
             ],
             where: whereStatement,
             order: [["createdAt", "DESC"]],
@@ -509,8 +511,10 @@ router.get("/list",
                     "headUserId",
                     "dateOfJoin",
                     "employeeId",
-                   "warehouseId",
-                   "customerIds",
+                    "warehouseId",
+                    [sequelize.literal(`(select name from warehouses where id = users."warehouseId")`), 'branchName'],
+                    "customerIds",
+                    [sequelize.literal(`(select Array(select name from customers where id = ANY (users."customerIds")))`), 'customerNames'],
                     "isActive"
                 ],
                 where: {
@@ -728,7 +732,12 @@ router.get(
                 'mobileNumber',
                 'address',
                 'dateOfJoin',
-                'employeeId'
+                'employeeId',
+                "warehouseId",
+                [sequelize.literal(`(select name from warehouses where id = users."warehouseId")`), 'branchName'],
+                "customerIds",
+                [sequelize.literal(`(select Array(select name from customers where id = ANY (users."customerIds")))`), 'customerNames']
+
             ],
             where: {
                 isActive: true,

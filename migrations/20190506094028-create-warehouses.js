@@ -20,8 +20,9 @@ module.exports = {
       warehouseType: {
         type: Sequelize.STRING
       },
-      primaryWarehouse: {
-        type: Sequelize.STRING
+      primaryWarehouseId: {
+        type: Sequelize.INTEGER,
+        allowNull: true
       },
       province: {
         type: Sequelize.STRING

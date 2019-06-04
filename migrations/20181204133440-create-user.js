@@ -56,6 +56,14 @@ module.exports = {
 				allowNull: true,
 				type: Sequelize.TEXT,
 			},
+			warehouseId: {
+				allowNull: true,
+				type: Sequelize.INTEGER,
+			},
+			customerIds: {
+				allowNull: true,
+				type: Sequelize.ARRAY(Sequelize.INTEGER),
+			},
 			createdAt: {
 				allowNull: false,
 				type: Sequelize.DATE,
@@ -70,6 +78,6 @@ module.exports = {
 		});
 	},
 	down: (queryInterface, Sequelize) => {
-		return queryInterface.dropTable('Users');
+		return queryInterface.dropTable('users');
 	},
 };

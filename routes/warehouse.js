@@ -35,10 +35,12 @@ router.get(
 
         if (result) {
             whereStatement = {
+                warehouseType: 'Primary',
                 isActive: true,
             };
         } else if (result1) {
             whereStatement = {
+                warehouseType: 'Primary',
                 isActive: true,
                 [propertyName]: {
                     $iLike: `%${req.query.propertyValue}%`,
@@ -55,7 +57,7 @@ router.get(
                     'email',
                     'phoneNumber',
                     'warehouseType',
-                    'primaryWarehouse',
+                    'primaryWarehouseId',
                     'province',
                     'address',
                     'latitude',
@@ -80,6 +82,7 @@ router.get('/all', asyncErrorHandlerMiddleWare(async (req, res, next) => {
     return res.status(200).json(await warehouses.findAll({
         attributes: ['id', 'name'],
         where: {
+            warehouseType: 'Primary',
             isActive: true
         }
     }));
@@ -111,7 +114,7 @@ router.get(
                 'email',
                 'phoneNumber',
                 'warehouseType',
-                'primaryWarehouse',
+                'primaryWarehouseId',
                 'province',
                 'address',
                 'latitude',
@@ -183,5 +186,38 @@ router.get('/branches', asyncErrorHandlerMiddleWare(async (req, res, next) => {
         }
     }));
 }));
+
+router.get(
+    '/:primaryWarehouseId/branches',
+    [auth.authenticate()],
+    asyncErrorHandlerMiddleWare(async (req, res, next) => {
+        const warehouse = await warehouses.findAll({
+            attributes: [
+                'id',
+                'name',
+                'email',
+                'phoneNumber',
+                'warehouseType',
+                'primaryWarehouseId',
+                'province',
+                'address',
+                'latitude',
+                'longitude',
+                'areaCode',
+                'buildingName',
+                'city',
+                'description',
+                'updatedBy',
+                'createdAt',
+            ],
+            where: {
+                isActive: true,
+                warehouseType: 'Secondary',
+                primaryWarehouseId: req.params.primaryWarehouseId,
+            },
+        });
+        return res.json(warehouse);
+    })
+);
 
 module.exports = router;

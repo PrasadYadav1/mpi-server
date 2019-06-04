@@ -37,6 +37,10 @@ module.exports = {
       description: {
         type: Sequelize.STRING
       },
+      classificationName: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
       isValid: {
         type: Sequelize.BOOLEAN,
         allowNull: true,

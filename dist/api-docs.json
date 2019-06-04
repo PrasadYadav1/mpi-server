@@ -2401,6 +2401,44 @@
 				}
 			}
 		},
+		"/warehouses/{primaryWarehouseId}/branches": {
+			"get": {
+				"tags": [
+					"Warehouse"
+				],
+				"description": "get all branches by primaryWarehouseId",
+				"operationId": "",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "primaryWarehouseId",
+						"in": "path",
+						"description": "primaryWarehouseId",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/warehouseData"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/inventories?pageIndex={pageIndex}&pageSize={pageSize}&{propertyName}&{propertyValue}": {
 			"get": {
 				"tags": [
@@ -4690,10 +4728,10 @@
 					"type": "string",
 					"example": "Primary"
 				},
-				"primaryWarehouse": {
-					"required": true,
-					"type": "string",
-					"example": ""
+				"primaryWarehouseId": {
+					"required": false,
+					"type": "number",
+					"example": 1
 				},
 				"province": {
 					"required": true,
@@ -4764,10 +4802,10 @@
 					"type": "string",
 					"example": "Primary"
 				},
-				"primaryWarehouse": {
-					"required": true,
-					"type": "string",
-					"example": ""
+				"primaryWarehouseId": {
+					"required": false,
+					"type": "number",
+					"example": 1
 				},
 				"province": {
 					"required": true,

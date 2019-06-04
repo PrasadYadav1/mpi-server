@@ -189,6 +189,7 @@ router.get(
                 'secondaryContactNumber',
                 'secondaryEmail',
                 'address',
+                'creditLimit',
                 'description',
                 'latitude',
                 'longitude',

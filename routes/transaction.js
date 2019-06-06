@@ -17,6 +17,17 @@ router.get(
 	'/',
 	[auth.authenticate(), reqQueryValidate(pagination)],
 	asyncErrorHandlerMiddleWare(async (req, res, next) => {
+
+		const fromDateDefault =
+			req.query.fromDate === 'null' || req.query.fromDate === '' || req.query.fromDate === undefined;
+		const toDateDefault = req.query.toDate === 'null' || req.query.toDate === '' || req.query.toDate === undefined;
+
+		const fromDateData =
+			req.query.fromDate != 'null' && req.query.fromDate != '' && req.query.fromDate != undefined;
+
+		const toDateData = req.query.toDate != 'null' && req.query.toDate != '' && req.query.toDate != undefined;
+
+
 		const propertyNameDefault =
 			req.query.propertyName === undefined || req.query.propertyName === 'null' || req.query.propertyName === '';
 
@@ -34,14 +45,30 @@ router.get(
 		const propertyName = req.query.propertyName;
 		const propertyValue = req.query.propertyValue;
 
-		const result = (propertyNameDefault || propertyNameData) && propertyValueDefault;
-		const result1 = propertyNameData && propertyValueData;
+		const result =
+			fromDateDefault &&
+			toDateDefault &&
+			(propertyNameDefault || propertyNameData) && propertyValueDefault;
+		const result1 = fromDateData &&
+			toDateData && propertyNameData && propertyValueData;
+		const result2 = fromDateDefault &&
+			toDateDefault && propertyNameData && propertyValueData;
 
 		if (result) {
 			whereStatement = {
 				isActive: true,
 			};
 		} else if (result1) {
+			whereStatement = {
+				$and: {
+					dateOfDelivery: {
+						$between: [req.query.fromDate, req.query.toDate],
+					},
+					isActive: true
+				},
+			};
+		}
+		else if (result2) {
 			whereStatement = {
 				isActive: true,
 				[propertyName]: (propertyName === 'customerId') ? { $eq: parseInt(propertyValue) }

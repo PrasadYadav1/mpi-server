@@ -3118,7 +3118,7 @@
 				}
 			}
 		},
-		"/transactions?pageIndex={pageIndex}&pageSize={pageSize}&{propertyName}&{propertyValue}": {
+		"/transactions?pageIndex={pageIndex}&pageSize={pageSize}&{fromDate}&{toDate}&{propertyName}&{propertyValue}": {
 			"get": {
 				"tags": [
 					"Transaction"
@@ -3148,6 +3148,20 @@
 						"description": "PageSize",
 						"required": true,
 						"type": "integer"
+					},
+					{
+						"name": "fromDate",
+						"in": "query",
+						"description": "fromDate(2017-01-01) (dateOfDelivery)",
+						"required": false,
+						"type": "String"
+					},
+					{
+						"name": "toDate",
+						"in": "query",
+						"description": "toDate(2018-01-01) (dateOfDelivery)",
+						"required": false,
+						"type": "String"
 					},
 					{
 						"name": "propertyName",

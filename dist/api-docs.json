@@ -3118,7 +3118,7 @@
 				}
 			}
 		},
-		"/transactions?pageIndex={pageIndex}&pageSize={pageSize}&{fromDate}&{toDate}&{propertyName}&{propertyValue}": {
+		"/transactions?pageIndex={pageIndex}&pageSize={pageSize}&{orderBy}&{fromDate}&{toDate}&{propertyName}&{propertyValue}": {
 			"get": {
 				"tags": [
 					"Transaction"
@@ -3148,6 +3148,17 @@
 						"description": "PageSize",
 						"required": true,
 						"type": "integer"
+					},
+					{
+						"name": "orderBy",
+						"in": "query",
+						"enum": [
+							"DESC",
+							"ASC"
+						],
+						"description": "order By",
+						"required": false,
+						"type": "String"
 					},
 					{
 						"name": "fromDate",

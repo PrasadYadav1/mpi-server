@@ -27,7 +27,15 @@ router.get(
 
 		const toDateData = req.query.toDate != 'null' && req.query.toDate != '' && req.query.toDate != undefined;
 
-
+		const orderByDefault = req.query.orderBy === 'null' && req.query.orderBy === '' && req.query.orderBy === undefined;
+		const orderByData = req.query.orderBy != 'null' && req.query.orderBy != '' && req.query.orderBy != undefined;
+		console.log(orderByData)
+		let orderBy = 'DESC';
+		if (orderByDefault) {
+			orderBy = req.query.orderBy;
+		} else {
+			orderBy = 'DESC';
+		}
 		const propertyNameDefault =
 			req.query.propertyName === undefined || req.query.propertyName === 'null' || req.query.propertyName === '';
 
@@ -50,10 +58,10 @@ router.get(
 			toDateDefault &&
 			(propertyNameDefault || propertyNameData) && propertyValueDefault;
 		const result1 = fromDateData &&
-			toDateData && propertyNameData && propertyValueData;
+			toDateData && req.query.propertyName;
 		const result2 = fromDateDefault &&
 			toDateDefault && propertyNameData && propertyValueData;
-
+		let whereStatement = {};
 		if (result) {
 			whereStatement = {
 				isActive: true,
@@ -61,7 +69,7 @@ router.get(
 		} else if (result1) {
 			whereStatement = {
 				$and: {
-					dateOfDelivery: {
+					[propertyName]: {
 						$between: [req.query.fromDate, req.query.toDate],
 					},
 					isActive: true
@@ -100,7 +108,7 @@ router.get(
 					'createdAt',
 				],
 				where: whereStatement,
-				order: [['updatedAt', 'DESC']],
+				order: [[propertyName ? propertyName : 'updatedAt', orderBy]],
 				limit: limit,
 				offset: parseInt(limit * req.query.pageIndex),
 			})

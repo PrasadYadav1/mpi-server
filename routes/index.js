@@ -39,7 +39,7 @@ router.post(
 	asyncErrorHandlerMiddleWare(async (req, res, next) => {
 		const hashedPassword = bcrypt.hashSync(req.body.password, 10);
 		let user = await users.find({
-			attributes: ['id', 'userName', 'password', 'firstName', 'lastName', 'email', 'userRole', 'designation', 'avatar', 'mobileNumber'],
+			attributes: ['id', 'userName', 'password', 'firstName', 'lastName', 'email', 'userRole', 'designation', 'avatar', 'mobileNumber', 'warehouseId', 'customerIds'],
 			where: {
 				isActive: true,
 				email: req.body.email,
@@ -58,6 +58,8 @@ router.post(
 					designation: user.designation,
 					avatar: user.avatar ? 'https://' + req.hostname + '/' + user.avatar : null,
 					mobileNumber: user.mobileNumber,
+					warehouseId: user.warehouseId,
+					customerIds: user.customerIds,
 				},
 			});
 		} else res.sendStatus(401);

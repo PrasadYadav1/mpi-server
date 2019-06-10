@@ -33,18 +33,38 @@ router.get(
         const result = (propertyNameDefault || propertyNameData) && propertyValueDefault;
         const result1 = propertyNameData && propertyValueData;
         let whereStatement = {};
-        if (result) {
-            whereStatement = {
-                isActive: true,
-            };
-        } else if (result1) {
-            whereStatement = {
-                isActive: true,
-                [propertyName]: {
-                    $iLike: `%${req.query.propertyValue}%`,
-                },
-            };
+        if (req.user.userRole === "SalesAgent") {
+            if (result) {
+                whereStatement = {
+                    isActive: true,
+                    warehouseId: req.user.warehouseId,
+                    id: req.user.customerIds
+                };
+            } else if (result1) {
+                whereStatement = {
+                    isActive: true,
+                    warehouseId: req.user.warehouseId,
+                    id: req.user.customerIds,
+                    [propertyName]: {
+                        $iLike: `%${req.query.propertyValue}%`,
+                    },
+                };
+            }
+        } else {
+            if (result) {
+                whereStatement = {
+                    isActive: true
+                };
+            } else if (result1) {
+                whereStatement = {
+                    isActive: true,
+                    [propertyName]: {
+                        $iLike: `%${req.query.propertyValue}%`,
+                    },
+                };
+            }
         }
+
 
         const limit = parseInt(req.query.pageSize);
         return res.json(

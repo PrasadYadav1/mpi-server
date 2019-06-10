@@ -1,19 +1,13 @@
 'use strict';
 module.exports = {
     up: (queryInterface, Sequelize) => {
-        return [
-            queryInterface.addColumn('customers', 'creditLimit', {
-                type: Sequelize.DOUBLE,
-                allowNull: true
-            })
-        ]
+        return queryInterface.addColumn('customers', 'creditLimit', Sequelize.DOUBLE);
     },
     down: (queryInterface, Sequelize) => {
-        return [
-            queryInterface.removeColumn('customers', 'creditLimit', {
-                type: Sequelize.DOUBLE,
-                allowNull: true
-            })
-        ];
-    },
+        return queryInterface.removeColumn({
+            tableName: 'customers'
+        },
+            'creditLimit'
+        );
+    }
 };

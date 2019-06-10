@@ -11,7 +11,7 @@ let params = {
 module.exports = function () {
 	let strategy = new Strategy(params, function (payload, done) {
 		const user = usr.find({
-			attributes: ['id', 'userName', 'email', 'userRole', 'firstName', 'lastName', 'headUserId', 'mobileNumber'],
+			attributes: ['id', 'userName', 'email', 'userRole', 'firstName', 'lastName', 'headUserId', 'mobileNumber', 'warehouseId', 'customerIds'],
 			where: { id: payload.id },
 		});
 		user.then(u => {
@@ -25,6 +25,8 @@ module.exports = function () {
 					userRole: u.userRole,
 					headUserId: u.headUserId,
 					mobileNumber: u.mobileNumber,
+					warehouseId: u.warehouseId,
+					customerIds: u.customerIds,
 				});
 			} else {
 				return done(new Error('User not found'), null);

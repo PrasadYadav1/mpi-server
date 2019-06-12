@@ -187,9 +187,9 @@ router.post(
 
 			const strceCreate = await stockReceiveds.bulkCreate(strc)
 		}
-		return res.json({
-			inventory,
-		});
+		return res.status(200).json({
+			mesage: 'success',
+		})
 	})
 );
 
@@ -350,8 +350,6 @@ router.get(
 	'/:productId/stockreceiveds/:batchNumber',
 	[auth.authenticate()],
 	asyncErrorHandlerMiddleWare(async (req, res, next) => {
-
-		console.log(req.params.batchNumber)
 		const stockReceived = await stockReceiveds.findAll({
 			attributes: [
 				'id',

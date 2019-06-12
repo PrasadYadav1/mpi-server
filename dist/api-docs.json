@@ -3320,12 +3320,12 @@
 				}
 			}
 		},
-		"/transactions/{transactionId}/preorders": {
+		"/preorders?pageIndex={pageIndex}&pageSize={pageSize}&{orderBy}&{fromDate}&{toDate}&{propertyName}&{propertyValue}": {
 			"get": {
 				"tags": [
-					"Transaction"
+					"PreOrder"
 				],
-				"description": "get preorders ",
+				"description": "Get All Transaction ",
 				"operationId": "for the URL",
 				"produces": [
 					"application/json"
@@ -3338,16 +3338,69 @@
 						"required": true
 					},
 					{
-						"name": "transactionId",
-						"in": "path",
-						"description": "transactionId",
+						"name": "pageIndex",
+						"in": "query",
+						"description": "PageIndex",
 						"required": true,
 						"type": "integer"
+					},
+					{
+						"name": "pageSize",
+						"in": "query",
+						"description": "PageSize",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "orderBy",
+						"in": "query",
+						"enum": [
+							"DESC",
+							"ASC"
+						],
+						"description": "order By",
+						"required": false,
+						"type": "String"
+					},
+					{
+						"name": "fromDate",
+						"in": "query",
+						"description": "fromDate(2017-01-01) (dateOfDelivery)",
+						"required": false,
+						"type": "String"
+					},
+					{
+						"name": "toDate",
+						"in": "query",
+						"description": "toDate(2018-01-01) (dateOfDelivery)",
+						"required": false,
+						"type": "String"
+					},
+					{
+						"name": "propertyName",
+						"in": "query",
+						"enum": [
+							"preOrderNumber",
+							"customerId",
+							"dateOfDelivery",
+							"discount",
+							"totalAmount"
+						],
+						"description": "PropertyName",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "propertyValue",
+						"in": "query",
+						"description": "propertyValue",
+						"required": false,
+						"type": "string"
 					}
 				],
 				"responses": {
 					"200": {
-						"description": "preorders response",
+						"description": "preorder  response",
 						"schema": {
 							"$ref": "#/definitions/preOrderListData"
 						}
@@ -3387,6 +3440,41 @@
 						"description": "PreOrder response",
 						"schema": {
 							"$ref": "#/definitions/successMessageResponse"
+						}
+					}
+				}
+			}
+		},
+		"/preorders/{id}/details": {
+			"get": {
+				"tags": [
+					"PreOrder"
+				],
+				"description": "get preorders ",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"description": "id",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "preorders response",
+						"schema": {
+							"$ref": "#/definitions/preOrderListData"
 						}
 					}
 				}
@@ -5454,13 +5542,8 @@
 				}
 			}
 		},
-		"preOrderData": {
+		"preorderProducts": {
 			"properties": {
-				"transactionId": {
-					"required": true,
-					"type": "integer",
-					"example": 1
-				},
 				"productId": {
 					"required": true,
 					"type": "integer",
@@ -5471,30 +5554,40 @@
 					"type": "string",
 					"example": "batchNumber"
 				},
-				"availableQuantity": {
+				"orderQuantity": {
 					"required": true,
 					"type": "double",
 					"example": 10.0
+				}
+			}
+		},
+		"preOrderData": {
+			"properties": {
+				"customerId": {
+					"required": true,
+					"type": "integer",
+					"example": 1
 				},
-				"orderedQuantity": {
+				"dateOfDelivery": {
 					"required": true,
-					"type": "double",
-					"example": 10.0
+					"type": "date",
+					"example": "2019-01-02"
 				},
 				"discount": {
 					"required": true,
 					"type": "double",
 					"example": 100.20
 				},
-				"mrp": {
-					"required": true,
-					"type": "double",
-					"example": 100.20
-				},
-				"amount": {
+				"totalAmount": {
 					"required": true,
 					"type": "double",
 					"example": 120.00
+				},
+				"preorderProducts": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/preorderProducts"
+					}
 				}
 			}
 		},
@@ -5533,22 +5626,17 @@
 				}
 			}
 		},
-		"preOrderDetails": {
+		"preorderProductsDetails": {
 			"properties": {
 				"id": {
 					"required": true,
 					"type": "integer",
 					"example": 1
 				},
-				"transactionId": {
+				"preorderId": {
 					"required": true,
 					"type": "integer",
 					"example": 1
-				},
-				"transactionNumber": {
-					"required": true,
-					"type": "string",
-					"example": "transactionNumber"
 				},
 				"productId": {
 					"required": true,
@@ -5565,27 +5653,91 @@
 					"type": "string",
 					"example": "batchNumber"
 				},
-				"availableQuantity": {
+				"orderQuantity": {
 					"required": true,
 					"type": "double",
 					"example": 10.0
+				}
+			}
+		},
+		"preOrderDetails": {
+			"properties": {
+				"id": {
+					"required": true,
+					"type": "integer",
+					"example": 1
 				},
-				"orderedQuantity": {
+				"preOrderNumber": {
 					"required": true,
-					"type": "double",
-					"example": 10.0
+					"type": "string",
+					"example": "preOrderNumber"
+				},
+				"customerId": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"customerName": {
+					"required": true,
+					"type": "string",
+					"example": "customerName"
+				},
+				"dateOfDelivery": {
+					"required": true,
+					"type": "date",
+					"example": "2019-01-02"
 				},
 				"discount": {
 					"required": true,
 					"type": "double",
 					"example": 100.20
 				},
-				"mrp": {
+				"totalAmount": {
+					"required": true,
+					"type": "double",
+					"example": 120.00
+				},
+				"preorderProducts": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/preorderProductsDetails"
+					}
+				}
+			}
+		},
+		"preOrderListDetails": {
+			"properties": {
+				"id": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"preOrderNumber": {
+					"required": true,
+					"type": "string",
+					"example": "preOrderNumber"
+				},
+				"customerId": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"customerName": {
+					"required": true,
+					"type": "string",
+					"example": "customerName"
+				},
+				"dateOfDelivery": {
+					"required": true,
+					"type": "date",
+					"example": "2019-01-02"
+				},
+				"discount": {
 					"required": true,
 					"type": "double",
 					"example": 100.20
 				},
-				"amount": {
+				"totalAmount": {
 					"required": true,
 					"type": "double",
 					"example": 120.00
@@ -5595,7 +5747,7 @@
 		"preOrderListData": {
 			"type": "array",
 			"items": {
-				"$ref": "#/definitions/preOrderDetails"
+				"$ref": "#/definitions/preOrderListDetails"
 			}
 		},
 		"transactionDetails": {

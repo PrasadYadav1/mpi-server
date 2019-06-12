@@ -8,39 +8,19 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      transactionId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'transactions',
-          key: 'id'
-        }
-      },
       preOrderNumber: {
         type: Sequelize.STRING
       },
-      productId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'products',
-          key: 'id'
-        }
+      customerId: {
+        type: Sequelize.INTEGER
       },
-      batchNumber: {
+      dateOfDelivery: {
         type: Sequelize.STRING
-      },
-      availableQuantity: {
-        type: Sequelize.DOUBLE
-      },
-      orderedQuantity: {
-        type: Sequelize.DOUBLE
       },
       discount: {
         type: Sequelize.DOUBLE
       },
-      mrp: {
-        type: Sequelize.DOUBLE
-      },
-      amount: {
+      totalAmount: {
         type: Sequelize.DOUBLE
       },
       createdBy: {

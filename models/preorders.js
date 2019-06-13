@@ -5,6 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     customerId: DataTypes.DOUBLE,
     dateOfDelivery: DataTypes.DATEONLY,
     discount: DataTypes.DOUBLE,
+    amount: DataTypes.DOUBLE,
     totalAmount: DataTypes.DOUBLE,
     createdBy: DataTypes.INTEGER,
     updatedBy: DataTypes.INTEGER,

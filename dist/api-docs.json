@@ -5586,6 +5586,11 @@
 				"discount": {
 					"required": true,
 					"type": "double",
+					"example": 1.22
+				},
+				"amount": {
+					"required": true,
+					"type": "double",
 					"example": 100.20
 				},
 				"totalAmount": {
@@ -5698,6 +5703,11 @@
 					"example": "2019-01-02"
 				},
 				"discount": {
+					"required": true,
+					"type": "double",
+					"example": 1.22
+				},
+				"amount": {
 					"required": true,
 					"type": "double",
 					"example": 100.20

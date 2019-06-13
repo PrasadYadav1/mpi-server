@@ -59,6 +59,7 @@ router.get(
 				attributes: [
 					'id',
 					'name',
+					'productCode',
 					[
 						sequelize.literal(
 							'(Select name from companies where companies.id = products."companyId")'
@@ -136,6 +137,7 @@ router.get(
 				attributes: [
 					'id',
 					'name',
+					'productCode',
 					[
 						sequelize.literal(
 							'(Select name from companies where companies.id = products."companyId")'
@@ -175,6 +177,7 @@ router.post(
 	asyncErrorHandlerMiddleWare(async (req, res, next) => {
 		const product = await products.create({
 			name: req.body.name,
+			productCode: req.body.productCode,
 			companyId: req.body.companyId,
 			categoryId: req.body.categoryId,
 			subCategoryId: req.body.subCategoryId,
@@ -201,6 +204,7 @@ router.get(
 				'id',
 				'name',
 				'companyId',
+				'productCode',
 				[
 					sequelize.literal(
 						'(Select name from companies where companies.id = products."companyId")'
@@ -247,6 +251,7 @@ router.put(
 		const product = await products.update(
 			{
 				name: req.body.name,
+				productCode: req.body.productCode,
 				companyId: req.body.companyId,
 				categoryId: req.body.categoryId,
 				subCategoryId: req.body.subCategoryId,

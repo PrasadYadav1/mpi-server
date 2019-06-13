@@ -3474,7 +3474,7 @@
 					"200": {
 						"description": "preorders response",
 						"schema": {
-							"$ref": "#/definitions/preOrderListData"
+							"$ref": "#/definitions/preOrderDetails"
 						}
 					}
 				}
@@ -4611,6 +4611,11 @@
 					"type": "string",
 					"example": "Combiflam"
 				},
+				"productCode": {
+					"required": true,
+					"type": "string",
+					"example": "productCode"
+				},
 				"companyId": {
 					"required": true,
 					"type": "integer",
@@ -4659,6 +4664,11 @@
 					"required": true,
 					"type": "string",
 					"example": "Combiflam"
+				},
+				"productCode": {
+					"required": true,
+					"type": "string",
+					"example": "productCode"
 				},
 				"companyId": {
 					"required": true,

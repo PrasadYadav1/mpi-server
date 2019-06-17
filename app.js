@@ -20,6 +20,7 @@ const stockreceived = require('./routes/stockreceived')
 const offers = require('./routes/offer')
 const transactions = require('./routes/transaction');
 const preorders = require('./routes/preorder')
+const orders = require('./routes/order')
 const app = express();
 const argv = require('minimist')(process.argv.slice(2));
 const subpath = express();
@@ -77,6 +78,7 @@ app.use('/api/stockreceived', stockreceived)
 app.use('/api/offers', offers)
 app.use('/api/transactions', transactions);
 app.use('/api/preorders', preorders)
+app.use('/api/orders', orders)
 app.use('/hintimages', express.static(__dirname + '/public/images/hintimages'));
 app.use('/assets/*', express.static(__dirname + '/public/clientApp/assets'));
 app.use('/css', express.static(__dirname + '/public/css/'));

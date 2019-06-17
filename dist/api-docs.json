@@ -3555,6 +3555,242 @@
 					}
 				}
 			}
+		},
+		"/orders?pageIndex={pageIndex}&pageSize={pageSize}&{orderBy}&{fromDate}&{toDate}&{propertyName}&{propertyValue}": {
+			"get": {
+				"tags": [
+					"Order"
+				],
+				"description": "Get All Transaction ",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "pageIndex",
+						"in": "query",
+						"description": "PageIndex",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "pageSize",
+						"in": "query",
+						"description": "PageSize",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "orderBy",
+						"in": "query",
+						"enum": [
+							"DESC",
+							"ASC"
+						],
+						"description": "order By",
+						"required": false,
+						"type": "String"
+					},
+					{
+						"name": "fromDate",
+						"in": "query",
+						"description": "fromDate(2017-01-01) (dateOfDelivery)",
+						"required": false,
+						"type": "String"
+					},
+					{
+						"name": "toDate",
+						"in": "query",
+						"description": "toDate(2018-01-01) (dateOfDelivery)",
+						"required": false,
+						"type": "String"
+					},
+					{
+						"name": "propertyName",
+						"in": "query",
+						"enum": [
+							"orderNumber",
+							"customerId",
+							"dateOfDelivery",
+							"discount",
+							"totalAmount"
+						],
+						"description": "PropertyName",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "propertyValue",
+						"in": "query",
+						"description": "propertyValue",
+						"required": false,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "order  response",
+						"schema": {
+							"$ref": "#/definitions/orderListData"
+						}
+					}
+				}
+			}
+		},
+		"/orders": {
+			"post": {
+				"tags": [
+					"Order"
+				],
+				"description": "Create new Order",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "Job Parameters",
+						"in": "body",
+						"description": "Order",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/orderData"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Order response",
+						"schema": {
+							"$ref": "#/definitions/successMessageResponse"
+						}
+					}
+				}
+			}
+		},
+		"/orders/{id}/details": {
+			"get": {
+				"tags": [
+					"Order"
+				],
+				"description": "get orders ",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"description": "id",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "orders response",
+						"schema": {
+							"$ref": "#/definitions/orderDetails"
+						}
+					}
+				}
+			}
+		},
+		"/orders/{id}": {
+			"put": {
+				"tags": [
+					"Order"
+				],
+				"description": "Update Order",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"description": "id",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "Job Parameters",
+						"in": "body",
+						"description": "Order",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/orderData"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Order response",
+						"schema": {
+							"$ref": "#/definitions/successMessageResponse"
+						}
+					}
+				}
+			}
+		},
+		"/orders/{orderId}": {
+			"delete": {
+				"tags": [
+					"Order"
+				],
+				"description": "delete the order by id ",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "orderId",
+						"in": "path",
+						"description": "orderId",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Ok"
+					}
+				}
+			}
 		}
 	},
 	"definitions": {
@@ -5768,6 +6004,204 @@
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/preOrderListDetails"
+			}
+		},
+		"orderProducts": {
+			"properties": {
+				"productId": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"batchNumber": {
+					"required": true,
+					"type": "string",
+					"example": "batchNumber"
+				},
+				"orderQuantity": {
+					"required": true,
+					"type": "double",
+					"example": 10.0
+				}
+			}
+		},
+		"orderData": {
+			"properties": {
+				"orderConfirmed": {
+					"required": true,
+					"type": "boolean",
+					"example": true
+				},
+				"customerId": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"dateOfDelivery": {
+					"required": true,
+					"type": "date",
+					"example": "2019-01-02"
+				},
+				"discount": {
+					"required": true,
+					"type": "double",
+					"example": 1.22
+				},
+				"amount": {
+					"required": true,
+					"type": "double",
+					"example": 100.20
+				},
+				"totalAmount": {
+					"required": true,
+					"type": "double",
+					"example": 120.00
+				},
+				"preorderProducts": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/orderProducts"
+					}
+				}
+			}
+		},
+		"orderProductsDetails": {
+			"properties": {
+				"id": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"orderId": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"productId": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"productName": {
+					"required": true,
+					"type": "string",
+					"example": "productName"
+				},
+				"batchNumber": {
+					"required": true,
+					"type": "string",
+					"example": "batchNumber"
+				},
+				"orderQuantity": {
+					"required": true,
+					"type": "double",
+					"example": 10.0
+				}
+			}
+		},
+		"orderDetails": {
+			"properties": {
+				"id": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"orderConfirmed": {
+					"required": true,
+					"type": "boolean",
+					"example": true
+				},
+				"orderNumber": {
+					"required": true,
+					"type": "string",
+					"example": "preOrderNumber"
+				},
+				"customerId": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"customerName": {
+					"required": true,
+					"type": "string",
+					"example": "customerName"
+				},
+				"dateOfDelivery": {
+					"required": true,
+					"type": "date",
+					"example": "2019-01-02"
+				},
+				"discount": {
+					"required": true,
+					"type": "double",
+					"example": 1.22
+				},
+				"amount": {
+					"required": true,
+					"type": "double",
+					"example": 100.20
+				},
+				"totalAmount": {
+					"required": true,
+					"type": "double",
+					"example": 120.00
+				},
+				"preorderProducts": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/orderProductsDetails"
+					}
+				}
+			}
+		},
+		"orderListDetails": {
+			"properties": {
+				"id": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"orderConfirmed": {
+					"required": true,
+					"type": "boolean",
+					"example": true
+				},
+				"orderNumber": {
+					"required": true,
+					"type": "string",
+					"example": "preOrderNumber"
+				},
+				"customerId": {
+					"required": true,
+					"type": "integer",
+					"example": 1
+				},
+				"customerName": {
+					"required": true,
+					"type": "string",
+					"example": "customerName"
+				},
+				"dateOfDelivery": {
+					"required": true,
+					"type": "date",
+					"example": "2019-01-02"
+				},
+				"discount": {
+					"required": true,
+					"type": "double",
+					"example": 100.20
+				},
+				"totalAmount": {
+					"required": true,
+					"type": "double",
+					"example": 120.00
+				}
+			}
+		},
+		"orderListData": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/orderListDetails"
 			}
 		},
 		"transactionDetails": {

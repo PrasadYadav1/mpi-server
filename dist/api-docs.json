@@ -3118,208 +3118,6 @@
 				}
 			}
 		},
-		"/transactions?pageIndex={pageIndex}&pageSize={pageSize}&{orderBy}&{fromDate}&{toDate}&{propertyName}&{propertyValue}": {
-			"get": {
-				"tags": [
-					"Transaction"
-				],
-				"description": "Get All Transaction ",
-				"operationId": "for the URL",
-				"produces": [
-					"application/json"
-				],
-				"parameters": [
-					{
-						"name": "Authorization",
-						"in": "header",
-						"description": "bearer token",
-						"required": true
-					},
-					{
-						"name": "pageIndex",
-						"in": "query",
-						"description": "PageIndex",
-						"required": true,
-						"type": "integer"
-					},
-					{
-						"name": "pageSize",
-						"in": "query",
-						"description": "PageSize",
-						"required": true,
-						"type": "integer"
-					},
-					{
-						"name": "orderBy",
-						"in": "query",
-						"enum": [
-							"DESC",
-							"ASC"
-						],
-						"description": "order By",
-						"required": false,
-						"type": "String"
-					},
-					{
-						"name": "fromDate",
-						"in": "query",
-						"description": "fromDate(2017-01-01) (dateOfDelivery)",
-						"required": false,
-						"type": "String"
-					},
-					{
-						"name": "toDate",
-						"in": "query",
-						"description": "toDate(2018-01-01) (dateOfDelivery)",
-						"required": false,
-						"type": "String"
-					},
-					{
-						"name": "propertyName",
-						"in": "query",
-						"enum": [
-							"transactionNumber",
-							"transactionDate",
-							"companyId",
-							"address",
-							"dateOfDelivery"
-						],
-						"description": "PropertyName",
-						"required": false,
-						"type": "string"
-					},
-					{
-						"name": "propertyValue",
-						"in": "query",
-						"description": "propertyValue",
-						"required": false,
-						"type": "string"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Transaction response",
-						"schema": {
-							"$ref": "#/definitions/transactionResponseWithPagination"
-						}
-					}
-				}
-			}
-		},
-		"/transactions/all?{propertyName}&{propertyValue}": {
-			"get": {
-				"tags": [
-					"Transaction"
-				],
-				"description": "Get All transactions ",
-				"operationId": "for the URL",
-				"produces": [
-					"application/json"
-				],
-				"parameters": [
-					{
-						"name": "Authorization",
-						"in": "header",
-						"description": "bearer token",
-						"required": true
-					},
-					{
-						"name": "propertyName",
-						"in": "query",
-						"enum": [
-							"transactionNumber",
-							"transactionDate",
-							"companyId",
-							"address",
-							"dateOfDelivery"
-						],
-						"description": "PropertyName",
-						"required": false,
-						"type": "string"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Transaction response",
-						"schema": {
-							"$ref": "#/definitions/transactionResponse"
-						}
-					}
-				}
-			}
-		},
-		"/transactions": {
-			"post": {
-				"tags": [
-					"Transaction"
-				],
-				"description": "Create new Transaction",
-				"operationId": "for the URL",
-				"produces": [
-					"application/json"
-				],
-				"parameters": [
-					{
-						"name": "Authorization",
-						"in": "header",
-						"description": "bearer token",
-						"required": true
-					},
-					{
-						"name": "Job Parameters",
-						"in": "body",
-						"description": "Transaction",
-						"required": true,
-						"schema": {
-							"$ref": "#/definitions/transaction"
-						}
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Transaction response",
-						"schema": {
-							"$ref": "#/definitions/transactionData"
-						}
-					}
-				}
-			}
-		},
-		"/transactions/{id}/details": {
-			"get": {
-				"tags": [
-					"Transaction"
-				],
-				"description": "get by id ",
-				"operationId": "for the URL",
-				"produces": [
-					"application/json"
-				],
-				"parameters": [
-					{
-						"name": "Authorization",
-						"in": "header",
-						"description": "bearer token",
-						"required": true
-					},
-					{
-						"name": "id",
-						"in": "path",
-						"description": "id",
-						"required": true,
-						"type": "integer"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Transaction response",
-						"schema": {
-							"$ref": "#/definitions/transactionDetails"
-						}
-					}
-				}
-			}
-		},
 		"/preorders?pageIndex={pageIndex}&pageSize={pageSize}&{orderBy}&{fromDate}&{toDate}&{propertyName}&{propertyValue}": {
 			"get": {
 				"tags": [
@@ -5800,7 +5598,32 @@
 					"type": "string",
 					"example": "batchNumber"
 				},
+				"availableQuantity": {
+					"required": true,
+					"type": "double",
+					"example": 10.0
+				},
 				"orderQuantity": {
+					"required": true,
+					"type": "double",
+					"example": 10.0
+				},
+				"discount": {
+					"required": true,
+					"type": "double",
+					"example": 10.0
+				},
+				"rate": {
+					"required": true,
+					"type": "double",
+					"example": 10.0
+				},
+				"mrp": {
+					"required": true,
+					"type": "double",
+					"example": 10.0
+				},
+				"totalAmount": {
 					"required": true,
 					"type": "double",
 					"example": 10.0
@@ -5842,41 +5665,6 @@
 				}
 			}
 		},
-		"transaction": {
-			"properties": {
-				"transactionDate": {
-					"required": true,
-					"type": "date",
-					"example": "2019-01-02"
-				},
-				"customerId": {
-					"required": true,
-					"type": "integer",
-					"example": 1
-				},
-				"address": {
-					"required": true,
-					"type": "string",
-					"example": "address"
-				},
-				"dateOfDelivery": {
-					"required": true,
-					"type": "date",
-					"example": "2019-01-02"
-				},
-				"description": {
-					"required": true,
-					"type": "string",
-					"example": "mg"
-				},
-				"preOrders": {
-					"type": "array",
-					"items": {
-						"$ref": "#/definitions/preOrder"
-					}
-				}
-			}
-		},
 		"preorderProductsDetails": {
 			"properties": {
 				"id": {
@@ -5904,7 +5692,32 @@
 					"type": "string",
 					"example": "batchNumber"
 				},
+				"availableQuantity": {
+					"required": true,
+					"type": "double",
+					"example": 10.0
+				},
 				"orderQuantity": {
+					"required": true,
+					"type": "double",
+					"example": 10.0
+				},
+				"discount": {
+					"required": true,
+					"type": "double",
+					"example": 10.0
+				},
+				"rate": {
+					"required": true,
+					"type": "double",
+					"example": 10.0
+				},
+				"mrp": {
+					"required": true,
+					"type": "double",
+					"example": 10.0
+				},
+				"totalAmount": {
 					"required": true,
 					"type": "double",
 					"example": 10.0
@@ -6018,7 +5831,32 @@
 					"type": "string",
 					"example": "batchNumber"
 				},
+				"availableQuantity": {
+					"required": true,
+					"type": "double",
+					"example": 10.0
+				},
 				"orderQuantity": {
+					"required": true,
+					"type": "double",
+					"example": 10.0
+				},
+				"discount": {
+					"required": true,
+					"type": "double",
+					"example": 10.0
+				},
+				"rate": {
+					"required": true,
+					"type": "double",
+					"example": 10.0
+				},
+				"mrp": {
+					"required": true,
+					"type": "double",
+					"example": 10.0
+				},
+				"totalAmount": {
 					"required": true,
 					"type": "double",
 					"example": 10.0
@@ -6092,7 +5930,32 @@
 					"type": "string",
 					"example": "batchNumber"
 				},
+				"availableQuantity": {
+					"required": true,
+					"type": "double",
+					"example": 10.0
+				},
 				"orderQuantity": {
+					"required": true,
+					"type": "double",
+					"example": 10.0
+				},
+				"discount": {
+					"required": true,
+					"type": "double",
+					"example": 10.0
+				},
+				"rate": {
+					"required": true,
+					"type": "double",
+					"example": 10.0
+				},
+				"mrp": {
+					"required": true,
+					"type": "double",
+					"example": 10.0
+				},
+				"totalAmount": {
 					"required": true,
 					"type": "double",
 					"example": 10.0
@@ -6105,11 +5968,6 @@
 					"required": true,
 					"type": "integer",
 					"example": 1
-				},
-				"orderConfirmed": {
-					"required": true,
-					"type": "boolean",
-					"example": true
 				},
 				"orderNumber": {
 					"required": true,
@@ -6161,11 +6019,6 @@
 					"type": "integer",
 					"example": 1
 				},
-				"orderConfirmed": {
-					"required": true,
-					"type": "boolean",
-					"example": true
-				},
 				"orderNumber": {
 					"required": true,
 					"type": "string",
@@ -6202,121 +6055,6 @@
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/orderListDetails"
-			}
-		},
-		"transactionDetails": {
-			"properties": {
-				"id": {
-					"required": true,
-					"type": "integer",
-					"example": 1
-				},
-				"transactionNumber": {
-					"required": true,
-					"type": "string",
-					"example": "transactionNumber"
-				},
-				"transactionDate": {
-					"required": true,
-					"type": "date",
-					"example": "2019-01-02"
-				},
-				"customerId": {
-					"required": true,
-					"type": "integer",
-					"example": 1
-				},
-				"customerName": {
-					"required": true,
-					"type": "string",
-					"example": "customerName"
-				},
-				"address": {
-					"required": true,
-					"type": "string",
-					"example": "address"
-				},
-				"dateOfDelivery": {
-					"required": true,
-					"type": "date",
-					"example": "2019-01-02"
-				},
-				"description": {
-					"required": true,
-					"type": "string",
-					"example": "mg"
-				},
-				"preOrders": {
-					"type": "array",
-					"items": {
-						"$ref": "#/definitions/preOrderDetails"
-					}
-				}
-			}
-		},
-		"transactionData": {
-			"properties": {
-				"id": {
-					"required": true,
-					"type": "integer",
-					"example": 1
-				},
-				"transactionNumber": {
-					"required": true,
-					"type": "string",
-					"example": "transactionNumber"
-				},
-				"transactionDate": {
-					"required": true,
-					"type": "date",
-					"example": "2019-01-02"
-				},
-				"customerId": {
-					"required": true,
-					"type": "integer",
-					"example": 1
-				},
-				"customerName": {
-					"required": true,
-					"type": "string",
-					"example": "customerName"
-				},
-				"address": {
-					"required": true,
-					"type": "string",
-					"example": "address"
-				},
-				"dateOfDelivery": {
-					"required": true,
-					"type": "date",
-					"example": "2019-01-02"
-				},
-				"description": {
-					"required": true,
-					"type": "string",
-					"example": "mg"
-				}
-			}
-		},
-		"transactionResponse": {
-			"type": "array",
-			"items": {
-				"$ref": "#/definitions/transactionData"
-			}
-		},
-		"transactionResponseWithPagination": {
-			"properties": {
-				"count": {
-					"required": true,
-					"type": "integer",
-					"example": 1
-				},
-				"rows": {
-					"type": "array",
-					"items": {
-						"$ref": "#/definitions/transactionData"
-					}
-				}
 			}
 		}
 	}

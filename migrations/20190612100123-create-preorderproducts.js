@@ -25,7 +25,22 @@ module.exports = {
       batchNumber: {
         type: Sequelize.STRING
       },
+      availableQuantity: {
+        type: Sequelize.DOUBLE
+      },
       orderQuantity: {
+        type: Sequelize.DOUBLE
+      },
+      discount: {
+        type: Sequelize.DOUBLE
+      },
+      rate: {
+        type: Sequelize.DOUBLE
+      },
+      mrp: {
+        type: Sequelize.DOUBLE
+      },
+      totalAmount: {
         type: Sequelize.DOUBLE
       },
       createdBy: {

@@ -20,6 +20,9 @@ module.exports = {
       discount: {
         type: Sequelize.DOUBLE
       },
+      amount: {
+        type: Sequelize.DOUBLE
+      },
       totalAmount: {
         type: Sequelize.DOUBLE
       },

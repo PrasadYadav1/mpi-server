@@ -134,7 +134,6 @@ router.post(
 		if (order) {
 			let strc = req.body.orderProducts.map(function (n, i) {
 				(n.orderId = order.dataValues.id),
-					(n.batchNumber = `ORDER${order.dataValues.id}00${i + 1}`),
 					(n.createdBy = req.user.userId),
 					(n.updatedBy = req.user.userId),
 					(n.isActive = true);

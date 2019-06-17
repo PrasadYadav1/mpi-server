@@ -133,7 +133,6 @@ router.post(
 		if (preOrder) {
 			let strc = req.body.preorderProducts.map(function (n, i) {
 				(n.preorderId = preOrder.dataValues.id),
-					(n.batchNumber = `PORDER${preOrder.dataValues.id}00${i + 1}`),
 					(n.createdBy = req.user.userId),
 					(n.updatedBy = req.user.userId),
 					(n.isActive = true);

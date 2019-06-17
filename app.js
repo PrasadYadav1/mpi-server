@@ -18,7 +18,6 @@ const warehouses = require('./routes/warehouse');
 const inventories = require('./routes/inventory');
 const stockreceived = require('./routes/stockreceived')
 const offers = require('./routes/offer')
-const transactions = require('./routes/transaction');
 const preorders = require('./routes/preorder')
 const orders = require('./routes/order')
 const app = express();
@@ -76,7 +75,6 @@ app.use('/api/warehouses', warehouses);
 app.use('/api/inventories', inventories);
 app.use('/api/stockreceived', stockreceived)
 app.use('/api/offers', offers)
-app.use('/api/transactions', transactions);
 app.use('/api/preorders', preorders)
 app.use('/api/orders', orders)
 app.use('/hintimages', express.static(__dirname + '/public/images/hintimages'));

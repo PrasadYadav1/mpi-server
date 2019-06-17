@@ -4,7 +4,12 @@ module.exports = (sequelize, DataTypes) => {
     orderId: DataTypes.INTEGER,
     productId: DataTypes.INTEGER,
     batchNumber: DataTypes.STRING,
+    availableQuantity: DataTypes.DOUBLE,
     orderQuantity: DataTypes.DOUBLE,
+    discount: DataTypes.DOUBLE,
+    rate: DataTypes.DOUBLE,
+    mrp: DataTypes.DOUBLE,
+    totalAmount: DataTypes.DOUBLE,
     createdBy: DataTypes.INTEGER,
     updatedBy: DataTypes.INTEGER,
     isActive: DataTypes.BOOLEAN

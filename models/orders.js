@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       model.orderproducts,
       { as: 'orderProducts' },
       {
-        foreignKey: 'preorderId',
+        foreignKey: 'orderId',
         targetKey: 'id',
       }
     );

@@ -5895,7 +5895,7 @@
 					"type": "double",
 					"example": 120.00
 				},
-				"preorderProducts": {
+				"orderProducts": {
 					"type": "array",
 					"items": {
 						"$ref": "#/definitions/orderProducts"
@@ -6004,7 +6004,7 @@
 					"type": "double",
 					"example": 120.00
 				},
-				"preorderProducts": {
+				"orderProducts": {
 					"type": "array",
 					"items": {
 						"$ref": "#/definitions/orderProductsDetails"

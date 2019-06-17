@@ -86,6 +86,7 @@ router.get(
 			await orders.findAndCount({
 				attributes: [
 					'id',
+					'orderConfirmed',
 					'orderNumber',
 					'dateOfDelivery',
 					'customerId',
@@ -182,7 +183,7 @@ router.get(
 					as: 'orderProducts',
 					attributes: [
 						'id',
-						'preorderId',
+						'orderId',
 						'productId',
 						[
 							sequelize.literal(

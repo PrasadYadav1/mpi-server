@@ -3243,6 +3243,40 @@
 				}
 			}
 		},
+		"/preorders/{prOrderId}": {
+			"get": {
+				"tags": [
+					"PreOrder"
+				],
+				"description": "get preorderConfirmed",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "prOrderId",
+						"in": "path",
+						"description": "prOrderId",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"responses": {
+						"200": {
+							"description": "Ok"
+						}
+					}
+				}
+			}
+		},
 		"/preorders/{id}/details": {
 			"get": {
 				"tags": [
@@ -3322,6 +3356,38 @@
 				}
 			}
 		},
+		"/preorders/{preOrderId}": {
+			"delete": {
+				"tags": [
+					"PreOrder"
+				],
+				"description": "delete the PreOrder by id ",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "preOrderId",
+						"in": "path",
+						"description": "preOrderId",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Ok"
+					}
+				}
+			}
+		},
 		"/preorders/{id}/preorderproducts": {
 			"put": {
 				"tags": [
@@ -3366,12 +3432,12 @@
 				}
 			}
 		},
-		"/preorders/{preOrderId}": {
+		"/preorders/{preOrderProductId}/preorderproducts": {
 			"delete": {
 				"tags": [
 					"PreOrder"
 				],
-				"description": "delete the PreOrder by id ",
+				"description": "delete the preOrderProduct by id ",
 				"operationId": "for the URL",
 				"produces": [
 					"application/json"
@@ -3384,9 +3450,9 @@
 						"required": true
 					},
 					{
-						"name": "preOrderId",
+						"name": "preOrderProductId",
 						"in": "path",
-						"description": "preOrderId",
+						"description": "preOrderProductId",
 						"required": true,
 						"type": "integer"
 					}
@@ -3602,6 +3668,38 @@
 				}
 			}
 		},
+		"/orders/{orderId}": {
+			"delete": {
+				"tags": [
+					"Order"
+				],
+				"description": "delete the order by id ",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "orderId",
+						"in": "path",
+						"description": "orderId",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Ok"
+					}
+				}
+			}
+		},
 		"/orders/{id}/orderproducts": {
 			"put": {
 				"tags": [
@@ -3646,12 +3744,12 @@
 				}
 			}
 		},
-		"/orders/{orderId}": {
+		"/orders/{orderProductId}/orderproducts": {
 			"delete": {
 				"tags": [
 					"Order"
 				],
-				"description": "delete the order by id ",
+				"description": "delete the orderProduct by id ",
 				"operationId": "for the URL",
 				"produces": [
 					"application/json"
@@ -3664,9 +3762,9 @@
 						"required": true
 					},
 					{
-						"name": "orderId",
+						"name": "orderProductId",
 						"in": "path",
-						"description": "orderId",
+						"description": "orderProductId",
 						"required": true,
 						"type": "integer"
 					}
@@ -5819,6 +5917,11 @@
 					"type": "integer",
 					"example": 1
 				},
+				"preorderConfirmed": {
+					"required": true,
+					"type": "boolean",
+					"example": false
+				},
 				"preOrderNumber": {
 					"required": true,
 					"type": "string",
@@ -5868,6 +5971,11 @@
 					"required": true,
 					"type": "integer",
 					"example": 1
+				},
+				"preorderConfirmed": {
+					"required": true,
+					"type": "boolean",
+					"example": false
 				},
 				"preOrderNumber": {
 					"required": true,

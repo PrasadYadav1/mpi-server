@@ -1,6 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var preorders = sequelize.define('preorders', {
+    preorderConfirmed: DataTypes.BOOLEAN,
     preOrderNumber: DataTypes.STRING,
     customerId: DataTypes.DOUBLE,
     dateOfDelivery: DataTypes.DATEONLY,

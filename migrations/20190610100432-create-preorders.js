@@ -8,6 +8,9 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      preorderConfirmed: {
+        type: Sequelize.BOOLEAN
+      },
       preOrderNumber: {
         type: Sequelize.STRING
       },

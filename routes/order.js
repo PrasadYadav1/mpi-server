@@ -277,4 +277,51 @@ router.delete(
 		return res.sendStatus(200);
 	})
 );
+
+router.put(
+	'/:id/orderproducts',
+	[auth.authenticate()],
+	asyncErrorHandlerMiddleWare(async (req, res, next) => {
+		const order = await orderProducts.update(
+			{
+				productId: req.body.productId,
+				batchNumber: req.body.batchNumber,
+				availableQuantity: req.body.availableQuantity,
+				orderQuantity: req.body.orderQuantity,
+				discount: req.body.discount,
+				rate: req.body.rate,
+				mrp: req.body.mrp,
+				totalAmount: req.body.amount,
+				updatedBy: req.user.userId,
+			},
+			{
+				where: {
+					id: req.params.id,
+				},
+			}
+		);
+		return res.status(200).json({
+			mesage: 'success',
+		});
+	})
+);
+
+router.delete(
+	'/:orderProductId/orderproducts',
+	[auth.authenticate()],
+	asyncErrorHandlerMiddleWare(async (req, res, next) => {
+		const order = await orderProducts.update(
+			{
+				isActive: false,
+				updatedBy: req.user.userId,
+			},
+			{
+				where: {
+					id: req.params.orderProductId,
+				},
+			}
+		);
+		return res.sendStatus(200);
+	})
+);
 module.exports = router;

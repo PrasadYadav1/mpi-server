@@ -86,6 +86,7 @@ router.get(
 			await preOrders.findAndCount({
 				attributes: [
 					'id',
+					'preorderConfirmed',
 					'preOrderNumber',
 					'dateOfDelivery',
 					'customerId',
@@ -120,6 +121,7 @@ router.post(
 			}
 		})
 		const preOrder = await preOrders.create({
+			preorderConfirmed: false,
 			preOrderNumber: `PORD0000${(preOrderCount ? preOrderCount : 0) + 1}`,
 			dateOfDelivery: req.body.dateOfDelivery,
 			customerId: req.body.customerId,
@@ -154,6 +156,7 @@ router.get(
 		const product = await preOrders.findOne({
 			attributes: [
 				'id',
+				'preorderConfirmed',
 				'preOrderNumber',
 				'dateOfDelivery',
 				'customerId',
@@ -203,6 +206,25 @@ router.get(
 	})
 );
 
+router.get(
+	'/:prOrderId',
+	[auth.authenticate()],
+	asyncErrorHandlerMiddleWare(async (req, res, next) => {
+		const preOrder = await preOrders.update(
+			{
+				preorderConfirmed: true,
+				updatedBy: req.user.userId,
+			},
+			{
+				where: {
+					id: req.params.preOrderId,
+				},
+			}
+		);
+		return res.sendStatus(200);
+	})
+);
+
 router.put(
 	'/:id',
 	[auth.authenticate()],
@@ -225,6 +247,25 @@ router.put(
 		return res.status(200).json({
 			mesage: 'success',
 		});
+	})
+);
+
+router.delete(
+	'/:preOrderId',
+	[auth.authenticate()],
+	asyncErrorHandlerMiddleWare(async (req, res, next) => {
+		const preOrder = await preOrders.update(
+			{
+				isActive: false,
+				updatedBy: req.user.userId,
+			},
+			{
+				where: {
+					id: req.params.preOrderId,
+				},
+			}
+		);
+		return res.sendStatus(200);
 	})
 );
 
@@ -258,17 +299,17 @@ router.put(
 );
 
 router.delete(
-	'/:preOrderId',
+	'/:preOrderProductId/preorderproducts',
 	[auth.authenticate()],
 	asyncErrorHandlerMiddleWare(async (req, res, next) => {
-		const preOrder = await preOrders.update(
+		const preOrder = await preorderProducts.update(
 			{
 				isActive: false,
 				updatedBy: req.user.userId,
 			},
 			{
 				where: {
-					id: req.params.preOrderId,
+					id: req.params.preOrderProductId,
 				},
 			}
 		);

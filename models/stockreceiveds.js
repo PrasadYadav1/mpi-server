@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     dateOfManufacture: DataTypes.DATEONLY,
     expiryDate: DataTypes.DATEONLY,
     receivedQuantity: DataTypes.DOUBLE,
+    minSalePrice: DataTypes.DOUBLE,
     price: DataTypes.DOUBLE,
     mrp: DataTypes.DOUBLE,
     amount: DataTypes.DOUBLE,

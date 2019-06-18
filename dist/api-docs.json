@@ -5265,6 +5265,11 @@
 					"type": "double",
 					"example": 10
 				},
+				"minSalePrice": {
+					"required": true,
+					"type": "double",
+					"example": 100.20
+				},
 				"price": {
 					"required": true,
 					"type": "double",
@@ -5313,6 +5318,11 @@
 					"required": true,
 					"type": "double",
 					"example": 10
+				},
+				"minSalePrice": {
+					"required": true,
+					"type": "double",
+					"example": 100.20
 				},
 				"price": {
 					"required": true,
@@ -5412,6 +5422,11 @@
 					"required": true,
 					"type": "double",
 					"example": 10
+				},
+				"minSalePrice": {
+					"required": true,
+					"type": "double",
+					"example": 100.20
 				},
 				"price": {
 					"required": true,

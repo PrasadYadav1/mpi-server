@@ -269,6 +269,7 @@ router.get(
 						'dateOfManufacture',
 						'expiryDate',
 						'receivedQuantity',
+						'minSalePrice',
 						'price',
 						'mrp',
 						'amount'
@@ -301,6 +302,7 @@ router.get(
 				'dateOfManufacture',
 				'expiryDate',
 				'receivedQuantity',
+				'minSalePrice',
 				'price',
 				'mrp',
 				'amount'
@@ -334,6 +336,7 @@ router.get(
 				'dateOfManufacture',
 				'expiryDate',
 				'receivedQuantity',
+				'minSalePrice',
 				'price',
 				'mrp',
 				'amount'
@@ -367,6 +370,7 @@ router.get(
 				'dateOfManufacture',
 				'expiryDate',
 				'receivedQuantity',
+				'minSalePrice',
 				'price',
 				'mrp',
 				'amount'

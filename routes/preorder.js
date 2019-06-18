@@ -188,8 +188,13 @@ router.get(
 							),
 							'productName',
 						],
+						'availableQuantity',
 						'batchNumber',
-						'orderQuantity'
+						'orderQuantity',
+						'discount',
+						'rate',
+						'mrp',
+						'totalAmount'
 					],
 				},
 			]
@@ -208,6 +213,35 @@ router.put(
 				productId: req.body.productId,
 				discount: req.body.discount,
 				amount: req.body.amount,
+				totalAmount: req.body.amount,
+				updatedBy: req.user.userId,
+			},
+			{
+				where: {
+					id: req.params.id,
+				},
+			}
+		);
+		return res.status(200).json({
+			mesage: 'success',
+		});
+	})
+);
+
+router.put(
+	'/:id/preorderproducts',
+	[auth.authenticate()],
+	asyncErrorHandlerMiddleWare(async (req, res, next) => {
+		const preOrder = await preorderProducts.update(
+			{
+				preorderId: req.body.preorderId,
+				productId: req.body.productId,
+				batchNumber: req.body.batchNumber,
+				availableQuantity: req.body.availableQuantity,
+				orderQuantity: req.body.orderQuantity,
+				discount: req.body.discount,
+				rate: req.body.rate,
+				mrp: req.body.mrp,
 				totalAmount: req.body.amount,
 				updatedBy: req.user.userId,
 			},

@@ -3322,6 +3322,50 @@
 				}
 			}
 		},
+		"/preorders/{id}/preorderproducts": {
+			"put": {
+				"tags": [
+					"PreOrder"
+				],
+				"description": "Update  preorder products ",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"description": "id",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "Job Parameters",
+						"in": "body",
+						"description": "Preorder Products",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/preorderProducts"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "preorder products response",
+						"schema": {
+							"$ref": "#/definitions/successMessageResponse"
+						}
+					}
+				}
+			}
+		},
 		"/preorders/{preOrderId}": {
 			"delete": {
 				"tags": [
@@ -3551,6 +3595,50 @@
 				"responses": {
 					"200": {
 						"description": "Order response",
+						"schema": {
+							"$ref": "#/definitions/successMessageResponse"
+						}
+					}
+				}
+			}
+		},
+		"/orders/{id}/orderproducts": {
+			"put": {
+				"tags": [
+					"Order"
+				],
+				"description": "Update  order products ",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"description": "id",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "Job Parameters",
+						"in": "body",
+						"description": "order Products",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/orderProducts"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "order products response",
 						"schema": {
 							"$ref": "#/definitions/successMessageResponse"
 						}

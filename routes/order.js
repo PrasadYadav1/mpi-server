@@ -191,8 +191,13 @@ router.get(
 							),
 							'productName',
 						],
+						'availableQuantity',
 						'batchNumber',
-						'orderQuantity'
+						'orderQuantity',
+						'discount',
+						'rate',
+						'mrp',
+						'totalAmount'
 					],
 				},
 			]
@@ -227,6 +232,33 @@ router.put(
 	})
 );
 
+router.put(
+	'/:id/orderproducts',
+	[auth.authenticate()],
+	asyncErrorHandlerMiddleWare(async (req, res, next) => {
+		const order = await orderProducts.update(
+			{
+				productId: req.body.productId,
+				batchNumber: req.body.batchNumber,
+				availableQuantity: req.body.availableQuantity,
+				orderQuantity: req.body.orderQuantity,
+				discount: req.body.discount,
+				rate: req.body.rate,
+				mrp: req.body.mrp,
+				totalAmount: req.body.amount,
+				updatedBy: req.user.userId,
+			},
+			{
+				where: {
+					id: req.params.id,
+				},
+			}
+		);
+		return res.status(200).json({
+			mesage: 'success',
+		});
+	})
+);
 router.delete(
 	'/:orderId',
 	[auth.authenticate()],

@@ -448,40 +448,83 @@ router.get("/list",
                 return res.status(403).json({ message: 'you dont have permission for this resource' })
             let pageIndex = parseInt(req.query.pageIndex);
             let pageSize = parseInt(req.query.pageSize);
-            let managerRelatedusers = { headUserId: req.user.userId };
-            let regionalManagerRelatedusers = { headUserId: req.user.userId };
-            console.log()
-            let searchQuery = [];
+            const propertyNameDefault =
+                req.query.propertyName === undefined ||
+                req.query.propertyName === "null" ||
+                req.query.propertyName === "";
 
-            if (req.query.propertyName === 'name') {
-                searchQuery = [{
-                    $or:
-                        [{ firstName: { $iLike: `%${req.query.propertyValue ? req.query.propertyValue : ''}%` } },
-                        { lastName: { $iLike: `%${req.query.propertyValue ? req.query.propertyValue : ''}%` } }]
-                }]
-            }
-            if (req.query.propertyName === 'employeeId') {
-                searchQuery = [{ employeeId: { $iLike: `%${req.query.propertyValue ? req.query.propertyValue : ''}%` } }]
-            }
-            if (req.query.propertyName === 'supervisor') {
-                searchQuery = [
-                    sequelize.literal(`"headUserId" in (select id from "users" as U2 WHERE U2."isActive" = true
-                 AND (U2."firstName" ILIKE '%${req.query.propertyValue}%' OR
-                 U2."lastName" ILIKE '%${req.query.propertyValue}%'))`)]
-            }
-            if (req.query.propertyName === 'role') {
-                searchQuery = [{ userRole: req.query.propertyValue }]
-            }
+            const propertyValueDefault =
+                req.query.propertyValue === undefined ||
+                req.query.propertyValue === "null" ||
+                req.query.propertyValue === "";
+            const propertyNameData =
+                req.query.propertyName != undefined &&
+                req.query.propertyName != "null" &&
+                req.query.propertyName != "";
+            const propertyValueData =
+                req.query.propertyValue != undefined &&
+                req.query.propertyValue != "null" &&
+                req.query.propertyValue != "";
+            const propertyName = req.query.propertyName;
+            const result =
+                (propertyNameDefault || propertyNameData) && propertyValueDefault;
+            const result1 = propertyNameData && propertyValueData;
+            let whereStatement = {};
+            let selectLiteral = (req.user.userRole === 'Admin') ? `select id from "users" where "userRole" != 'Admin'`
+                : `select id from "users" where "headUserId" in (select id from "users" where "headUserId" = ${req.user.userId})`
 
-            const filters = {
-                Admin: { Search: searchQuery, Default: [] },
-                ZonalManager: {
-                    Search: [...searchQuery, [managerRelatedusers]],
-                    Default: [managerRelatedusers]
-                },
-                RegionalManager: {
-                    Search: [...searchQuery, [regionalManagerRelatedusers]],
-                    Default: [regionalManagerRelatedusers]
+            if (result) {
+                whereStatement = {
+                    isActive: true,
+                    $or: [
+                        {
+                            id: {
+                                $in: [
+                                    sequelize.literal(selectLiteral)
+                                ]
+                            }
+                        },
+                        {
+                            id: {
+                                $in: [
+                                    sequelize.literal(
+                                        'select id from "users" where "headUserId" =' +
+                                        +
+                                        req.user.userId
+                                    )
+                                ]
+                            }
+                        }
+                    ]
+                };
+            } else if (result1) {
+                {
+                    whereStatement = {
+                        isActive: true,
+                        $or: [
+                            {
+                                id: {
+                                    $in: [
+                                        sequelize.literal(selectLiteral)
+                                    ]
+                                }
+                            },
+                            {
+                                id: {
+                                    $in: [
+                                        sequelize.literal(
+                                            'select id from "users" where "headUserId" =' +
+                                            +
+                                            req.user.userId
+                                        )
+                                    ]
+                                }
+                            }
+                        ],
+                        [propertyName]: {
+                            $like: `%${req.query.propertyValue}%`
+                        }
+                    }
                 }
             }
             const resultData = await users.findAndCountAll({
@@ -496,30 +539,19 @@ router.get("/list",
                     "avatar",
                     "mobileNumber",
                     [sequelize.literal(`(SELECT "firstName" || ' ' || "lastName" from
-                 "users" WHERE "users"."id" = "users"."headUserId")`), 'supervisior'],
+                     "users" WHERE "users"."id" = "users"."headUserId")`), 'supervisior'],
                     [sequelize.literal(`(SELECT "amount" from "targetrevenue" WHERE
-                 "targetrevenue"."assigneeId" = "users"."id" AND "targetrevenue"."year" = ${moment().year()}
-                 Order By "updatedAt" DESC limit 1)`)
+                     "targetrevenue"."assigneeId" = "users"."id" AND "targetrevenue"."year" = ${moment().year()}
+                     Order By "updatedAt" DESC limit 1)`)
                         , 'target'],
-                    [sequelize.literal(`CASE WHEN "isActive" = false Then (SELECT DATE("createdAt") from "useractivities" WHERE
-                 "useractivities"."userId" = "users"."id" AND "useractivities"."activityType" = 'Deactivate'
-                 Order By "updatedAt" DESC limit 1) Else null End`)
-                        , 'deactivatedDate'],
-                    [sequelize.literal(`CASE WHEN "userRole" = 'RegionalManager' Then EXISTS(SELECT id from "users" as U1 WHERE
-                U1."headUserId" = "users"."id" AND U1."isActive" = true) Else false End`)
-                        , 'hasAgents'],
                     "headUserId",
                     "dateOfJoin",
-                    "employeeId",
                     "warehouseId",
                     [sequelize.literal(`(select name from warehouses where id = users."warehouseId")`), 'branchName'],
                     "customerIds",
-                    [sequelize.literal(`(select Array(select name from customers where id = ANY (users."customerIds")))`), 'customerNames'],
-                    "isActive"
+                    [sequelize.literal(`(select Array(select name from customers where id = ANY (users."customerIds")))`), 'customerNames']
                 ],
-                where: {
-                    $and: filters[req.user.userRole][(req.query.propertyName) ? 'Search' : 'Default']
-                },
+                where: whereStatement,
                 order: [["createdAt", "DESC"]],
                 limit: pageSize,
                 offset: pageSize * pageIndex

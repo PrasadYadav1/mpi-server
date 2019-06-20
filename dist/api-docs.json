@@ -132,10 +132,12 @@
 						"name": "propertyName",
 						"in": "query",
 						"enum": [
-							"name",
-							"employeeId",
-							"supervisor",
-							"role"
+							"userName",
+							"firstName",
+							"lastName",
+							"email",
+							"designation",
+							"mobileNumber"
 						],
 						"description": "PropertyName",
 						"required": false,
@@ -3433,6 +3435,50 @@
 				}
 			}
 		},
+		"/preorders/{preorderId}/preorderproducts": {
+			"post": {
+				"tags": [
+					"PreOrder"
+				],
+				"description": "Create  preorder products ",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "preorderId",
+						"in": "path",
+						"description": "preorderId",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "Job Parameters",
+						"in": "body",
+						"description": "Preorder Products",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/preorderProducts"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "preorder products response",
+						"schema": {
+							"$ref": "#/definitions/successMessageResponse"
+						}
+					}
+				}
+			}
+		},
 		"/preorders/{id}/preorderproducts": {
 			"put": {
 				"tags": [
@@ -3741,6 +3787,50 @@
 				"responses": {
 					"200": {
 						"description": "Ok"
+					}
+				}
+			}
+		},
+		"/orders/{orderId}/orderproducts": {
+			"post": {
+				"tags": [
+					"Order"
+				],
+				"description": "create  order products ",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "orderId",
+						"in": "path",
+						"description": "orderId",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "Job Parameters",
+						"in": "body",
+						"description": "order Products",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/orderProducts"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "order products response",
+						"schema": {
+							"$ref": "#/definitions/successMessageResponse"
+						}
 					}
 				}
 			}

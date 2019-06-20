@@ -50,7 +50,7 @@ router.get(
             (propertyNameDefault || propertyNameData) && propertyValueDefault;
         const result1 = propertyNameData && propertyValueData;
         let whereStatement = {};
-        let selectLiteral = (req.user.userRole === 'Admin') ? `select id from "users"`
+        let selectLiteral = (req.user.userRole === 'Admin') ? `select id from "users" where "userRole" != 'Admin'`
             : `select id from "users" where "headUserId" in (select id from "users" where "headUserId" = ${req.user.userId})`
 
         if (result) {

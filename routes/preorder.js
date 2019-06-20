@@ -269,6 +269,32 @@ router.delete(
 	})
 );
 
+router.post(
+	'/:preorderId/preorderproducts',
+	[auth.authenticate()],
+	asyncErrorHandlerMiddleWare(async (req, res, next) => {
+		const preOrder = await preorderProducts.create(
+			{
+				preorderId: req.params.preorderId,
+				productId: req.body.productId,
+				batchNumber: req.body.batchNumber,
+				availableQuantity: req.body.availableQuantity,
+				orderQuantity: req.body.orderQuantity,
+				discount: req.body.discount,
+				rate: req.body.rate,
+				mrp: req.body.mrp,
+				totalAmount: req.body.amount,
+				createdBy: req.user.userId,
+				updatedBy: req.user.userId,
+				isActive: true,
+			}
+		);
+		return res.status(200).json({
+			mesage: 'success',
+		});
+	})
+);
+
 router.put(
 	'/:id/preorderproducts',
 	[auth.authenticate()],

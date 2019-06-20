@@ -672,6 +672,51 @@
 				}
 			}
 		},
+		"/users/{userId}/assing/warehouse": {
+			"put": {
+				"tags": [
+					"User"
+				],
+				"summary": "assing warehouse  by userId",
+				"description": "only assign by Admin",
+				"operationId": "for the URL",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "bearer token",
+						"required": true
+					},
+					{
+						"name": "userId",
+						"in": "path",
+						"description": "",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "Job Parameters",
+						"in": "body",
+						"description": "",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/userAssingWarehouse"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Assing Branch and customer",
+						"schema": {
+							"$ref": "#/definitions/successMessageResponse"
+						}
+					}
+				}
+			}
+		},
 		"/users/{userId}/assing/branch/customer": {
 			"put": {
 				"tags": [
@@ -4103,6 +4148,15 @@
 				"dateOfJoin": {
 					"type": "string",
 					"required": true
+				}
+			}
+		},
+		"userAssingWarehouse": {
+			"properties": {
+				"warehouseId": {
+					"required": true,
+					"type": "number",
+					"example": 1
 				}
 			}
 		},

@@ -15,5 +15,14 @@ module.exports = (sequelize, DataTypes) => {
       targetKey: 'id'
     });
   };
+  offers.associate = function (model) {
+    offers.hasMany(
+      model.offerdiscounts,
+      { as: 'offerDiscounts' },
+      {
+        foreignKey: 'offerId',
+        targetKey: 'id',
+      });
+  };
   return offers;
 };

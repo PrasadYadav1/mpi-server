@@ -5,11 +5,11 @@ const auth = require('../authentication/auth')();
 const pagination = require('../dtos/pagination').Pagination;
 const offers = require('../models').offers;
 const products = require('../models').products;
-const offerDTO = require('../dtos/offer')
 const multer = require('multer');
 const reqQueryValidate = require('../utils/req_generic_validations').reqqueryvalidation;
 const reqBodyValidation = require('../utils/req_generic_validations').reqBodyValidation;
 const asyncErrorHandlerMiddleWare = require('../utils/async_custom_handlers').asyncErrorHandler;
+const offerDiscounts = require('../models').offerdiscounts;
 
 router.get(
     '/',
@@ -112,17 +112,33 @@ router.post(
 );
 router.post(
     '/',
-    [auth.authenticate(), reqBodyValidation(offerDTO.offerPost)],
+    [auth.authenticate()],
     asyncErrorHandlerMiddleWare(async (req, res, next) => {
         const offer = await offers.create({
-            ...req.body,
+            offerDate: req.body.offerDate,
+            productId: req.body.productId,
+            offerType: req.body.offerType,
+            imageUrl: req.body.imageUrl,
             createdBy: req.user.userId,
             updatedBy: req.user.userId,
             isActive: true,
         });
-        return res.json(
-            offer,
-        );
+        if (offer) {
+            let strc = req.body.offerDiscounts.map(function (n) {
+                (n.offerId = offer.dataValues.id),
+                    (n.createdBy = req.user.userId),
+                    (n.updatedBy = req.user.userId),
+                    (n.isActive = true);
+                return n;
+            });
+
+            console.log(strc)
+
+            const strceCreate = await offerDiscounts.bulkCreate(strc)
+        }
+        return res.status(200).json({
+            mesage: 'success',
+        })
     })
 );
 
@@ -136,28 +152,44 @@ router.get(
                 'id',
                 'offerDate',
                 'productId',
+                [
+                    sequelize.literal(
+                        '(Select name from products where products.id = "offers"."productId")'
+                    ),
+                    'productName',
+                ],
                 'offerType',
                 'imageUrl',
                 'updatedBy',
                 'createdAt'],
-            include: [
-                {
-                    model: products,
-                    attributes: ['name'],
-                    required: true,
-                },
-            ],
+
             where: {
                 isActive: true,
                 id: req.params.id,
             },
+            include: [
+                {
+                    model: offerDiscounts,
+                    as: 'offerDiscounts',
+                    attributes: [
+                        'id',
+                        'offerId',
+                        'stockReceivedId',
+                        [
+                            sequelize.literal(
+                                '(Select "batchNumber" from stockreceiveds where stockreceiveds.id = "offerDiscounts"."stockReceivedId")'
+                            ),
+                            'batchNumber',
+                        ],
+                        'discount'
+
+                    ],
+                },
+            ]
         });
-        if (!offer) return res.status(404).json({ message: 'not found' });
-        const { product, ...remaining } = offer.get({ plain: true });
-        return res.json({
-            ...remaining,
-            productName: product.name
-        });
+        return res.json(
+            offer
+        );
     })
 );
 
@@ -198,6 +230,68 @@ router.delete(
             {
                 where: {
                     id: req.params.offerId,
+                },
+            }
+        );
+        return res.sendStatus(200);
+    })
+);
+
+
+router.post(
+    '/:offerId/offerdiscounts',
+    [auth.authenticate()],
+    asyncErrorHandlerMiddleWare(async (req, res, next) => {
+        const ofd = await offerDiscounts.create(
+            {
+                offerId: req.params.offerId,
+                stockReceivedId: req.body.stockReceivedId,
+                discount: req.body.discount,
+                createdBy: req.user.userId,
+                updatedBy: req.user.userId,
+                isActive: true,
+            }
+        );
+        return res.status(200).json({
+            mesage: 'success',
+        });
+    })
+);
+
+router.put(
+    '/:id/offerdiscounts',
+    [auth.authenticate()],
+    asyncErrorHandlerMiddleWare(async (req, res, next) => {
+        const ofd = await offerDiscounts.update(
+            {
+                stockReceivedId: req.body.stockReceivedId,
+                discount: req.body.discount,
+                updatedBy: req.user.userId,
+            },
+            {
+                where: {
+                    id: req.params.id,
+                },
+            }
+        );
+        return res.status(200).json({
+            mesage: 'success',
+        });
+    })
+);
+
+router.delete(
+    '/:offerdiscountsId/offerdiscounts',
+    [auth.authenticate()],
+    asyncErrorHandlerMiddleWare(async (req, res, next) => {
+        const odc = await offerDiscounts.update(
+            {
+                isActive: false,
+                updatedBy: req.user.userId,
+            },
+            {
+                where: {
+                    id: req.params.offerdiscountsId,
                 },
             }
         );

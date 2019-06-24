@@ -272,7 +272,13 @@ router.get(
 						'minSalePrice',
 						'price',
 						'mrp',
-						'amount'
+						'amount',
+						[
+							sequelize.literal(
+								'(Select discount from offerdiscounts where offerdiscounts.id = "stockReceiveds".id)'
+							),
+							'discount',
+						],
 					],
 				},
 			]
@@ -305,7 +311,13 @@ router.get(
 				'minSalePrice',
 				'price',
 				'mrp',
-				'amount'
+				'amount',
+				[
+					sequelize.literal(
+						'(Select discount from offerdiscounts where offerdiscounts.id = "stockReceiveds".id)'
+					),
+					'discount',
+				],
 			],
 			where: {
 				isActive: true,
@@ -340,7 +352,13 @@ router.get(
 				'minSalePrice',
 				'price',
 				'mrp',
-				'amount'
+				'amount',
+				[
+					sequelize.literal(
+						'(Select discount from offerdiscounts where offerdiscounts.id = "stockReceiveds".id)'
+					),
+					'discount',
+				],
 			],
 			where: {
 				isActive: true,
@@ -374,7 +392,13 @@ router.get(
 				'minSalePrice',
 				'price',
 				'mrp',
-				'amount'
+				'amount',
+				[
+					sequelize.literal(
+						'(Select discount from offerdiscounts where offerdiscounts.id = "stockReceiveds".id)'
+					),
+					'discount',
+				],
 			],
 			where: {
 				isActive: true,

@@ -5706,6 +5706,11 @@
 					"required": true,
 					"type": "double",
 					"example": 120.0
+				},
+				"discount": {
+					"required": true,
+					"type": "double",
+					"example": 2.0
 				}
 			}
 		},

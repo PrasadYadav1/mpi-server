@@ -316,9 +316,10 @@ router.get(
 	})
 );
 router.get(
-	'/:productId/stockreceiveds',
+	'/stockreceiveds/:productId',
 	[auth.authenticate()],
 	asyncErrorHandlerMiddleWare(async (req, res, next) => {
+		console.log(req.params.productId)
 		const stockReceived = await stockReceiveds.findAll({
 			attributes: [
 				'id',

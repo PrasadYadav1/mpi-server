@@ -355,7 +355,7 @@ router.get(
 				'amount',
 				[
 					sequelize.literal(
-						'(Select discount from offerdiscounts where offerdiscounts.id = stockreceiveds.id)'
+						'(Select discount from offerdiscounts where offerdiscounts."stockReceivedId" = stockreceiveds.id order by offerdiscounts."createdAt" desc  limit 1)'
 					),
 					'discount',
 				],

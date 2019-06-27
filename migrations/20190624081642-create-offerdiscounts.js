@@ -19,7 +19,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       discount: {
-        type: Sequelize.STRING
+        type: Sequelize.DOUBLE
       },
       createdBy: {
         type: Sequelize.INTEGER

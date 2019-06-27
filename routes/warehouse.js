@@ -45,12 +45,12 @@ router.get(
 
     if (result) {
       whereStatement = {
-        warehouseType: 'Primary',
+        // warehouseType: 'Primary',
         isActive: true
       };
     } else if (result1) {
       whereStatement = {
-        warehouseType: 'Primary',
+        //warehouseType: 'Primary',
         isActive: true,
         [propertyName]: {
           $iLike: `%${req.query.propertyValue}%`
@@ -70,7 +70,7 @@ router.get(
           'primaryWarehouseId',
           [
             sequelize.literal(
-              '(Select name from warehouses where warehouses.id = "warehouses"."primaryWarehouseId")'
+              '(select name from warehouses AS wa where wa.id = "warehouses"."primaryWarehouseId")'
             ),
             'primaryWarehouseName'
           ],
@@ -138,7 +138,7 @@ router.get(
         'primaryWarehouseId',
         [
           sequelize.literal(
-            `(select name from warehouses where id = warehouses."primaryWarehouseId")`
+            '(select name from warehouses AS wa where wa.id = "warehouses"."primaryWarehouseId")'
           ),
           'primaryWarehouseName'
         ],

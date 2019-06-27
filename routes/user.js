@@ -440,8 +440,7 @@ router.post("", async (req, res) => {
 
 
 router.get("/list",
-    [auth.authenticate(),
-    reqQueryValidate(userDto.usersListQueryParams)],
+    [auth.authenticate()],
     async (req, res) => {
         try {
             if (req.user.userRole === 'SalesAgent')

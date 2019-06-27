@@ -96,7 +96,7 @@
 				}
 			}
 		},
-		"/users/list?{pageIndex}&{pageSize}": {
+		"/users/list?{pageIndex}&{pageSize}/{propertyName}&{propertyValue}": {
 			"get": {
 				"tags": [
 					"User"

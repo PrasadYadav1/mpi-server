@@ -127,7 +127,9 @@ router.get(
                 "headUserId",
                 "dateOfJoin",
                 "warehouseId",
-                [sequelize.literal(`(select name from warehouses where id = users."warehouseId")`), 'branchName'],
+                [sequelize.literal(`(select name from warehouses where id = users."warehouseId")`), 'warehouseName'],
+                "branchId",
+                [sequelize.literal(`(select name from warehouses where id = users."branchId")`), 'branchName'],
                 "customerIds",
                 [sequelize.literal(`(select Array(select name from customers where id = ANY (users."customerIds")))`), 'customerNames']
             ],
@@ -546,7 +548,9 @@ router.get("/list",
                     "headUserId",
                     "dateOfJoin",
                     "warehouseId",
-                    [sequelize.literal(`(select name from warehouses where id = users."warehouseId")`), 'branchName'],
+                    [sequelize.literal(`(select name from warehouses where id = users."warehouseId")`), 'warehouseName'],
+                    "branchId",
+                    [sequelize.literal(`(select name from warehouses where id = users."branchId")`), 'branchName'],
                     "customerIds",
                     [sequelize.literal(`(select Array(select name from customers where id = ANY (users."customerIds")))`), 'customerNames']
                 ],
@@ -891,6 +895,7 @@ router.put(
         const upa = await users.update(
             {
                 warehouseId: req.body.warehouseId,
+                branchId: req.body.branchId,
                 customerIds: req.body.customerIds,
                 updatedBy: req.user.userId,
             },

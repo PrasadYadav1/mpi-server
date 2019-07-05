@@ -5,6 +5,7 @@ const auth = require('../authentication/auth')();
 const pagination = require('../dtos/pagination').Pagination;
 const productPriceCatalogueParams = require('../dtos/products')
   .productPriceCatalogueParams;
+const productDTO = require('../dtos/product');
 const products = require('../models').products;
 const productprices = require('../models').productprices;
 const reqQueryValidate = require('../utils/req_generic_validations')
@@ -334,18 +335,16 @@ router.get(
 );
 router.post(
   '/',
-  [auth.authenticate()],
+  [auth.authenticate(), reqBodyValidation(productDTO.productPost)],
   asyncErrorHandlerMiddleWare(async (req, res, next) => {
+    const productCount = await products.count({
+      where: {
+        isActive: true
+      }
+    });
     const product = await products.create({
-      name: req.body.name,
-      productCode: req.body.productCode,
-      companyId: req.body.companyId,
-      categoryId: req.body.categoryId,
-      subCategoryId: req.body.subCategoryId,
-      units: req.body.units,
-      unitsofMeasurement: req.body.unitsofMeasurement,
-      description: req.body.description,
-      classificationName: req.body.classificationName,
+      productCode: `PORD0000${(productCount ? productCount : 0) + 1}`,
+      ...req.body,
       createdBy: req.user.userId,
       updatedBy: req.user.userId,
       isActive: true

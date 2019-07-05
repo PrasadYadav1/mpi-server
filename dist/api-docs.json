@@ -3816,6 +3816,21 @@
           "type": "integer",
           "example": 1
         },
+        "warehouseName": {
+          "required": false,
+          "type": "string",
+          "example": "warehouseName"
+        },
+        "branchId": {
+          "required": false,
+          "type": "integer",
+          "example": 1
+        },
+        "branchName": {
+          "required": false,
+          "type": "string",
+          "example": "branchName"
+        },
         "customerIds": {
           "required": true,
           "type": "array",
@@ -4003,6 +4018,11 @@
     "userAssingBranch": {
       "properties": {
         "warehouseId": {
+          "required": true,
+          "type": "number",
+          "example": 1
+        },
+        "branchId": {
           "required": true,
           "type": "number",
           "example": 1
@@ -4721,11 +4741,6 @@
           "required": true,
           "type": "string",
           "example": "Combiflam"
-        },
-        "productCode": {
-          "required": true,
-          "type": "string",
-          "example": "productCode"
         },
         "companyId": {
           "required": true,

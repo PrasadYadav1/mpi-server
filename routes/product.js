@@ -12,7 +12,7 @@ const reqQueryValidate = require('../utils/req_generic_validations')
   .reqqueryvalidation;
 const reqpathNewvalidation = require('../utils/req_generic_validations')
   .reqpathNewvalidation;
-const reqBodyValidate = require('../utils/req_generic_validations')
+const reqBodyValidation = require('../utils/req_generic_validations')
   .reqBodyValidation;
 const asyncErrorHandlerMiddleWare = require('../utils/async_custom_handlers')
   .asyncErrorHandler;

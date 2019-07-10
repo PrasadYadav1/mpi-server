@@ -3662,6 +3662,115 @@
           }
         }
       }
+    },
+    "/orders/{id}/invoice": {
+      "get": {
+        "tags": ["Order"],
+        "description": "get orders invoice ",
+        "operationId": "for the URL",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "bearer token",
+            "required": true
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/orders/invoice?pageIndex={pageIndex}&pageSize={pageSize}&{orderBy}&{fromDate}&{toDate}&{propertyName}&{propertyValue}": {
+      "get": {
+        "tags": ["Order"],
+        "description": "Get All Invoice ",
+        "operationId": "for the URL",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "bearer token",
+            "required": true
+          },
+          {
+            "name": "pageIndex",
+            "in": "query",
+            "description": "PageIndex",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "PageSize",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "orderBy",
+            "in": "query",
+            "enum": ["DESC", "ASC"],
+            "description": "order By",
+            "required": false,
+            "type": "String"
+          },
+          {
+            "name": "fromDate",
+            "in": "query",
+            "description": "fromDate(2017-01-01) (dateOfDelivery)",
+            "required": false,
+            "type": "String"
+          },
+          {
+            "name": "toDate",
+            "in": "query",
+            "description": "toDate(2018-01-01) (dateOfDelivery)",
+            "required": false,
+            "type": "String"
+          },
+          {
+            "name": "propertyName",
+            "in": "query",
+            "enum": [
+              "orderNumber",
+              "customerId",
+              "dateOfDelivery",
+              "discount",
+              "totalAmount"
+            ],
+            "description": "PropertyName",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "propertyValue",
+            "in": "query",
+            "description": "propertyValue",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "order  response",
+            "schema": {
+              "$ref": "#/definitions/orderListData"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -4868,126 +4977,126 @@
           }
         }
       }
-	},
-	"productsPO": {
-		"properties": {
-		  "id": {
-			"required": true,
-			"type": "integer",
-			"example": 1
-		  },
-		  "name": {
-			"required": true,
-			"type": "string",
-			"example": "Combiflam"
-		  },
-		  "productCode": {
-			"required": true,
-			"type": "string",
-			"example": "productCode"
-		  },
-		  "companyId": {
-			"required": true,
-			"type": "integer",
-			"example": 1
-		  },
-		  "companyName": {
-			"required": true,
-			"type": "string",
-			"example": "techno"
-		  },
-		  "categoryId": {
-			"required": true,
-			"type": "integer",
-			"example": 1
-		  },
-		  "categoryName": {
-			"required": true,
-			"type": "string",
-			"example": ""
-		  },
-		  "subCategoryId": {
-			"required": true,
-			"type": "integer",
-			"example": 1
-		  },
-		  "subCategoryName": {
-			"required": true,
-			"type": "string",
-			"example": ""
-		  },
-		  "units": {
-			"required": true,
-			"type": "double",
-			"example": 1.1
-		  },
-		  "unitsofMeasurement": {
-			"required": true,
-			"type": "string",
-			"example": ""
-		  },
-		  "receivedQuantity": {
-			"required": true,
-			"type": "double",
-			"example": 1.1
-		  },
-		  "minSalePrice": {
-			"required": true,
-			"type": "double",
-			"example": 1.1
-		  },
-		  "price": {
-			"required": true,
-			"type": "double",
-			"example": 1.1
-		  },
-		  "mrp": {
-			"required": true,
-			"type": "double",
-			"example": 1.1
-		  },
-		  "amount": {
-			"required": true,
-			"type": "double",
-			"example": 1.1
-		  },
-		  "offerType": {
-			"required": true,
-			"type": "string",
-			"example": "mg"
-		  },
-		  "discount": {
-			"required": true,
-			"type": "double",
-			"example": 1.1
-		  },
-		  "description": {
-			"required": true,
-			"type": "string",
-			"example": "mg"
-		  },
-		  "classificationName": {
-			"required": true,
-			"type": "string",
-			"example": "classificationName"
-		  }
-		}
-	  },
-	"productPreOrderResponseWithPagination": {
-		"properties": {
-		  "count": {
-			"required": true,
-			"type": "integer",
-			"example": 1
-		  },
-		  "rows": {
-			"type": "array",
-			"items": {
-			  "$ref": "#/definitions/productsPO"
-			}
-		  }
-		}
-	  },
+    },
+    "productsPO": {
+      "properties": {
+        "id": {
+          "required": true,
+          "type": "integer",
+          "example": 1
+        },
+        "name": {
+          "required": true,
+          "type": "string",
+          "example": "Combiflam"
+        },
+        "productCode": {
+          "required": true,
+          "type": "string",
+          "example": "productCode"
+        },
+        "companyId": {
+          "required": true,
+          "type": "integer",
+          "example": 1
+        },
+        "companyName": {
+          "required": true,
+          "type": "string",
+          "example": "techno"
+        },
+        "categoryId": {
+          "required": true,
+          "type": "integer",
+          "example": 1
+        },
+        "categoryName": {
+          "required": true,
+          "type": "string",
+          "example": ""
+        },
+        "subCategoryId": {
+          "required": true,
+          "type": "integer",
+          "example": 1
+        },
+        "subCategoryName": {
+          "required": true,
+          "type": "string",
+          "example": ""
+        },
+        "units": {
+          "required": true,
+          "type": "double",
+          "example": 1.1
+        },
+        "unitsofMeasurement": {
+          "required": true,
+          "type": "string",
+          "example": ""
+        },
+        "receivedQuantity": {
+          "required": true,
+          "type": "double",
+          "example": 1.1
+        },
+        "minSalePrice": {
+          "required": true,
+          "type": "double",
+          "example": 1.1
+        },
+        "price": {
+          "required": true,
+          "type": "double",
+          "example": 1.1
+        },
+        "mrp": {
+          "required": true,
+          "type": "double",
+          "example": 1.1
+        },
+        "amount": {
+          "required": true,
+          "type": "double",
+          "example": 1.1
+        },
+        "offerType": {
+          "required": true,
+          "type": "string",
+          "example": "mg"
+        },
+        "discount": {
+          "required": true,
+          "type": "double",
+          "example": 1.1
+        },
+        "description": {
+          "required": true,
+          "type": "string",
+          "example": "mg"
+        },
+        "classificationName": {
+          "required": true,
+          "type": "string",
+          "example": "classificationName"
+        }
+      }
+    },
+    "productPreOrderResponseWithPagination": {
+      "properties": {
+        "count": {
+          "required": true,
+          "type": "integer",
+          "example": 1
+        },
+        "rows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/productsPO"
+          }
+        }
+      }
+    },
     "productPrice": {
       "properties": {
         "productId": {

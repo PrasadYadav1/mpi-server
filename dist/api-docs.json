@@ -6384,6 +6384,11 @@
           "type": "string",
           "example": "customerName"
         },
+        "warehouseName": {
+          "required": true,
+          "type": "string",
+          "example": "warehouseName"
+        },
         "dateOfDelivery": {
           "required": true,
           "type": "date",

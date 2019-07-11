@@ -403,6 +403,68 @@ router.get(
 );
 
 router.get(
+  '/invoice/:id/details',
+  asyncErrorHandlerMiddleWare(async (req, res, next) => {
+    const product = await orders.findOne({
+      attributes: [
+        'id',
+        'orderConfirmed',
+        'orderNumber',
+        'dateOfDelivery',
+        'customerId',
+        [
+          sequelize.literal(
+            '(Select name from customers where customers.id = orders."customerId")'
+          ),
+          'customerName'
+        ],
+        [
+          sequelize.literal(
+            `(select name from warehouses where id = (Select "warehouseId" from customers where customers.id = orders."customerId" limit 1))`
+          ),
+          'warehouseName'
+        ],
+        'discount',
+        'amount',
+        'totalAmount',
+        'updatedBy',
+        'updatedAt',
+        'createdAt'
+      ],
+      where: {
+        isActive: true,
+        id: req.params.id
+      },
+      include: [
+        {
+          model: orderProducts,
+          as: 'orderProducts',
+          attributes: [
+            'id',
+            'orderId',
+            'productId',
+            [
+              sequelize.literal(
+                '(Select name from products where products.id = "orderProducts"."productId")'
+              ),
+              'productName'
+            ],
+            'availableQuantity',
+            'batchNumber',
+            'orderQuantity',
+            'discount',
+            'rate',
+            'mrp',
+            'totalAmount'
+          ]
+        }
+      ]
+    });
+    return res.json(product);
+  })
+);
+
+router.get(
   '/invoice',
   [auth.authenticate(), reqQueryValidate(pagination)],
   asyncErrorHandlerMiddleWare(async (req, res, next) => {

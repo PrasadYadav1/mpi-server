@@ -422,7 +422,7 @@ router.get(
           sequelize.literal(
             `(select name from warehouses where id = (Select "warehouseId" from customers where customers.id = orders."customerId" limit 1))`
           ),
-          'warehouseName'
+          'branchName'
         ],
         'discount',
         'amount',

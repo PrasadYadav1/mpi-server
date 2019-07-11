@@ -6384,10 +6384,10 @@
           "type": "string",
           "example": "customerName"
         },
-        "warehouseName": {
+        "branchName": {
           "required": true,
           "type": "string",
-          "example": "warehouseName"
+          "example": "branchName"
         },
         "dateOfDelivery": {
           "required": true,

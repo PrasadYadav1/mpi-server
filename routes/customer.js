@@ -48,13 +48,13 @@ router.get(
         whereStatement = {
           isActive: true,
           warehouseId: req.user.warehouseId,
-          id: req.user.customerIds
+          id: { $in: req.user.customerIds }
         };
       } else if (result1) {
         whereStatement = {
           isActive: true,
           warehouseId: req.user.warehouseId,
-          id: req.user.customerIds,
+          id: { $in: req.user.customerIds },
           [propertyName]: {
             $iLike: `%${req.query.propertyValue}%`
           }

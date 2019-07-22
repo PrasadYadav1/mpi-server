@@ -9,6 +9,7 @@ const reqBodyValidate = require('../utils/req_generic_validations').reqBodyValid
 const asyncErrorHandlerMiddleWare = require('../utils/async_custom_handlers').asyncErrorHandler;
 const preOrders = require('../models').preorders;
 const preorderProducts = require('../models').preorderproducts;
+const customers = require('../models').customers;
 const { fileStorage } = require('../utils/common')
 
 const nodemailer = require('nodemailer'); 
@@ -124,6 +125,13 @@ router.post(
 				isActive: true
 			}
 		})
+		const customerData = await customers.findOne({
+			where: {
+				isActive: true,
+				id:req.body.customerId
+			}
+		})
+		
 		const preOrder = await preOrders.create({
 			preorderConfirmed: false,
 			preOrderNumber: `PORD0000${(preOrderCount ? preOrderCount : 0) + 1}`,
@@ -156,7 +164,7 @@ router.post(
 		  });
 		  const mailOptions = {
 			from: 'krishnarao.inturi@technoidentity.com',
-			to: 'praveen.kambli@technoidentity.com',
+			to: `${customerData.dataValues.primaryEmail},${req.user.email}`,
 			subject: 'Pre Order',
 			html: `<h1>Pre Order Number: ${preOrder.dataValues.preOrderNumber}</h1><p>Date of Delivery: ${preOrder.dataValues.dateOfDelivery}</p>`
 		  };

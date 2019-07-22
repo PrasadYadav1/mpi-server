@@ -2,12 +2,16 @@ const express = require('express');
 const router = express.Router();
 const sequelize = require('sequelize');
 const auth = require('../authentication/auth')();
+const multer = require('multer');
 const pagination = require('../dtos/pagination').Pagination;
 const reqQueryValidate = require('../utils/req_generic_validations').reqqueryvalidation;
 const reqBodyValidate = require('../utils/req_generic_validations').reqBodyValidation;
 const asyncErrorHandlerMiddleWare = require('../utils/async_custom_handlers').asyncErrorHandler;
 const preOrders = require('../models').preorders;
 const preorderProducts = require('../models').preorderproducts;
+const { fileStorage } = require('../utils/common')
+
+const nodemailer = require('nodemailer'); 
 
 router.get(
 	'/',
@@ -143,6 +147,27 @@ router.post(
 
 			const strceCreate = await preorderProducts.bulkCreate(strc)
 		}
+		const transporter = nodemailer.createTransport({
+			service: 'gmail',
+			auth: {
+			  user: 'krishnarao.inturi@technoidentity.com',
+			  pass: 'Design_20'
+			}
+		  });
+		  const mailOptions = {
+			from: 'krishnarao.inturi@technoidentity.com',
+			to: 'praveen.kambli@technoidentity.com',
+			subject: 'Pre Order',
+			html: `<h1>Pre Order Number: ${preOrder.dataValues.preOrderNumber}</h1><p>Date of Delivery: ${preOrder.dataValues.dateOfDelivery}</p>`
+		  };
+		  
+		  transporter.sendMail(mailOptions, function(error, info){
+			if (error) {
+			  console.log(error);
+			} else {
+			  console.log('Email sent: ' + info.response);
+			}
+		  }); 
 		return res.status(200).json({
 			mesage: 'success',
 		})
@@ -169,6 +194,7 @@ router.get(
 				'discount',
 				'amount',
 				'totalAmount',
+				'digitalSignature',
 				'updatedBy',
 				'updatedAt',
 				'createdAt',
@@ -202,6 +228,8 @@ router.get(
 				},
 			]
 		});
+
+		var decodedImage = new Buffer(product.digitalSignature, 'base64').toString('binary');
 		return res.json(product);
 	})
 );
@@ -250,6 +278,56 @@ router.put(
 	})
 );
 
+// router.put(
+// 	'/:id/digitalsignature',
+// 	[auth.authenticate()],
+// 	asyncErrorHandlerMiddleWare(async (req, res, next) => {
+// 		  const upload = multer({
+// 			  storage: fileStorage('')
+// 		  }).single('digitalSignature');
+//      upload(req,res, async() => {
+	   
+// 	   var encodedImage = new Buffer(req.file.filename, 'binary').toString('base64');
+// 	   console.log(encodedImage)
+// 	   const preOrder = await preOrders.update(
+// 		{
+// 			digitalSignature: encodedImage,
+// 			updatedBy: req.user.userId,
+// 		},
+// 		{
+// 			where: {
+// 				id: req.params.id,
+// 			},
+// 		}
+// 	);
+// 	 });		  
+		 
+// 		return res.status(200).json({
+// 			mesage: 'success',
+// 		});
+// 	})
+// );
+
+router.put(
+	'/:id/digitalsignature',
+	[auth.authenticate()],
+	asyncErrorHandlerMiddleWare(async (req, res, next) => {
+		const preOrder = await preOrders.update(
+			{
+				digitalSignature:req.body.digitalSignature,
+				updatedBy: req.user.userId,
+			},
+			{
+				where: {
+					id: req.params.id,
+				},
+			}
+		);
+		return res.status(200).json({
+			mesage: 'success',
+		});
+	})
+);
 router.delete(
 	'/:preOrderId',
 	[auth.authenticate()],

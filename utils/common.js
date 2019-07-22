@@ -1,4 +1,5 @@
 const moment = require('moment');
+const multer = require('multer')
 
 const formatDateString = (dateString,formatString) =>
   moment(dateString).format(formatString)
@@ -26,4 +27,22 @@ const formatDateString = (dateString,formatString) =>
    }
  }
 
-module.exports = { formatDateString, groupByArrayOfObjects,getOrDefaultValue, getJavascriptData}
+ const fileStorage = (path) =>  multer.diskStorage({
+  destination: function (req, file, callback) {
+      const dateTime = Date.now();
+      callback(null, path);
+  },
+  filename: function (req, file, cb) {
+      let datetimestamp = Date.now();
+      cb(
+          null,
+          file.fieldname +
+          '-' +
+          datetimestamp +
+          '.' +
+          file.originalname.split('.')[file.originalname.split('.').length - 1]
+      );
+  },
+});
+
+module.exports = { formatDateString, groupByArrayOfObjects,getOrDefaultValue, getJavascriptData, fileStorage}

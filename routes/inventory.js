@@ -280,7 +280,7 @@ router.get(
             'productId',
             [
               sequelize.literal(
-                '(Select name from products where products.id = stockreceiveds."productId")'
+                '(Select name from products where products.id = "stockReceiveds"."productId")'
               ),
               'productName'
             ],
@@ -295,7 +295,7 @@ router.get(
             'amount',
             [
               sequelize.literal(
-                '(Select discount from offerdiscounts where offerdiscounts.id = stockreceiveds.id)'
+                '(Select discount from offerdiscounts where offerdiscounts.id = "stockReceiveds".id)'
               ),
               'discount'
             ]

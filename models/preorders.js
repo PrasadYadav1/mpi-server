@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     discount: DataTypes.DOUBLE,
     amount: DataTypes.DOUBLE,
     totalAmount: DataTypes.DOUBLE,
+    digitalSignature:DataTypes.BLOB('long'),
     createdBy: DataTypes.INTEGER,
     updatedBy: DataTypes.INTEGER,
     isActive: DataTypes.BOOLEAN

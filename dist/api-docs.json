@@ -3206,6 +3206,46 @@
         }
       }
     },
+    "/preorders/{id}/digitalsignature": {
+      "put": {
+        "tags": ["PreOrder"],
+        "description": "Update PreOrder",
+        "operationId": "for the URL",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "bearer token",
+            "required": true
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "Job Parameters",
+            "in": "body",
+            "description": "PreOrder",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/digitalSignature"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "PreOrder response",
+            "schema": {
+              "$ref": "#/definitions/successMessageResponse"
+            }
+          }
+        }
+      }
+    },
     "/preorders/{preOrderId}": {
       "delete": {
         "tags": ["PreOrder"],
@@ -4885,6 +4925,15 @@
           "required": true,
           "type": "string",
           "example": "classificationName"
+        }
+      }
+    },
+    "digitalSignature": {
+      "properties": {
+        "digitalSignature": {
+          "required": true,
+          "type": "file",
+          "example": "base64String"
         }
       }
     },

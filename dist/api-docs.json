@@ -1576,6 +1576,56 @@
         }
       }
     },
+    "/products/all/categories": {
+      "get": {
+        "tags": ["Product"],
+        "description": "Get All Product by categories",
+        "operationId": "for the URL",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "bearer token",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Product response",
+            "schema": {
+              
+              "$ref": "#/definitions/productCategories"
+            }
+          }
+        }
+      }
+    },
+    "/products/all/companies": {
+      "get": {
+        "tags": ["Product"],
+        "description": "Get All Product by companies",
+        "operationId": "for the URL",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "bearer token",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Product response",
+            "schema": {
+             
+              "$ref": "#/definitions/productCompanies"
+            }
+          }
+        }
+      }
+    },
     "/products/all?{propertyName}&{propertyValue}": {
       "get": {
         "tags": ["Product"],
@@ -5012,6 +5062,58 @@
         "$ref": "#/definitions/productsp"
       }
     },
+    "productCategories": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/productCategory"
+      }
+    },
+    "productCategory": {
+      "properties": {
+       
+        "categoryId": {
+          "required": true,
+          "type": "integer",
+          "example": 2
+        },
+        "categoryName": {
+          "required": true,
+          "type": "string",
+          "example": "Pharmaceuticals"
+        },
+        "productCount": {
+          "required": true,
+          "type": "string",
+          "example": "10"
+        }
+      }
+    },
+    "productCompanies": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/productCompany"
+      }
+    },
+    "productCompany": {
+      "properties": {
+        "companyId": {
+          "required": true,
+          "type": "integer",
+          "example": 1
+        },
+        "companyName": {
+          "required": true,
+          "type": "string",
+          "example": "techno"
+        },
+        "productCount": {
+          "required": true,
+          "type": "string",
+          "example": "10"
+        }
+      }
+    },
+    
     "productResponseWithPagination": {
       "properties": {
         "count": {

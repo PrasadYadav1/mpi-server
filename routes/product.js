@@ -333,6 +333,68 @@ router.get(
     );
   })
 );
+
+router.get(
+  '/all/categories',
+  [auth.authenticate()],
+  asyncErrorHandlerMiddleWare(async (req, res, next) => {
+    return res.json(
+      await products.findAll({
+        group:["categoryId","categoryName"],
+        attributes: [
+          'categoryId',
+          [
+            sequelize.literal(
+              '(Select name from categories where categories.id = products."categoryId")'
+            ),
+            'categoryName'
+          ],
+          [
+            sequelize.literal(
+              '(Select count(id) from products)'
+            ),
+            'productCount'
+          ],
+        ],
+        where: {
+          isActive: true
+        }
+      })
+    );
+  })
+);
+
+router.get(
+  '/all/companies',
+  [auth.authenticate()],
+  asyncErrorHandlerMiddleWare(async (req, res, next) => {
+    return res.json(
+      await products.findAll({
+        group:["companyId","companyName"],
+        attributes: [
+       "companyId",
+          [
+            sequelize.literal(
+              '(Select name from companies where companies.id = products."companyId")'
+            ),
+            'companyName'
+          ],
+          [
+            sequelize.literal(
+              '(Select count(id) from products)'
+            ),
+            'productCount'
+          ],
+        ],
+        where: {
+          isActive: true
+        }
+      })
+    );
+  })
+);
+
+
 router.post(
   '/',
   [auth.authenticate(), reqBodyValidation(productDTO.productPost)],

@@ -351,7 +351,7 @@ router.get(
           ],
           [
             sequelize.literal(
-              '(Select count(id) from products)'
+              ' count("categoryId")'
             ),
             'productCount'
           ],
@@ -381,7 +381,7 @@ router.get(
           ],
           [
             sequelize.literal(
-              '(Select count(id) from products)'
+              'count("companyId")'
             ),
             'productCount'
           ],

@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     batchNumber: DataTypes.STRING,
     availableQuantity: DataTypes.DOUBLE,
     orderQuantity: DataTypes.DOUBLE,
+    minSalePrice: DataTypes.DOUBLE,
     discount: DataTypes.DOUBLE,
     rate: DataTypes.DOUBLE,
     mrp: DataTypes.DOUBLE,

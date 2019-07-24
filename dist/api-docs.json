@@ -630,6 +630,47 @@
         }
       }
     },
+    "/users/{userId}/assing/branch": {
+      "put": {
+        "tags": ["User"],
+        "summary": "assing Branch  by userId",
+        "description": "only accessible to Admin",
+        "operationId": "for the URL",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "bearer token",
+            "required": true
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "Job Parameters",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/userAssingBranch"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Assing Branch",
+            "schema": {
+              "$ref": "#/definitions/successMessageResponse"
+            }
+          }
+        }
+      }
+    },
     "/users/{userId}/assing/branch/customer": {
       "put": {
         "tags": ["User"],
@@ -657,7 +698,7 @@
             "description": "",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/userAssingBranch"
+              "$ref": "#/definitions/userAssingBranchCustomer"
             }
           }
         ],
@@ -4215,6 +4256,20 @@
       }
     },
     "userAssingBranch": {
+      "properties": {
+        "warehouseId": {
+          "required": true,
+          "type": "number",
+          "example": 1
+        },
+        "branchId": {
+          "required": true,
+          "type": "number",
+          "example": 1
+        }
+      }
+    },
+    "userAssingBranchCustomer": {
       "properties": {
         "warehouseId": {
           "required": true,

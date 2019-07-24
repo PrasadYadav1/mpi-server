@@ -887,6 +887,29 @@ router.put(
     })
 );
 
+router.put(
+    '/:userId/assing/branch',
+    [auth.authenticate()],
+    asyncErrorHandlerMiddleWare(async (req, res, next) => {
+        const upa = await users.update(
+            {
+                warehouseId: req.body.warehouseId,
+                branchId: req.body.branchId,
+                updatedBy: req.user.userId,
+            },
+            {
+                where: {
+                    id: {
+                        $eq: req.params.userId,
+                    },
+                },
+            }
+        );
+        return res.status(200).json({
+            mesage: 'success',
+        });
+    })
+);
 
 router.put(
     '/:userId/assing/branch/customer',

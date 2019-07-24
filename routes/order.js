@@ -261,6 +261,30 @@ router.put(
         }
       }
     );
+    if(req.body.orderProducts){
+    const data = req.body.orderProducts[0]
+      const orderproducts = await orderProducts.update(
+        {
+          productId: data.productId,
+          batchNumber: data.batchNumber,
+          availableQuantity: data.availableQuantity,
+          orderQuantity: data.orderQuantity,
+          minSalePrice: data.minSalePrice,
+          discount: data.discount,
+          rate: data.rate,
+          mrp: data.mrp,
+          totalAmount: data.amount,
+          updatedBy: req.user.userId
+        },
+        {
+          where: {
+            id: data.id
+          }
+        }
+      );
+    }
+    
+
     return res.status(200).json({
       mesage: 'success'
     });

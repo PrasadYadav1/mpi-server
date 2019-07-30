@@ -1500,7 +1500,7 @@
     "/products?pageIndex={pageIndex}&pageSize={pageSize}&{propertyName}&{propertyValue}": {
       "get": {
         "tags": ["Product"],
-        "description": "Get All Product ",
+        "description": "Get All Product --> classificationName(ALKES,ETHICAL,OTC,GENGIGEL,CITREX,PELANGI,VITABIOTICS,UPIN IPIN,OTHERS,OGB,VIVO)",
         "operationId": "for the URL",
         "produces": ["application/json"],
         "parameters": [
@@ -1529,6 +1529,7 @@
             "in": "query",
             "enum": [
               "name",
+              "classificationName",
               "companyId",
               "categoryId",
               "subCategoryId",
@@ -1560,7 +1561,7 @@
     "/products/preorder?pageIndex={pageIndex}&pageSize={pageSize}&{propertyName}&{propertyValue}": {
       "get": {
         "tags": ["Product"],
-        "description": "Get All Product ",
+        "description": "Get All Product, classificationName(ALKES,ETHICAL,OTC,GENGIGEL,CITREX,PELANGI,VITABIOTICS,UPIN IPIN,OTHERS,OGB,VIVO)",
         "operationId": "for the URL",
         "produces": ["application/json"],
         "parameters": [
@@ -1589,6 +1590,7 @@
             "in": "query",
             "enum": [
               "name",
+              "classificationName",
               "companyId",
               "categoryId",
               "subCategoryId",
@@ -1635,7 +1637,6 @@
           "200": {
             "description": "Product response",
             "schema": {
-              
               "$ref": "#/definitions/productCategories"
             }
           }
@@ -1660,7 +1661,6 @@
           "200": {
             "description": "Product response",
             "schema": {
-             
               "$ref": "#/definitions/productCompanies"
             }
           }
@@ -1685,6 +1685,7 @@
             "in": "query",
             "enum": [
               "name",
+              "classificationName",
               "companyName",
               "injectionType",
               "formType",
@@ -1717,7 +1718,7 @@
     "/products": {
       "post": {
         "tags": ["Product"],
-        "description": "Create new Product,injectionType(Oral, Rectal),formType(Tablet, capsule, suspension, softgel)",
+        "description": "Create new Product,injectionType(Oral, Rectal),formType(Tablet, capsule, suspension, softgel),classificationName(ALKES,ETHICAL,OTC,GENGIGEL,CITREX,PELANGI,VITABIOTICS,UPIN IPIN,OTHERS,OGB,VIVO) ",
         "operationId": "for the URL",
         "produces": ["application/json"],
         "parameters": [
@@ -5125,7 +5126,6 @@
     },
     "productCategory": {
       "properties": {
-       
         "categoryId": {
           "required": true,
           "type": "integer",
@@ -5168,7 +5168,7 @@
         }
       }
     },
-    
+
     "productResponseWithPagination": {
       "properties": {
         "count": {

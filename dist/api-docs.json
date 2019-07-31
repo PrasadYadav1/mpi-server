@@ -6466,6 +6466,17 @@
           "type": "double",
           "example": 120.0
         },
+        "isApproved": {
+          "required": true,
+          "type": "boolean",
+          "example": true
+        },
+        "isApprovedBy": {
+          "required": true,
+          "type": "string",
+          "example": "krishna"
+        },
+
         "preorderProducts": {
           "type": "array",
           "items": {
@@ -6723,6 +6734,16 @@
           "required": true,
           "type": "double",
           "example": 120.0
+        },
+        "isApproved": {
+          "required": true,
+          "type": "boolean",
+          "example": true
+        },
+        "isApprovedBy": {
+          "required": true,
+          "type": "string",
+          "example": "krishna"
         },
         "orderProducts": {
           "type": "array",

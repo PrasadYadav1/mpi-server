@@ -5,7 +5,7 @@ const sequelize = require("sequelize");
 const { update } = require("tcomb");
 
 const getRelatedUsers = async (usr, attributesArray) => {
-    if (usr.userRole === 'Admin') {
+    if (usr.userRole === 'pharmacist') {
         return await User.findAll({
             attributes: attributesArray,
             where: {
@@ -13,8 +13,8 @@ const getRelatedUsers = async (usr, attributesArray) => {
                     { isActive: true },
                     {
                         $or: [
-                            { userRole: { $eq: 'ZonalManager' } },
-                            { userRole: { $eq: 'RegionalManager' } },
+                            { userRole: { $eq: 'bfo' } },
+                            { userRole: { $eq: 'sm' } },
                             { userRole: { $eq: 'SalesAgent' } }
                         ]
                     },
@@ -22,7 +22,7 @@ const getRelatedUsers = async (usr, attributesArray) => {
             },
             raw: true
         });
-    } else if (usr.userRole === "ZonalManager") {
+    } else if (usr.userRole === "bfo") {
         const regionalManager = await users.findAll({
             attributes: attributesArray,
             where: {
@@ -32,7 +32,7 @@ const getRelatedUsers = async (usr, attributesArray) => {
             raw: true
         });
         return regionalManager;
-    } else if (usr.userRole === "RegionalManager") {
+    } else if (usr.userRole === "sm") {
         const salesAgents = await users.findAll({
             attributes: attributesArray,
             where: {
@@ -48,7 +48,7 @@ const getRelatedUsers = async (usr, attributesArray) => {
 };
 
 const getRelatedUsersBySearch = async (usr, attributesArray, searchBy, value) => {
-    if (usr.userRole === 'Admin') {
+    if (usr.userRole === 'pharmacist') {
         return await users.findAll({
             attributes: attributesArray,
             where: {
@@ -56,8 +56,8 @@ const getRelatedUsersBySearch = async (usr, attributesArray, searchBy, value) =>
                     { isActive: true },
                     {
                         $or: [
-                            { userRole: { $eq: 'ZonalManager' } },
-                            { userRole: { $eq: 'RegionalManager' } },
+                            { userRole: { $eq: 'bfo' } },
+                            { userRole: { $eq: 'sm' } },
                             { userRole: { $eq: 'SalesAgent' } }
                         ]
                     },
@@ -70,7 +70,7 @@ const getRelatedUsersBySearch = async (usr, attributesArray, searchBy, value) =>
             },
             raw: true
         });
-    } else if (usr.userRole === "ZonalManager") {
+    } else if (usr.userRole === "bfo") {
         const regionalManager = await users.findAll({
             attributes: attributesArray,
             where: {
@@ -83,7 +83,7 @@ const getRelatedUsersBySearch = async (usr, attributesArray, searchBy, value) =>
             raw: true
         });
         return regionalManager;
-    } else if (usr.userRole === "RegionalManager") {
+    } else if (usr.userRole === "sm") {
         const salesAgents = await users.findAll({
             attributes: attributesArray,
             where: {

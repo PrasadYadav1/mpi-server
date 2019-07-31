@@ -50,7 +50,7 @@ router.get(
             (propertyNameDefault || propertyNameData) && propertyValueDefault;
         const result1 = propertyNameData && propertyValueData;
         let whereStatement = {};
-        let selectLiteral = (req.user.userRole === 'Admin') ? `select id from "users" where "userRole" != 'Admin'`
+        let selectLiteral = (req.user.userRole === 'pharmacist') ? `select id from "users" where "userRole" != 'pharmacist'`
             : `select id from "users" where "headUserId" in (select id from "users" where "headUserId" = ${req.user.userId})`
 
         if (result) {
@@ -143,7 +143,7 @@ router.get(
 router.get('/locations', [auth.authenticate()],
     reqQueryValidate(userDto.usersearch),
     asyncErrorHandlerMiddleWare(async (req, res, next) => {
-        if (!userUtils.verifyRole(req.user.userRole, 'ZonalManager'))
+        if (!userUtils.verifyRole(req.user.userRole, 'bfo'))
             return res.status(403).json({ message: 'you dont have permission to access this resource' });
         const searchByRequired = req.query && req.query.searchBy;
         if (searchByRequired && !req.query.searchByValue)
@@ -203,9 +203,9 @@ router.get('/locations', [auth.authenticate()],
 router.get('/:userId/locations', [auth.authenticate()],
     reqpathNewvalidation(userDto.userPathParm),
     asyncErrorHandlerMiddleWare(async (req, res, next) => {
-        if (!verifyRoles(['ZonalManager', 'RegionalManager', 'Admin'], req.user.userRole))
+        if (!verifyRoles(['bfo', 'sm', 'pharmacist'], req.user.userRole))
             return res.status(403).json({ message: 'you dont have permission to access this resource' });
-        const userData = (req.user.userRole === 'Admin') ? { id: parseInt(req.params.userId) }
+        const userData = (req.user.userRole === 'pharmacist') ? { id: parseInt(req.params.userId) }
             : await userUtils.getUserUnderAManager(
                 req.user.userId,
                 [
@@ -251,7 +251,7 @@ router.get('/:userId/locations', [auth.authenticate()],
 router.get('/:userId/last/location', [auth.authenticate()],
     reqpathNewvalidation(userDto.userPathParm),
     asyncErrorHandlerMiddleWare(async (req, res, next) => {
-        if (!userUtils.verifyRole(req.user.userRole, 'ZonalManager'))
+        if (!userUtils.verifyRole(req.user.userRole, 'bfo'))
             return res.status(403).json({ message: 'you dont have permission to access this resource' });
         const userData = await userUtils.getUserUnderAManager(
             req.user.userId,
@@ -288,13 +288,13 @@ router.get('/:userId/last/location', [auth.authenticate()],
 router.get('/lastLocations', [auth.authenticate()],
     // reqQueryValidate(userDto.usersearch),
     asyncErrorHandlerMiddleWare(async (req, res, next) => {
-        if (!authUtils.verifyRoles(['ZonalManager', 'RegionalManager', 'Admin'], req.user.userRole))
+        if (!authUtils.verifyRoles(['bfo', 'sm', 'pharmacist'], req.user.userRole))
             return res.status(403).json({ message: 'you dont have permission to access this resource' });
         const searchByRequired = req.query && req.query.searchBy;
         if (searchByRequired && !req.query.searchByValue)
             return res.status(400).json({ message: 'searchByValue query string missing' });
         const dataBase = sequlizeUtils.getSqlize(db);
-        const filters = (req.user.userRole === 'Admin') ? {
+        const filters = (req.user.userRole === 'pharmacist') ? {
             query: '', replacements: null
         } : {
                 replacements: {
@@ -471,7 +471,7 @@ router.get("/list",
                 (propertyNameDefault || propertyNameData) && propertyValueDefault;
             const result1 = propertyNameData && propertyValueData;
             let whereStatement = {};
-            let selectLiteral = (req.user.userRole === 'Admin') ? `select id from "users" where "userRole" != 'Admin'`
+            let selectLiteral = (req.user.userRole === 'pharmacist') ? `select id from "users" where "userRole" != 'pharmacist'`
                 : `select id from "users" where "headUserId" in (select id from "users" where "headUserId" = ${req.user.userId})`
 
             if (result) {
@@ -581,7 +581,7 @@ reqpathNewvalidation(userType)], reqQueryValidate(userTypeQuery),
 
             let notIncludeLoggedInUser = { id: { $ne: req.user.userId } };
 
-            let defaultCond = (req.user.userRole === 'Admin') ?
+            let defaultCond = (req.user.userRole === 'pharmacist') ?
                 [notIncludeLoggedInUser] : [notIncludeLoggedInUser, { headUserId: req.user.userId }];
 
             let searchQuery = [notIncludeLoggedInUser, {
@@ -631,17 +631,17 @@ reqpathNewvalidation(userType)], reqQueryValidate(userTypeQuery),
             if (req.params.type === 'SalesAgent') {
                 whereStatement = {
                     isActive: true,
-                    userRole: 'RegionalManager'
+                    userRole: 'sm'
                 };
-            } else if (req.params.type === 'RegionalManager') {
+            } else if (req.params.type === 'sm') {
                 whereStatement = {
                     isActive: true,
-                    userRole: 'ZonalManager'
+                    userRole: 'bfo'
                 };
-            } else if (req.params.type === 'ZonalManager') {
+            } else if (req.params.type === 'bfo') {
                 whereStatement = {
                     isActive: true,
-                    userRole: 'Admin'
+                    userRole: 'pharmacist'
                 };
             }
 
@@ -664,7 +664,7 @@ router.put("/:userId/assignManager",
     [auth.authenticate(), reqpathNewvalidation(userPathParm),
     reqBodyValidation(managerAssign)], async (req, res) => {
         try {
-            if (req.user.userRole !== 'Admin')
+            if (req.user.userRole !== 'pharmacist')
                 return res.status(403).json({ message: 'you dont have permission for this resource' })
             let salesAgentId = parseInt(req.params.userId);
             let managerId = parseInt(req.body.managerId);
@@ -677,7 +677,7 @@ router.put("/:userId/assignManager",
                 raw: true
             });
             let salesAgent = usersData.find((u) => u.id === salesAgentId && u.userRole === 'SalesAgent');
-            let manager = usersData.find((u) => u.id === managerId && u.userRole === 'RegionalManager')
+            let manager = usersData.find((u) => u.id === managerId && u.userRole === 'sm')
             if (!salesAgent) return res.status(404).json({ message: "sales agent not found" });
             if (!manager) return res.status(404).json({ message: "manager not found" });
             // if(salesAgent.headUserId) return res.status(409).json({ message: "you cannot change manager at this time"});
@@ -709,7 +709,7 @@ router.put("/:userId/changeStatus",
     [reqQueryValidate(userDto.userstatusChangeQueryParams)]]
     , async (req, res) => {
         try {
-            if (req.user.userRole !== 'Admin')
+            if (req.user.userRole !== 'pharmacist')
                 return res.status(403).json({ message: 'you dont have permission for this resource' })
             let userId = parseInt(req.params.userId);
             const userData = await users.findOne({
@@ -793,7 +793,7 @@ router.put(
     reqpathNewvalidation(userDto.userPathParm), reqBodyValidation(userUpdateBody),
     asyncErrorHandlerMiddleWare(async (req, res, next) => {
 
-        if (req.user.userRole !== 'Admin') {
+        if (req.user.userRole !== 'pharmacist') {
             return res.status(403).json({ message: 'you dont have access to this resource' });
         }
         const userId = req.params.userId;
@@ -826,7 +826,7 @@ router.put(
     [auth.authenticate(), reqpathNewvalidation(userDto.newManagerAssign)],
     asyncErrorHandlerMiddleWare(async (req, res, next) => {
 
-        if (req.user.userRole !== 'Admin') {
+        if (req.user.userRole !== 'pharmacist') {
             return res.status(403).json({ message: 'you dont have access to this resource' });
         }
         const managerId = parseInt(req.params.managerId);
@@ -840,9 +840,9 @@ router.put(
             },
             raw: true
         });
-        if (!managersAndAgents.some((m) => m.id === managerId && m.userRole === 'RegionalManager'))
+        if (!managersAndAgents.some((m) => m.id === managerId && m.userRole === 'sm'))
             return res.status(404).json({ message: 'manager not found' });
-        if (!managersAndAgents.some((m) => m.id === newManagerId && m.userRole === 'RegionalManager'))
+        if (!managersAndAgents.some((m) => m.id === newManagerId && m.userRole === 'sm'))
             return res.status(404).json({ message: 'newManager not found' });
 
         if (managersAndAgents.filter((ma) => ma.headUserId === managerId).length === 0)

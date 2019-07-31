@@ -1558,7 +1558,7 @@
         }
       }
     },
-    "/products/preorder?pageIndex={pageIndex}&pageSize={pageSize}&{propertyName}&{propertyValue}": {
+    "/products/preorder?pageIndex={pageIndex}&pageSize={pageSize}&classificationName={classificationName}&{propertyName}&{propertyValue}": {
       "get": {
         "tags": ["Product"],
         "description": "Get All Product, classificationName(ALKES,ETHICAL,OTC,GENGIGEL,CITREX,PELANGI,VITABIOTICS,UPIN IPIN,OTHERS,OGB,VIVO)",
@@ -1586,11 +1586,30 @@
             "type": "integer"
           },
           {
+            "name": "classificationName",
+            "in": "query",
+            "enum": [
+              "ALKES",
+              "ETHICAL",
+              "OTC",
+              "GENGIGEL",
+              "CITREX",
+              "PELANGI",
+              "VITABIOTICS",
+              "UPIN IPIN",
+              "OTHERS",
+              "OGB",
+              "VIVO"
+            ],
+            "description": "classificationName",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "propertyName",
             "in": "query",
             "enum": [
               "name",
-              "classificationName",
               "companyId",
               "categoryId",
               "subCategoryId",
@@ -6348,7 +6367,7 @@
     },
     "isApproved": {
       "properties": {
-        "amount": {
+        "isApproved": {
           "required": true,
           "type": "boolean",
           "example": true

@@ -133,7 +133,7 @@ router.get(
           'isApproved',
           [
             sequelize.literal(
-              '(Select "firstName" from users where users.id = preOrders."isApprovedBy")'
+              '(Select "userRole" from users where users.id = preOrders."isApprovedBy")'
             ),
             'isApprovedBy'
           ],
@@ -241,7 +241,7 @@ router.get(
         'isApproved',
         [
           sequelize.literal(
-            '(Select "firstName" from users where users.id = preOrders."isApprovedBy")'
+            '(Select "userRole" from users where users.id = preOrders."isApprovedBy")'
           ),
           'isApprovedBy'
         ],

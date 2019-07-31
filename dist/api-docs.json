@@ -3298,6 +3298,46 @@
         }
       }
     },
+    "/preorders/isapproved/{id}": {
+      "put": {
+        "tags": ["PreOrder"],
+        "description": "PreOrder is approved or not",
+        "operationId": "for the URL",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "bearer token",
+            "required": true
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "Job Parameters",
+            "in": "body",
+            "description": "PreOrder",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/isApproved"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "PreOrder response",
+            "schema": {
+              "$ref": "#/definitions/successMessageResponse"
+            }
+          }
+        }
+      }
+    },
     "/preorders/{id}/digitalsignature": {
       "put": {
         "tags": ["PreOrder"],
@@ -3646,6 +3686,46 @@
             "required": true,
             "schema": {
               "$ref": "#/definitions/orderData"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Order response",
+            "schema": {
+              "$ref": "#/definitions/successMessageResponse"
+            }
+          }
+        }
+      }
+    },
+    "/orders/isapproved/{id}": {
+      "put": {
+        "tags": ["Order"],
+        "description": "Order is approved or not",
+        "operationId": "for the URL",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "bearer token",
+            "required": true
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "Job Parameters",
+            "in": "body",
+            "description": "Order",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/isApproved"
             }
           }
         ],
@@ -6263,6 +6343,15 @@
           "items": {
             "$ref": "#/definitions/preorderProducts"
           }
+        }
+      }
+    },
+    "isApproved": {
+      "properties": {
+        "amount": {
+          "required": true,
+          "type": "boolean",
+          "example": true
         }
       }
     },

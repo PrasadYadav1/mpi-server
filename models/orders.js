@@ -8,17 +8,19 @@ module.exports = (sequelize, DataTypes) => {
     discount: DataTypes.DOUBLE,
     amount: DataTypes.DOUBLE,
     totalAmount: DataTypes.DOUBLE,
+    isApproved: DataTypes.BOOLEAN,
+    isApprovedBy: DataTypes.INTEGER,
     createdBy: DataTypes.INTEGER,
     updatedBy: DataTypes.INTEGER,
     isActive: DataTypes.BOOLEAN
   });
-  orders.associate = function (model) {
+  orders.associate = function(model) {
     orders.hasMany(
       model.orderproducts,
       { as: 'orderProducts' },
       {
         foreignKey: 'orderId',
-        targetKey: 'id',
+        targetKey: 'id'
       }
     );
   };

@@ -8,18 +8,20 @@ module.exports = (sequelize, DataTypes) => {
     discount: DataTypes.DOUBLE,
     amount: DataTypes.DOUBLE,
     totalAmount: DataTypes.DOUBLE,
-    digitalSignature:DataTypes.BLOB('long'),
+    digitalSignature: DataTypes.BLOB('long'),
+    isApproved: DataTypes.BOOLEAN,
+    isApprovedBy: DataTypes.INTEGER,
     createdBy: DataTypes.INTEGER,
     updatedBy: DataTypes.INTEGER,
     isActive: DataTypes.BOOLEAN
   });
-  preorders.associate = function (model) {
+  preorders.associate = function(model) {
     preorders.hasMany(
       model.preorderproducts,
       { as: 'preorderProducts' },
       {
         foreignKey: 'preorderId',
-        targetKey: 'id',
+        targetKey: 'id'
       }
     );
   };

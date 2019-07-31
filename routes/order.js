@@ -127,6 +127,13 @@ router.get(
           'discount',
           'amount',
           'totalAmount',
+          [
+            sequelize.literal(
+              '(Select "firstName" from users where users.id = orders."isApprovedBy")'
+            ),
+            'isApprovedBy'
+          ],
+          'isApprovedBy',
           'updatedBy',
           'updatedAt',
           'createdAt'
@@ -203,6 +210,13 @@ router.get(
         'discount',
         'amount',
         'totalAmount',
+        'isApproved',
+        [
+          sequelize.literal(
+            '(Select "firstName" from users where users.id = orders."isApprovedBy")'
+          ),
+          'isApprovedBy'
+        ],
         'updatedBy',
         'updatedAt',
         'createdAt'
@@ -224,6 +238,12 @@ router.get(
                 '(Select name from products where products.id = "orderProducts"."productId")'
               ),
               'productName'
+            ],
+            [
+              sequelize.literal(
+                '(Select "classificationName" from products where products.id = "orderProducts"."productId")'
+              ),
+              'classificationName'
             ],
             'availableQuantity',
             'batchNumber',
@@ -261,8 +281,8 @@ router.put(
         }
       }
     );
-    if(req.body.orderProducts){
-    const data = req.body.orderProducts[0]
+    if (req.body.orderProducts) {
+      const data = req.body.orderProducts[0];
       const orderproducts = await orderProducts.update(
         {
           productId: data.productId,
@@ -283,8 +303,29 @@ router.put(
         }
       );
     }
-    
 
+    return res.status(200).json({
+      mesage: 'success'
+    });
+  })
+);
+
+router.put(
+  '/isapproved/:id',
+  [auth.authenticate()],
+  asyncErrorHandlerMiddleWare(async (req, res, next) => {
+    const order = await orders.update(
+      {
+        isApproved: req.body.isApproved,
+        isApprovedBy: req.user.userId,
+        updatedBy: req.user.userId
+      },
+      {
+        where: {
+          id: req.params.id
+        }
+      }
+    );
     return res.status(200).json({
       mesage: 'success'
     });

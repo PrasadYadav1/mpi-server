@@ -136,20 +136,48 @@ router.get(
       req.query.propertyValue != 'null' &&
       req.query.propertyValue != '';
 
+      const classificationNameDefault =
+      req.query.classificationName === undefined ||
+      req.query.classificationName === 'null' ||
+      req.query.classificationName === '';
+
+    const classificationName = req.query.classificationName
     const propertyName = req.query.propertyName;
     const propertyValue = req.query.propertyValue;
 
     const result =
-      (propertyNameDefault || propertyNameData) && propertyValueDefault;
-    const result1 = propertyNameData && propertyValueData;
+      (propertyNameDefault || propertyNameData) && propertyValueDefault
+const result1 =
+     classificationName && (propertyNameDefault || propertyNameData) && propertyValueDefault;
 
+    const result2 = classificationNameDefault && propertyNameData && propertyValueData;
+    const result3 = classificationName && propertyNameData && propertyValueData;
     if (result) {
       whereStatement = {
         isActive: true
       };
-    } else if (result1) {
+    } else  if (result1) {
       whereStatement = {
         isActive: true,
+        classificationName: classificationName
+      };
+    }
+    else if (result2) {
+      whereStatement = {
+        isActive: true,
+        [propertyName]:
+          propertyName === 'companyId' ||
+          propertyName === 'categoryId' ||
+          propertyName === 'subCategoryId'
+            ? { $eq: parseInt(propertyValue) }
+            : {
+                $iLike: `%${propertyValue}%`
+              }
+      };
+    } else if (result3) {
+      whereStatement = {
+        isActive: true,
+        classificationName: classificationName,
         [propertyName]:
           propertyName === 'companyId' ||
           propertyName === 'categoryId' ||

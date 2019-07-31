@@ -13,6 +13,7 @@ const asyncErrorHandlerMiddleWare = require('../utils/async_custom_handlers')
 const preOrders = require('../models').preorders;
 const preorderProducts = require('../models').preorderproducts;
 const customers = require('../models').customers;
+const users = require('../models').users;
 const { fileStorage } = require('../utils/common');
 
 const nodemailer = require('nodemailer');
@@ -132,7 +133,7 @@ router.get(
           'isApproved',
           [
             sequelize.literal(
-              '(Select "firstName" from users where users.id = orders."isApprovedBy")'
+              '(Select "firstName" from users where users.id = preOrders."isApprovedBy")'
             ),
             'isApprovedBy'
           ],
@@ -240,7 +241,7 @@ router.get(
         'isApproved',
         [
           sequelize.literal(
-            '(Select "firstName" from users where users.id = orders."isApprovedBy")'
+            '(Select "firstName" from users where users.id = preOrders."isApprovedBy")'
           ),
           'isApprovedBy'
         ],

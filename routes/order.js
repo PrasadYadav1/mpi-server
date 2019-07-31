@@ -11,7 +11,7 @@ const asyncErrorHandlerMiddleWare = require('../utils/async_custom_handlers')
   .asyncErrorHandler;
 const orders = require('../models').orders;
 const orderProducts = require('../models').orderproducts;
-
+const users = require('../models').users;
 router.get(
   '/',
   [auth.authenticate(), reqQueryValidate(pagination)],
@@ -133,7 +133,6 @@ router.get(
             ),
             'isApprovedBy'
           ],
-          'isApprovedBy',
           'updatedBy',
           'updatedAt',
           'createdAt'

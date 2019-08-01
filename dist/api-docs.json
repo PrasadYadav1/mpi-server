@@ -1558,7 +1558,7 @@
         }
       }
     },
-    "/products/preorder?pageIndex={pageIndex}&pageSize={pageSize}&classificationName={classificationName}&{propertyName}&{propertyValue}": {
+    "/products/preorder?pageIndex={pageIndex}&pageSize={pageSize}&{propertyName}&{propertyValue}": {
       "get": {
         "tags": ["Product"],
         "description": "Get All Product, classificationName(ALKES,ETHICAL,OTC,GENGIGEL,CITREX,PELANGI,VITABIOTICS,UPIN IPIN,OTHERS,OGB,VIVO)",

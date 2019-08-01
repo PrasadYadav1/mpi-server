@@ -146,7 +146,7 @@ router.get(
     const propertyValue = req.query.propertyValue;
 
     const result =
-      (propertyNameDefault || propertyNameData) && propertyValueDefault
+    classificationNameDefault && (propertyNameDefault || propertyNameData) && propertyValueDefault
 const result1 =
      classificationName && (propertyNameDefault || propertyNameData) && propertyValueDefault;
 
@@ -159,7 +159,7 @@ const result1 =
     } else  if (result1) {
       whereStatement = {
         isActive: true,
-        classificationName: classificationName
+        classificationName: req.query.classificationName
       };
     }
     else if (result2) {
@@ -177,7 +177,7 @@ const result1 =
     } else if (result3) {
       whereStatement = {
         isActive: true,
-        classificationName: classificationName,
+        classificationName: req.query.classificationName,
         [propertyName]:
           propertyName === 'companyId' ||
           propertyName === 'categoryId' ||

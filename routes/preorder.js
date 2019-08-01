@@ -13,6 +13,7 @@ const asyncErrorHandlerMiddleWare = require('../utils/async_custom_handlers')
 const preOrders = require('../models').preorders;
 const preorderProducts = require('../models').preorderproducts;
 const customers = require('../models').customers;
+const products = require('../models').products;
 const users = require('../models').users;
 const { fileStorage } = require('../utils/common');
 
@@ -239,12 +240,12 @@ router.get(
         'totalAmount',
         'digitalSignature',
         'isApproved',
-        [
-          sequelize.literal(
-            '(Select "userRole" from users where users.id = preOrders."isApprovedBy")'
-          ),
-          'isApprovedBy'
-        ],
+		[
+            sequelize.literal(
+              '(Select "userRole" from users where users.id = preOrders."isApprovedBy")'
+            ),
+            'isApprovedBy'
+          ],
         'updatedBy',
         'updatedAt',
         'createdAt'
@@ -286,9 +287,9 @@ router.get(
       ]
     });
 
-    var decodedImage = new Buffer(product.digitalSignature, 'base64').toString(
-      'binary'
-    );
+    // var decodedImage = new Buffer(product.digitalSignature, 'base64').toString(
+    //   'binary'
+    // );
     return res.json(product);
   })
 );

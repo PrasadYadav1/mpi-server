@@ -295,7 +295,7 @@ router.get(
 );
 
 router.get(
-  '/:prOrderId',
+  '/:pId',
   [auth.authenticate()],
   asyncErrorHandlerMiddleWare(async (req, res, next) => {
     const preOrder = await preOrders.update(
@@ -305,7 +305,7 @@ router.get(
       },
       {
         where: {
-          id: req.params.preOrderId
+          id: req.params.pId
         }
       }
     );

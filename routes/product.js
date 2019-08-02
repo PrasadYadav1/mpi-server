@@ -366,6 +366,20 @@ router.get(
   '/all/categories',
   [auth.authenticate()],
   asyncErrorHandlerMiddleWare(async (req, res, next) => {
+    const classificationNameDefault =
+    req.query.classificationName === undefined ||
+    req.query.classificationName === 'null' ||
+    req.query.classificationName === '';
+    if (classificationNameDefault) {
+      whereStatement = {
+        isActive: true
+      };
+    } else{
+      whereStatement = {
+        isActive: true,
+        classificationName: req.query.classificationName
+      };
+    }
     return res.json(
       await products.findAll({
         group:["categoryId","categoryName"],
@@ -384,9 +398,7 @@ router.get(
             'productCount'
           ],
         ],
-        where: {
-          isActive: true
-        }
+        where: whereStatement
       })
     );
   })
@@ -396,6 +408,20 @@ router.get(
   '/all/companies',
   [auth.authenticate()],
   asyncErrorHandlerMiddleWare(async (req, res, next) => {
+    const classificationNameDefault =
+    req.query.classificationName === undefined ||
+    req.query.classificationName === 'null' ||
+    req.query.classificationName === '';
+    if (classificationNameDefault) {
+      whereStatement = {
+        isActive: true
+      };
+    } else{
+      whereStatement = {
+        isActive: true,
+        classificationName: req.query.classificationName
+      };
+    }
     return res.json(
       await products.findAll({
         group:["companyId","companyName"],
@@ -414,9 +440,7 @@ router.get(
             'productCount'
           ],
         ],
-        where: {
-          isActive: true
-        }
+        where: whereStatement
       })
     );
   })

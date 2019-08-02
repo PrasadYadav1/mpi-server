@@ -1650,6 +1650,26 @@
             "in": "header",
             "description": "bearer token",
             "required": true
+          },
+          {
+            "name": "classificationName",
+            "in": "query",
+            "enum": [
+              "ALKES",
+              "ETHICAL",
+              "OTC",
+              "GENGIGEL",
+              "CITREX",
+              "PELANGI",
+              "VITABIOTICS",
+              "UPIN IPIN",
+              "OTHERS",
+              "OGB",
+              "VIVO"
+            ],
+            "description": "classificationName",
+            "required": false,
+            "type": "string"
           }
         ],
         "responses": {
@@ -1674,6 +1694,26 @@
             "in": "header",
             "description": "bearer token",
             "required": true
+          },
+          {
+            "name": "classificationName",
+            "in": "query",
+            "enum": [
+              "ALKES",
+              "ETHICAL",
+              "OTC",
+              "GENGIGEL",
+              "CITREX",
+              "PELANGI",
+              "VITABIOTICS",
+              "UPIN IPIN",
+              "OTHERS",
+              "OGB",
+              "VIVO"
+            ],
+            "description": "classificationName",
+            "required": false,
+            "type": "string"
           }
         ],
         "responses": {
@@ -3216,7 +3256,7 @@
         }
       }
     },
-    "/preorders/{prOrderId}": {
+    "/preorders/{pId}": {
       "get": {
         "tags": ["PreOrder"],
         "description": "get preorderConfirmed",
@@ -3230,9 +3270,9 @@
             "required": true
           },
           {
-            "name": "prOrderId",
+            "name": "prId",
             "in": "path",
-            "description": "prOrderId",
+            "description": "preOrderId",
             "required": true,
             "type": "integer"
           }

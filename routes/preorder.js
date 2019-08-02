@@ -127,7 +127,13 @@ router.get(
               '(Select name from customers where customers.id = preOrders."customerId")'
             ),
             'customerName'
-          ],
+		  ],
+		  [
+			sequelize.literal(
+			  '(Select (Select products."classificationName" from products where products.id = "preorderproducts"."productId") from "preorderproducts" where "preorderproducts"."preorderId" = preOrders.id limit 1)'
+			),
+			'classificationName'
+		  ],
           'discount',
           'amount',
           'totalAmount',

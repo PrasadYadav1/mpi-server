@@ -6571,6 +6571,11 @@
           "type": "string",
           "example": "customerName"
         },
+        "classificationName": {
+          "required": true,
+          "type": "string",
+          "example": "ALKES"
+        },
         "dateOfDelivery": {
           "required": true,
           "type": "date",

@@ -14,7 +14,7 @@ const getRelatedUsers = async (usr, attributesArray) => {
                     {
                         $or: [
                             { userRole: { $eq: 'bfo' } },
-                            { userRole: { $eq: 'sm' } },
+                            { userRole: { $eq: 'ss' } },
                             { userRole: { $eq: 'SalesAgent' } }
                         ]
                     },
@@ -32,7 +32,7 @@ const getRelatedUsers = async (usr, attributesArray) => {
             raw: true
         });
         return regionalManager;
-    } else if (usr.userRole === "sm") {
+    } else if (usr.userRole === "ss") {
         const salesAgents = await users.findAll({
             attributes: attributesArray,
             where: {
@@ -57,7 +57,7 @@ const getRelatedUsersBySearch = async (usr, attributesArray, searchBy, value) =>
                     {
                         $or: [
                             { userRole: { $eq: 'bfo' } },
-                            { userRole: { $eq: 'sm' } },
+                            { userRole: { $eq: 'ss' } },
                             { userRole: { $eq: 'SalesAgent' } }
                         ]
                     },
@@ -83,7 +83,7 @@ const getRelatedUsersBySearch = async (usr, attributesArray, searchBy, value) =>
             raw: true
         });
         return regionalManager;
-    } else if (usr.userRole === "sm") {
+    } else if (usr.userRole === "ss") {
         const salesAgents = await users.findAll({
             attributes: attributesArray,
             where: {

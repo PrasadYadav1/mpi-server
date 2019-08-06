@@ -203,7 +203,7 @@ router.get('/locations', [auth.authenticate()],
 router.get('/:userId/locations', [auth.authenticate()],
     reqpathNewvalidation(userDto.userPathParm),
     asyncErrorHandlerMiddleWare(async (req, res, next) => {
-        if (!verifyRoles(['bfo', 'sm', 'pharmacist'], req.user.userRole))
+        if (!verifyRoles(['bfo', 'ss', 'pharmacist'], req.user.userRole))
             return res.status(403).json({ message: 'you dont have permission to access this resource' });
         const userData = (req.user.userRole === 'pharmacist') ? { id: parseInt(req.params.userId) }
             : await userUtils.getUserUnderAManager(
@@ -288,7 +288,7 @@ router.get('/:userId/last/location', [auth.authenticate()],
 router.get('/lastLocations', [auth.authenticate()],
     // reqQueryValidate(userDto.usersearch),
     asyncErrorHandlerMiddleWare(async (req, res, next) => {
-        if (!authUtils.verifyRoles(['bfo', 'sm', 'pharmacist'], req.user.userRole))
+        if (!authUtils.verifyRoles(['bfo', 'ss', 'pharmacist'], req.user.userRole))
             return res.status(403).json({ message: 'you dont have permission to access this resource' });
         const searchByRequired = req.query && req.query.searchBy;
         if (searchByRequired && !req.query.searchByValue)
@@ -631,9 +631,9 @@ reqpathNewvalidation(userType)], reqQueryValidate(userTypeQuery),
             if (req.params.type === 'SalesAgent') {
                 whereStatement = {
                     isActive: true,
-                    userRole: 'sm'
+                    userRole: 'ss'
                 };
-            } else if (req.params.type === 'sm') {
+            } else if (req.params.type === 'ss') {
                 whereStatement = {
                     isActive: true,
                     userRole: 'bfo'
@@ -677,7 +677,7 @@ router.put("/:userId/assignManager",
                 raw: true
             });
             let salesAgent = usersData.find((u) => u.id === salesAgentId && u.userRole === 'SalesAgent');
-            let manager = usersData.find((u) => u.id === managerId && u.userRole === 'sm')
+            let manager = usersData.find((u) => u.id === managerId && u.userRole === 'ss')
             if (!salesAgent) return res.status(404).json({ message: "sales agent not found" });
             if (!manager) return res.status(404).json({ message: "manager not found" });
             // if(salesAgent.headUserId) return res.status(409).json({ message: "you cannot change manager at this time"});
@@ -840,9 +840,9 @@ router.put(
             },
             raw: true
         });
-        if (!managersAndAgents.some((m) => m.id === managerId && m.userRole === 'sm'))
+        if (!managersAndAgents.some((m) => m.id === managerId && m.userRole === 'ss'))
             return res.status(404).json({ message: 'manager not found' });
-        if (!managersAndAgents.some((m) => m.id === newManagerId && m.userRole === 'sm'))
+        if (!managersAndAgents.some((m) => m.id === newManagerId && m.userRole === 'ss'))
             return res.status(404).json({ message: 'newManager not found' });
 
         if (managersAndAgents.filter((ma) => ma.headUserId === managerId).length === 0)

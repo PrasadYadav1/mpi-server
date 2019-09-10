@@ -40,13 +40,15 @@ app.use(function (req, res, next) {
 });
 app.use(logger('dev'));
 app.use(bodyParser());
+app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/', index);
 app.get('/api-docs', function (req, res) {
 	res.sendFile(__dirname + '/dist/index.html');
 });
 app.use(bodyParser.json());
 app.use(auth.initialize());
-app.use(bodyParser.urlencoded({ extended: false }));
+
 app.use(methodOverride());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -81,6 +83,10 @@ app.use('/hintimages', express.static(__dirname + '/public/images/hintimages'));
 app.use('/assets/*', express.static(__dirname + '/public/clientApp/assets'));
 app.use('/css', express.static(__dirname + '/public/css/'));
 
+app.use(express.static(path.join(__dirname, 'prod')));
+app.get('/*', function(req, res) {
+res.sendFile(path.join(__dirname, 'prod', 'index.html'));
+});
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
 	const err = new Error('Not Found');

@@ -56,6 +56,15 @@ module.exports = {
       longitude: {
         type: Sequelize.DOUBLE
       },
+      createdBy: {
+        type: Sequelize.INTEGER
+      },
+      updatedBy: {
+        type: Sequelize.INTEGER
+      },
+      isActive: {
+        type: Sequelize.BOOLEAN
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

@@ -11,7 +11,7 @@ const userPost = t.struct({
   lastName: t.String,
   email: t.String,
   password: t.String,
-  userRole: t.enums.of(['ZonalManager', 'RegionalManager', 'SalesAgent']),
+  userRole: t.enums.of(['bm', 'pharmacist', 'bfo', 'ss', 'SalesAgent']),
   userName: t.String,
   password: t.String,
   mobileNumber: t.String,
@@ -25,7 +25,7 @@ const userPathParm = t.struct({
 });
 
 const userType = t.struct({
-  type: t.enums.of(['All', 'ZonalManager', 'RegionalManager', 'SalesAgent'])
+  type: t.enums.of(['All', 'bm', 'pharmacist', 'bfo', 'ss', 'SalesAgent'])
 });
 
 const userTypeQuery = t.struct({
@@ -40,12 +40,14 @@ const managerAssign = t.struct({
 const usersListQueryParams = t.struct({
   pageSize: types.StringNumber,
   pageIndex: types.StringNumber,
-  propertyName: t.maybe(t.enums.of(['name', 'employeeId', 'supervisor', 'role'])),
+  propertyName: t.maybe(
+    t.enums.of(['name', 'employeeId', 'supervisor', 'role'])
+  ),
   propertyValue: t.maybe(t.String)
 });
 
 const userStatusChangeQueryParams = t.struct({
-  status: t.enums.of(['Activate', 'Deactivate']),
+  status: t.enums.of(['Activate', 'Deactivate'])
 });
 const userUpdateBody = t.struct({
   firstName: t.String,

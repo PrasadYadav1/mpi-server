@@ -50,8 +50,11 @@ router.get(
             (propertyNameDefault || propertyNameData) && propertyValueDefault;
         const result1 = propertyNameData && propertyValueData;
         let whereStatement = {};
-        let selectLiteral = (req.user.userRole === 'pharmacist') ? `select id from "users" where "userRole" != 'pharmacist'`
-            : `select id from "users" where "headUserId" in (select id from "users" where "headUserId" = ${req.user.userId})`
+       // let selectLiteral = (req.user.userRole === 'pharmacist') ? `select id from "users" where "userRole" != 'pharmacist'`
+       //     : `select id from "users" where "headUserId" in (select id from "users" where "headUserId" = ${req.user.userId})`
+            let selectLiteral = `select id from "users" where "headUserId" in (select id from "users" where "headUserId" = ${req.user.userId})`
+            let selectLiteral1 = `select id from "users" where "headUserId" in (select id from "users" where "headUserId" in (select id from "users" where "headUserId" = ${req.user.userId}))`
+            let selectLiteral2 = `select id from "users" where "headUserId" in (select id from "users" where "headUserId" in (select id from "users" where "headUserId" in (select id from "users" where "headUserId" = ${req.user.userId})))`
 
         if (result) {
             whereStatement = {
@@ -61,6 +64,20 @@ router.get(
                         id: {
                             $in: [
                                 sequelize.literal(selectLiteral)
+                            ]
+                        }
+                    },
+                    {
+                        id: {
+                            $in: [
+                                sequelize.literal(selectLiteral1)
+                            ]
+                        }
+                    },
+                    {
+                        id: {
+                            $in: [
+                                sequelize.literal(selectLiteral2)
                             ]
                         }
                     },
@@ -203,7 +220,7 @@ router.get('/locations', [auth.authenticate()],
 router.get('/:userId/locations', [auth.authenticate()],
     reqpathNewvalidation(userDto.userPathParm),
     asyncErrorHandlerMiddleWare(async (req, res, next) => {
-        if (!verifyRoles(['bfo', 'ss', 'pharmacist'], req.user.userRole))
+        if (!verifyRoles(['bfo', 'ss', 'pharmacist','bm'], req.user.userRole))
             return res.status(403).json({ message: 'you dont have permission to access this resource' });
         const userData = (req.user.userRole === 'pharmacist') ? { id: parseInt(req.params.userId) }
             : await userUtils.getUserUnderAManager(
@@ -288,7 +305,7 @@ router.get('/:userId/last/location', [auth.authenticate()],
 router.get('/lastLocations', [auth.authenticate()],
     // reqQueryValidate(userDto.usersearch),
     asyncErrorHandlerMiddleWare(async (req, res, next) => {
-        if (!authUtils.verifyRoles(['bfo', 'ss', 'pharmacist'], req.user.userRole))
+        if (!authUtils.verifyRoles(['bfo', 'ss', 'pharmacist','bm'], req.user.userRole))
             return res.status(403).json({ message: 'you dont have permission to access this resource' });
         const searchByRequired = req.query && req.query.searchBy;
         if (searchByRequired && !req.query.searchByValue)
@@ -471,8 +488,9 @@ router.get("/list",
                 (propertyNameDefault || propertyNameData) && propertyValueDefault;
             const result1 = propertyNameData && propertyValueData;
             let whereStatement = {};
-            let selectLiteral = (req.user.userRole === 'pharmacist') ? `select id from "users" where "userRole" != 'pharmacist'`
-                : `select id from "users" where "headUserId" in (select id from "users" where "headUserId" = ${req.user.userId})`
+            let selectLiteral = `select id from "users" where "headUserId" in (select id from "users" where "headUserId" = ${req.user.userId})`
+            let selectLiteral1 = `select id from "users" where "headUserId" in (select id from "users" where "headUserId" in (select id from "users" where "headUserId" = ${req.user.userId}))`
+            let selectLiteral2 = `select id from "users" where "headUserId" in (select id from "users" where "headUserId" in (select id from "users" where "headUserId" in (select id from "users" where "headUserId" = ${req.user.userId})))`
 
             if (result) {
                 whereStatement = {
@@ -481,7 +499,21 @@ router.get("/list",
                         {
                             id: {
                                 $in: [
-                                    sequelize.literal(selectLiteral)
+                                    sequelize.literal(selectLiteral),
+                                ]
+                            }
+                        },
+                        {
+                            id: {
+                                $in: [
+                                    sequelize.literal(selectLiteral1),
+                                ]
+                            }
+                        },
+                        {
+                            id: {
+                                $in: [
+                                    sequelize.literal(selectLiteral2),
                                 ]
                             }
                         },
@@ -642,6 +674,16 @@ reqpathNewvalidation(userType)], reqQueryValidate(userTypeQuery),
                 whereStatement = {
                     isActive: true,
                     userRole: 'pharmacist'
+                };
+            } else if (req.params.type === 'pharmacist') {
+                whereStatement = {
+                    isActive: true,
+                    userRole: 'bm'
+                };
+            } else if (req.params.type === 'bm') {
+                whereStatement = {
+                    isActive: true,
+                    userRole: 'admin'
                 };
             }
 

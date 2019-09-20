@@ -2245,7 +2245,7 @@
     "/warehouses": {
       "post": {
         "tags": ["Warehouse"],
-        "description": "Create new Warehouse,  warehouseType:(Primary, Secondary)",
+        "description": "Create new Warehouse,  warehouseType:(Primary, Secondary,Tertiary)",
         "operationId": "for the URL",
         "produces": ["application/json"],
         "parameters": [
@@ -2309,7 +2309,7 @@
     "/warehouses/{id}": {
       "put": {
         "tags": ["Warehouse"],
-        "description": "Update Warehouse warehouseType:(Primary, Secondary)",
+        "description": "Update Warehouse warehouseType:(Primary, Secondary,Tertiary)",
         "operationId": "for the URL",
         "produces": ["application/json"],
         "parameters": [
@@ -2393,6 +2393,25 @@
         }
       }
     },
+    "/warehouses/outlets": {
+      "get": {
+        "tags": ["Warehouse"],
+        "description": "get all outlets",
+        "operationId": "",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/categoryresponse"
+              }
+            }
+          }
+        }
+      }
+    },
     "/warehouses/{primaryWarehouseId}/branches": {
       "get": {
         "tags": ["Warehouse"],
@@ -2410,6 +2429,40 @@
             "name": "primaryWarehouseId",
             "in": "path",
             "description": "primaryWarehouseId",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/warehouseData"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/warehouses/{secondaryWarehouseId}/outlets": {
+      "get": {
+        "tags": ["Warehouse"],
+        "description": "get all outlets by secondaryWarehouseId",
+        "operationId": "",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "bearer token",
+            "required": true
+          },
+          {
+            "name": "secondaryWarehouseId",
+            "in": "path",
+            "description": "secondaryWarehouseId",
             "required": true,
             "type": "integer"
           }

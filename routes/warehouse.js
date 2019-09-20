@@ -220,6 +220,21 @@ router.get(
 );
 
 router.get(
+  '/outlets',
+  asyncErrorHandlerMiddleWare(async (req, res, next) => {
+    return res.status(200).json(
+      await warehouses.findAll({
+        attributes: ['id', 'name'],
+        where: {
+          warehouseType: 'Tertiary',
+          isActive: true
+        }
+      })
+    );
+  })
+);
+
+router.get(
   '/:primaryWarehouseId/branches',
   [auth.authenticate()],
   asyncErrorHandlerMiddleWare(async (req, res, next) => {
@@ -233,9 +248,7 @@ router.get(
         'primaryWarehouseId',
         [
           sequelize.literal(
-            `(select name from warehouses where id = ${
-              req.params.primaryWarehouseId
-            })`
+            `(select name from warehouses where id = ${req.params.primaryWarehouseId})`
           ),
           'primaryWarehouseName'
         ],
@@ -254,6 +267,45 @@ router.get(
         isActive: true,
         warehouseType: 'Secondary',
         primaryWarehouseId: req.params.primaryWarehouseId
+      }
+    });
+    return res.json(warehouse);
+  })
+);
+
+router.get(
+  '/:secondaryWarehouseId/outlets',
+  [auth.authenticate()],
+  asyncErrorHandlerMiddleWare(async (req, res, next) => {
+    const warehouse = await warehouses.findAll({
+      attributes: [
+        'id',
+        'name',
+        'email',
+        'phoneNumber',
+        'warehouseType',
+        'primaryWarehouseId',
+        [
+          sequelize.literal(
+            `(select name from warehouses where id = ${req.params.primaryWarehouseId})`
+          ),
+          'secondaryWarehouseName'
+        ],
+        'province',
+        'address',
+        'latitude',
+        'longitude',
+        'areaCode',
+        'buildingName',
+        'city',
+        'description',
+        'updatedBy',
+        'createdAt'
+      ],
+      where: {
+        isActive: true,
+        warehouseType: 'Tertiary',
+        primaryWarehouseId: req.params.secondaryWarehouseId
       }
     });
     return res.json(warehouse);

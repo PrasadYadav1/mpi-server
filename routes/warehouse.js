@@ -226,7 +226,7 @@ router.get(
       await warehouses.findAll({
         attributes: ['id', 'name'],
         where: {
-          warehouseType: 'Tertiary',
+          warehouseType: 'Teritary',
           isActive: true
         }
       })
@@ -287,7 +287,7 @@ router.get(
         'primaryWarehouseId',
         [
           sequelize.literal(
-            `(select name from warehouses where id = ${req.params.primaryWarehouseId})`
+            `(select name from warehouses where id = ${req.params.secondaryWarehouseId})`
           ),
           'secondaryWarehouseName'
         ],
@@ -304,7 +304,7 @@ router.get(
       ],
       where: {
         isActive: true,
-        warehouseType: 'Tertiary',
+        warehouseType: 'Teritary',
         primaryWarehouseId: req.params.secondaryWarehouseId
       }
     });

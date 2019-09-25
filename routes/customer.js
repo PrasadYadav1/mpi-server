@@ -85,9 +85,9 @@ router.get(
           'warehouseId',
           [
             sequelize.literal(
-              `(select name from warehouses where id = customers."warehouseId")`
+              `(select Array(select name from warehouses where id = ANY (customers."warehouseId")))`
             ),
-            'warehouseName'
+            'warehouseNames'
           ],
           'customerType',
           'buildingName',
@@ -226,6 +226,12 @@ router.get(
         'customerNumber',
         'name',
         'warehouseId',
+        [
+          sequelize.literal(
+            `(select Array(select name from warehouses where id = ANY (customers."warehouseId")))`
+          ),
+          'warehouseNames'
+        ],
         'customerType',
         'buildingName',
         'city',
@@ -279,7 +285,7 @@ router.put(
 );
 
 router.put(
-  '/:id/branch',
+  '/:id/outlets',
   [auth.authenticate(), reqBodyValidation(customerDTO.branchPost)],
   asyncErrorHandlerMiddleWare(async (req, res, next) => {
     const upa = await customers.update(

@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       customerNumber: DataTypes.STRING,
       name: DataTypes.STRING,
-      warehouseId: DataTypes.INTEGER,
+      warehouseId: DataTypes.ARRAY(DataTypes.INTEGER),
       customerType: DataTypes.STRING,
       buildingName: DataTypes.STRING,
       city: DataTypes.STRING,

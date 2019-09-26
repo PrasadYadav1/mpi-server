@@ -712,6 +712,39 @@
         }
       }
     },
+    "/user/visit/locations": {
+      "post": {
+        "tags": ["User Visit Location"],
+        "description": "User Visit Location",
+        "operationId": "for the URL",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "bearer token",
+            "required": true
+          },
+          {
+            "name": "Job Parameters",
+            "in": "body",
+            "description": "user visit location",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/userVisitLocation"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User Visit Location",
+            "schema": {
+              "$ref": "#/definitions/userVisitLocationData"
+            }
+          }
+        }
+      }
+    },
     "/companies?pageIndex={pageIndex}&pageSize={pageSize}&{propertyName}&{propertyValue}": {
       "get": {
         "tags": ["Company"],
@@ -4376,6 +4409,60 @@
         }
       }
     },
+    "userVisitLocation": {
+      "properties": {
+        "visit": {
+          "required": true,
+          "type": "boolean",
+          "example": true
+        },
+        "longitude": {
+          "required": true,
+          "type": "number",
+          "example": 10.6758
+        },
+        "latitude": {
+          "required": true,
+          "type": "number",
+          "example": -122.3445
+        }
+      }
+    },
+    "userVisitLocationData": {
+      "properties": {
+        "id": {
+          "required": true,
+          "type": "number",
+          "example": 1
+        },
+        "userId": {
+          "required": true,
+          "type": "number",
+          "example": 1
+        },
+        "visit": {
+          "required": true,
+          "type": "boolean",
+          "example": true
+        },
+        "longitude": {
+          "required": true,
+          "type": "number",
+          "example": 10.6758
+        },
+        "latitude": {
+          "required": true,
+          "type": "number",
+          "example": -122.3445
+        },
+        "createdAt": {
+          "required": true,
+          "type": "string",
+          "example": "2019-02-02T10:18:16.397Z"
+        }
+      }
+    },
+
     "assignManager": {
       "properties": {
         "managerId": {
@@ -6847,10 +6934,20 @@
           "type": "string",
           "example": "customerName"
         },
-        "branchName": {
+        "warehouseId": {
+          "required": true,
+          "type": "integer",
+          "example": 1
+        },
+        "outletName": {
           "required": true,
           "type": "string",
-          "example": "branchName"
+          "example": "outletName"
+        },
+        "outletAddress": {
+          "required": true,
+          "type": "string",
+          "example": "outletAddress"
         },
         "dateOfDelivery": {
           "required": true,

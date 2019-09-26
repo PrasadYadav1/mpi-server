@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const index = require('./routes/index');
 const user = require('./routes/user');
 const userlocation = require('./routes/userlocation');
+const uservisitlocation = require('./routes/uservisitlocation');
 const auth = require('./authentication/auth')();
 const categories = require('./routes/categories');
 const unitsofmeasurements = require('./routes/unitsofmeasurement');
@@ -71,6 +72,7 @@ swagger.setApiInfo({
 app.use('/', index);
 app.use('/api/users', user);
 app.use('/api/userlocations', userlocation);
+app.use('/api/user/visit/locations', uservisitlocation);
 app.use('/api/companies', company);
 app.use('/api/categories', categories);
 app.use('/api/unitsofmeasurements', unitsofmeasurements);
@@ -89,7 +91,7 @@ app.use('/css', express.static(__dirname + '/public/css/'));
 
 app.use(express.static(path.join(__dirname, 'prod')));
 app.get('/*', function(req, res) {
-res.sendFile(path.join(__dirname, 'prod', 'index.html'));
+  res.sendFile(path.join(__dirname, 'prod', 'index.html'));
 });
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

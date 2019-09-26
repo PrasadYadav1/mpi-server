@@ -125,6 +125,18 @@ router.get(
             'customerName'
           ],
           'warehouseId',
+          [
+            sequelize.literal(
+              '(Select name from warehouses where warehouses.id = preOrders."warehouseId")'
+            ),
+            'outletName'
+          ],
+          [
+            sequelize.literal(
+              '(Select address from warehouses where warehouses.id = preOrders."warehouseId")'
+            ),
+            'outletAddress'
+          ],
           'discount',
           'amount',
           'totalAmount',
@@ -205,9 +217,15 @@ router.get(
         'warehouseId',
         [
           sequelize.literal(
-            `(select name from warehouses where id = (Select "warehouseId" from customers where customers.id = orders."customerId" limit 1))`
+            '(Select name from warehouses where warehouses.id = preOrders."warehouseId")'
           ),
-          'branchName'
+          'outletName'
+        ],
+        [
+          sequelize.literal(
+            '(Select address from warehouses where warehouses.id = preOrders."warehouseId")'
+          ),
+          'outletAddress'
         ],
         'discount',
         'amount',
@@ -492,9 +510,15 @@ router.get(
         'warehouseId',
         [
           sequelize.literal(
-            `(select name from warehouses where id = (Select "warehouseId" from customers where customers.id = orders."customerId" limit 1))`
+            '(Select name from warehouses where warehouses.id = preOrders."warehouseId")'
           ),
-          'branchName'
+          'outletName'
+        ],
+        [
+          sequelize.literal(
+            '(Select address from warehouses where warehouses.id = preOrders."warehouseId")'
+          ),
+          'outletAddress'
         ],
         'discount',
         'amount',
@@ -650,6 +674,18 @@ router.get(
             'customerName'
           ],
           'warehouseId',
+          [
+            sequelize.literal(
+              '(Select name from warehouses where warehouses.id = preOrders."warehouseId")'
+            ),
+            'outletName'
+          ],
+          [
+            sequelize.literal(
+              '(Select address from warehouses where warehouses.id = preOrders."warehouseId")'
+            ),
+            'outletAddress'
+          ],
           'discount',
           'amount',
           'totalAmount',

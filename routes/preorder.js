@@ -131,6 +131,18 @@ router.get(
           'warehouseId',
           [
             sequelize.literal(
+              '(Select name from warehouses where warehouses.id = preOrders."warehouseId")'
+            ),
+            'outletName'
+          ],
+          [
+            sequelize.literal(
+              '(Select address from warehouses where warehouses.id = preOrders."warehouseId")'
+            ),
+            'outletAddress'
+          ],
+          [
+            sequelize.literal(
               '(Select (Select products."classificationName" from products where products.id = "preorderproducts"."productId") from "preorderproducts" where "preorderproducts"."preorderId" = preOrders.id limit 1)'
             ),
             'classificationName'
@@ -218,9 +230,7 @@ router.post(
         console.log('Email sent: ' + info.response);
       }
     });
-    return res.status(200).json({
-      mesage: 'success'
-    });
+    return res.status(200).json(preOrder);
   })
 );
 
@@ -242,6 +252,18 @@ router.get(
           'customerName'
         ],
         'warehouseId',
+        [
+          sequelize.literal(
+            '(Select name from warehouses where warehouses.id = preOrders."warehouseId")'
+          ),
+          'outletName'
+        ],
+        [
+          sequelize.literal(
+            '(Select address from warehouses where warehouses.id = preOrders."warehouseId")'
+          ),
+          'outletAddress'
+        ],
         'discount',
         'amount',
         'totalAmount',

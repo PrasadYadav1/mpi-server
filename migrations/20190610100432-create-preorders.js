@@ -29,6 +29,9 @@ module.exports = {
       amount: {
         type: Sequelize.DOUBLE
       },
+      isApproved: {
+        type: Sequelize.BOOLEAN
+      },
       isApprovedBy: {
         type: Sequelize.INTEGER
       },

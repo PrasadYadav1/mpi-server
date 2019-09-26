@@ -11,7 +11,7 @@ const reqQueryValidate = require('../utils/req_generic_validations')
   .reqqueryvalidation;
 const asyncErrorHandlerMiddleWare = require('../utils/async_custom_handlers')
   .asyncErrorHandler;
-
+const warehouses = require('../models').warehouses;
 router.get(
   '/',
   [auth.authenticate(), reqQueryValidate(pagination)],
@@ -308,17 +308,27 @@ router.put(
 );
 
 router.get(
-  '/:warehouseId/all',
+  '/:customerId/all',
   [auth.authenticate()],
   asyncErrorHandlerMiddleWare(async (req, res, next) => {
     const customer = await customers.findAll({
-      attributes: ['id', 'name'],
+      attributes: ['warehouseId'],
       where: {
         isActive: true,
-        id: req.params.warehouseId
+        id: req.params.customerId
       }
     });
-    return res.json(customer);
+    const warehouse = await warehouses.findAll({
+      attributes: ['id', 'name'],
+      where: {
+        warehouseType: 'Teritary',
+        isActive: true,
+        id: {
+          $in: customer[0].dataValues.warehouseId
+        }
+      }
+    });
+    return res.json(warehouse);
   })
 );
 

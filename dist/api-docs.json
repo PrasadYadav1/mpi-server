@@ -1171,10 +1171,10 @@
         }
       }
     },
-    "/customers/{warehouseId}/all": {
+    "/customers/{customerId}/all": {
       "get": {
         "tags": ["Customer"],
-        "description": "get all Customers by branch id",
+        "description": "get all Outlets by customerId",
         "operationId": "for the URL",
         "produces": ["application/json"],
         "parameters": [
@@ -1185,9 +1185,9 @@
             "required": true
           },
           {
-            "name": "warehouseId",
+            "name": "customerId",
             "in": "path",
-            "description": "warehouseId",
+            "description": "customerId",
             "required": true,
             "type": "integer"
           }
@@ -4930,7 +4930,7 @@
         "warehouseId": {
           "required": true,
           "type": "array",
-          "example": [1,2]
+          "example": [1, 2]
         }
       }
     },

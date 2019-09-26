@@ -124,6 +124,7 @@ router.get(
             ),
             'customerName'
           ],
+          'warehouseId',
           'discount',
           'amount',
           'totalAmount',
@@ -159,6 +160,7 @@ router.post(
       orderNumber: `ORD0000${(orderCount ? orderCount : 0) + 1}`,
       dateOfDelivery: req.body.dateOfDelivery,
       customerId: req.body.customerId,
+      warehouseId: req.body.warehouseId,
       discount: req.body.discount,
       amount: req.body.amount,
       totalAmount: req.body.amount,
@@ -200,6 +202,7 @@ router.get(
           ),
           'customerName'
         ],
+        'warehouseId',
         [
           sequelize.literal(
             `(select name from warehouses where id = (Select "warehouseId" from customers where customers.id = orders."customerId" limit 1))`
@@ -486,6 +489,7 @@ router.get(
           ),
           'customerName'
         ],
+        'warehouseId',
         [
           sequelize.literal(
             `(select name from warehouses where id = (Select "warehouseId" from customers where customers.id = orders."customerId" limit 1))`
@@ -645,6 +649,7 @@ router.get(
             ),
             'customerName'
           ],
+          'warehouseId',
           'discount',
           'amount',
           'totalAmount',

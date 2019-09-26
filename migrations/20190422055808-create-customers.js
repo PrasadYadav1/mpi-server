@@ -11,6 +11,9 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
+      customerNumber: {
+        type: Sequelize.STRING
+      },
       warehouseId: {
         allowNull: true,
         type: Sequelize.ARRAY(Sequelize.INTEGER)
@@ -61,6 +64,9 @@ module.exports = {
         type: Sequelize.DOUBLE
       },
       longitude: {
+        type: Sequelize.DOUBLE
+      },
+      creditLimit: {
         type: Sequelize.DOUBLE
       },
       createdBy: {

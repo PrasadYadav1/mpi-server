@@ -40,6 +40,9 @@ module.exports = {
       price: {
         type: Sequelize.DOUBLE
       },
+      minSalePrice: {
+        type: Sequelize.DOUBLE
+      },
       mrp: {
         type: Sequelize.DOUBLE
       },

@@ -127,13 +127,14 @@ router.get(
               '(Select name from customers where customers.id = preOrders."customerId")'
             ),
             'customerName'
-		  ],
-		  [
-			sequelize.literal(
-			  '(Select (Select products."classificationName" from products where products.id = "preorderproducts"."productId") from "preorderproducts" where "preorderproducts"."preorderId" = preOrders.id limit 1)'
-			),
-			'classificationName'
-		  ],
+          ],
+          'warehouseId',
+          [
+            sequelize.literal(
+              '(Select (Select products."classificationName" from products where products.id = "preorderproducts"."productId") from "preorderproducts" where "preorderproducts"."preorderId" = preOrders.id limit 1)'
+            ),
+            'classificationName'
+          ],
           'discount',
           'amount',
           'totalAmount',
@@ -177,6 +178,7 @@ router.post(
       preOrderNumber: `PORD0000${(preOrderCount ? preOrderCount : 0) + 1}`,
       dateOfDelivery: req.body.dateOfDelivery,
       customerId: req.body.customerId,
+      warehouseId: req.body.warehouseId,
       discount: req.body.discount,
       amount: req.body.amount,
       totalAmount: req.body.amount,
@@ -206,9 +208,7 @@ router.post(
       from: 'krishnarao.inturi@technoidentity.com',
       to: `${customerData.dataValues.primaryEmail},${req.user.email}`,
       subject: 'Pre Order',
-      html: `<h1>Pre Order Number: ${
-        preOrder.dataValues.preOrderNumber
-      }</h1><p>Date of Delivery: ${preOrder.dataValues.dateOfDelivery}</p>`
+      html: `<h1>Pre Order Number: ${preOrder.dataValues.preOrderNumber}</h1><p>Date of Delivery: ${preOrder.dataValues.dateOfDelivery}</p>`
     };
 
     transporter.sendMail(mailOptions, function(error, info) {
@@ -241,17 +241,18 @@ router.get(
           ),
           'customerName'
         ],
+        'warehouseId',
         'discount',
         'amount',
         'totalAmount',
         'digitalSignature',
         'isApproved',
-		[
-            sequelize.literal(
-              '(Select "userRole" from users where users.id = preOrders."isApprovedBy")'
-            ),
-            'isApprovedBy'
-          ],
+        [
+          sequelize.literal(
+            '(Select "userRole" from users where users.id = preOrders."isApprovedBy")'
+          ),
+          'isApprovedBy'
+        ],
         'updatedBy',
         'updatedAt',
         'createdAt'

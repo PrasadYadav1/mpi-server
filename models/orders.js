@@ -3,7 +3,8 @@ module.exports = (sequelize, DataTypes) => {
   var orders = sequelize.define('orders', {
     orderConfirmed: DataTypes.BOOLEAN,
     orderNumber: DataTypes.STRING,
-    customerId: DataTypes.DOUBLE,
+    customerId: DataTypes.INTEGER,
+    warehouseId: DataTypes.INTEGER,
     dateOfDelivery: DataTypes.DATEONLY,
     discount: DataTypes.DOUBLE,
     amount: DataTypes.DOUBLE,

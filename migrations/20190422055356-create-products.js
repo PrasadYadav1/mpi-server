@@ -8,6 +8,9 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      productCode: {
+        type: Sequelize.STRING
+      },
       name: {
         type: Sequelize.STRING
       },
@@ -26,7 +29,7 @@ module.exports = {
         }
       },
       subCategoryId: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.INTEGER
       },
       units: {
         type: Sequelize.DOUBLE

@@ -37,6 +37,9 @@ module.exports = {
       rate: {
         type: Sequelize.DOUBLE
       },
+      minSalePrice: {
+        type: Sequelize.DOUBLE
+      },
       mrp: {
         type: Sequelize.DOUBLE
       },

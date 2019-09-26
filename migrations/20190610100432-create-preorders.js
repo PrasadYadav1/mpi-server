@@ -17,6 +17,9 @@ module.exports = {
       customerId: {
         type: Sequelize.INTEGER
       },
+      warehouseId: {
+        type: Sequelize.INTEGER
+      },
       dateOfDelivery: {
         type: Sequelize.STRING
       },
@@ -26,8 +29,14 @@ module.exports = {
       amount: {
         type: Sequelize.DOUBLE
       },
+      isApprovedBy: {
+        type: Sequelize.INTEGER
+      },
       totalAmount: {
         type: Sequelize.DOUBLE
+      },
+      digitalSignature: {
+        type: Sequelize.BLOB('long')
       },
       createdBy: {
         type: Sequelize.INTEGER

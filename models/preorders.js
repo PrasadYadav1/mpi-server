@@ -3,7 +3,8 @@ module.exports = (sequelize, DataTypes) => {
   var preorders = sequelize.define('preorders', {
     preorderConfirmed: DataTypes.BOOLEAN,
     preOrderNumber: DataTypes.STRING,
-    customerId: DataTypes.DOUBLE,
+    customerId: DataTypes.INTEGER,
+    warehouseId: DataTypes.INTEGER,
     dateOfDelivery: DataTypes.DATEONLY,
     discount: DataTypes.DOUBLE,
     amount: DataTypes.DOUBLE,

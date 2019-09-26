@@ -6430,6 +6430,11 @@
           "type": "integer",
           "example": 1
         },
+        "warehouseId": {
+          "required": true,
+          "type": "integer",
+          "example": 1
+        },
         "dateOfDelivery": {
           "required": true,
           "type": "date",
@@ -6558,6 +6563,11 @@
           "type": "string",
           "example": "customerName"
         },
+        "warehouseId": {
+          "required": true,
+          "type": "integer",
+          "example": 1
+        },
         "dateOfDelivery": {
           "required": true,
           "type": "date",
@@ -6623,6 +6633,11 @@
           "required": true,
           "type": "string",
           "example": "customerName"
+        },
+        "warehouseId": {
+          "required": true,
+          "type": "integer",
+          "example": 1
         },
         "classificationName": {
           "required": true,
@@ -6709,6 +6724,11 @@
           "example": true
         },
         "customerId": {
+          "required": true,
+          "type": "integer",
+          "example": 1
+        },
+        "warehouseId": {
           "required": true,
           "type": "integer",
           "example": 1

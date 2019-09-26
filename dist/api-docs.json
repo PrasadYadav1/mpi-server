@@ -4411,6 +4411,11 @@
     },
     "userVisitLocation": {
       "properties": {
+        "warehouseId": {
+          "type": "integer",
+          "required": true,
+          "example": 1
+        },
         "visit": {
           "required": true,
           "type": "boolean",
@@ -4438,6 +4443,11 @@
         "userId": {
           "required": true,
           "type": "number",
+          "example": 1
+        },
+        "warehouseId": {
+          "type": "integer",
+          "required": true,
           "example": 1
         },
         "visit": {

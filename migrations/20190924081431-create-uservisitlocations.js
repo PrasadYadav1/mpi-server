@@ -11,9 +11,13 @@ module.exports = {
       userId: {
         type: Sequelize.INTEGER
       },
+      warehouseId: {
+        type: Sequelize.INTEGER
+      },
       visit: {
         type: Sequelize.BOOLEAN
       },
+
       latitude: {
         type: Sequelize.DOUBLE
       },

@@ -45,7 +45,14 @@ router.get('/', auth.authenticate(), async (req, res, next) => {
   const limit = parseInt(req.query.pageSize);
   return res.json(
     await uservisitlocations.findAll({
-      attributes: ['id', 'visit', 'userId', 'latitude', 'longitude'],
+      attributes: [
+        'id',
+        'warehouseId',
+        'visit',
+        'userId',
+        'latitude',
+        'longitude'
+      ],
       limit: limit,
       offset: parseInt(limit * req.query.pageIndex)
     })
@@ -58,6 +65,7 @@ router.post(
   asyncErrorHandlerMiddleWare(async (req, res, next) => {
     const uservisitlocationData = await uservisitlocations.create({
       userId: req.user.userId,
+      warehouseId: req.body.warehouseId,
       visit: req.body.visit,
       latitude: req.body.latitude,
       longitude: req.body.longitude,

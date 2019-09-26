@@ -127,13 +127,13 @@ router.get(
           'warehouseId',
           [
             sequelize.literal(
-              '(Select name from warehouses where warehouses.id = preOrders."warehouseId")'
+              '(Select name from warehouses where warehouses.id = orders."warehouseId")'
             ),
             'outletName'
           ],
           [
             sequelize.literal(
-              '(Select address from warehouses where warehouses.id = preOrders."warehouseId")'
+              '(Select address from warehouses where warehouses.id = orders."warehouseId")'
             ),
             'outletAddress'
           ],
@@ -217,13 +217,13 @@ router.get(
         'warehouseId',
         [
           sequelize.literal(
-            '(Select name from warehouses where warehouses.id = preOrders."warehouseId")'
+            '(Select name from warehouses where warehouses.id = orders."warehouseId")'
           ),
           'outletName'
         ],
         [
           sequelize.literal(
-            '(Select address from warehouses where warehouses.id = preOrders."warehouseId")'
+            '(Select address from warehouses where warehouses.id = orders."warehouseId")'
           ),
           'outletAddress'
         ],
@@ -510,13 +510,13 @@ router.get(
         'warehouseId',
         [
           sequelize.literal(
-            '(Select name from warehouses where warehouses.id = preOrders."warehouseId")'
+            '(Select name from warehouses where warehouses.id = orders."warehouseId")'
           ),
           'outletName'
         ],
         [
           sequelize.literal(
-            '(Select address from warehouses where warehouses.id = preOrders."warehouseId")'
+            '(Select address from warehouses where warehouses.id = orders."warehouseId")'
           ),
           'outletAddress'
         ],
@@ -676,13 +676,13 @@ router.get(
           'warehouseId',
           [
             sequelize.literal(
-              '(Select name from warehouses where warehouses.id = preOrders."warehouseId")'
+              '(Select name from warehouses where warehouses.id = orders."warehouseId")'
             ),
             'outletName'
           ],
           [
             sequelize.literal(
-              '(Select address from warehouses where warehouses.id = preOrders."warehouseId")'
+              '(Select address from warehouses where warehouses.id = orders."warehouseId")'
             ),
             'outletAddress'
           ],

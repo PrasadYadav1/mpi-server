@@ -37,6 +37,30 @@
         }
       }
     },
+    "/dashboard": {
+      "get": {
+        "tags": ["Dashboard"],
+        "description": "Dashboard ",
+        "operationId": "for the URL",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "bearer token",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Dash board response",
+            "schema": {
+              "$ref": "#/definitions/dashboardResponse"
+            }
+          }
+        }
+      }
+    },
     "/users?{propertyName}&{propertyValue}": {
       "get": {
         "tags": ["User"],
@@ -4135,6 +4159,50 @@
       "properties": {
         "message": {
           "type": "string"
+        }
+      }
+    },
+    "dashboardResponse": {
+      "properties": {
+        "userCount": {
+          "required": true,
+          "type": "integer",
+          "example": 1
+        },
+        "customerCount": {
+          "required": true,
+          "type": "integer",
+          "example": 1
+        },
+        "companyCount": {
+          "required": true,
+          "type": "integer",
+          "example": 1
+        },
+        "productCount": {
+          "required": true,
+          "type": "integer",
+          "example": 1
+        },
+        "warehouseCount": {
+          "required": true,
+          "type": "integer",
+          "example": 1
+        },
+        "preOrderCount": {
+          "required": true,
+          "type": "integer",
+          "example": 1
+        },
+        "orderCount": {
+          "required": true,
+          "type": "integer",
+          "example": 1
+        },
+        "offerCount": {
+          "required": true,
+          "type": "integer",
+          "example": 1
         }
       }
     },

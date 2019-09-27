@@ -5,6 +5,7 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const index = require('./routes/index');
+const dashboard = require('./routes/dashboard');
 const user = require('./routes/user');
 const userlocation = require('./routes/userlocation');
 const uservisitlocation = require('./routes/uservisitlocation');
@@ -70,6 +71,7 @@ swagger.setApiInfo({
 });
 
 app.use('/', index);
+app.use('/api/dashboard', dashboard);
 app.use('/api/users', user);
 app.use('/api/userlocations', userlocation);
 app.use('/api/user/visit/locations', uservisitlocation);

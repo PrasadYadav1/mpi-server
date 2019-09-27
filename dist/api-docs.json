@@ -61,6 +61,30 @@
         }
       }
     },
+    "/dashboard/visit": {
+      "get": {
+        "tags": ["Dashboard"],
+        "description": "Dashboard ",
+        "operationId": "for the URL",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "bearer token",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Dash board response",
+            "schema": {
+              "$ref": "#/definitions/userVisitLocationResponse"
+            }
+          }
+        }
+      }
+    },
     "/users?{propertyName}&{propertyValue}": {
       "get": {
         "tags": ["User"],
@@ -4194,6 +4218,16 @@
           "type": "integer",
           "example": 1
         },
+        "approvedPreOrderCount": {
+          "required": true,
+          "type": "integer",
+          "example": 1
+        },
+        "pendingPreOrderCount": {
+          "required": true,
+          "type": "integer",
+          "example": 1
+        },
         "orderCount": {
           "required": true,
           "type": "integer",
@@ -4206,6 +4240,7 @@
         }
       }
     },
+
     "token": {
       "properties": {
         "email": {
@@ -4540,7 +4575,61 @@
         }
       }
     },
-
+    "userVisitLocationResult": {
+      "properties": {
+        "id": {
+          "required": true,
+          "type": "number",
+          "example": 1
+        },
+        "userId": {
+          "required": true,
+          "type": "number",
+          "example": 1
+        },
+        "salesAgentName": {
+          "required": true,
+          "type": "string",
+          "example": ""
+        },
+        "warehouseId": {
+          "type": "integer",
+          "required": true,
+          "example": 1
+        },
+        "outletName": {
+          "type": "string",
+          "required": true,
+          "example": ""
+        },
+        "visit": {
+          "required": true,
+          "type": "boolean",
+          "example": true
+        },
+        "longitude": {
+          "required": true,
+          "type": "number",
+          "example": 10.6758
+        },
+        "latitude": {
+          "required": true,
+          "type": "number",
+          "example": -122.3445
+        },
+        "createdAt": {
+          "required": true,
+          "type": "string",
+          "example": "2019-02-02T10:18:16.397Z"
+        }
+      }
+    },
+    "userVisitLocationResponse": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/userVisitLocationResult"
+      }
+    },
     "assignManager": {
       "properties": {
         "managerId": {

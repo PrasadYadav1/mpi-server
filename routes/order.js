@@ -168,7 +168,7 @@ router.post(
       }
     });
     const order = await orders.create({
-      orderConfirmed: req.body.orderConfirmed,
+      orderConfirmed: false,
       orderNumber: `ORD0000${(orderCount ? orderCount : 0) + 1}`,
       dateOfDelivery: req.body.dateOfDelivery,
       customerId: req.body.customerId,
@@ -632,12 +632,12 @@ router.get(
     let whereStatement = {};
     if (result) {
       whereStatement = {
-        orderConfirmed: false,
+        orderConfirmed: true,
         isActive: true
       };
     } else if (result1) {
       whereStatement = {
-        orderConfirmed: false,
+        orderConfirmed: true,
         $and: {
           [propertyName]: {
             $between: [req.query.fromDate, req.query.toDate]
@@ -647,7 +647,7 @@ router.get(
       };
     } else if (result2) {
       whereStatement = {
-        orderConfirmed: false,
+        orderConfirmed: true,
         isActive: true,
         [propertyName]:
           propertyName === 'customerId'

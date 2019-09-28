@@ -74,7 +74,7 @@ router.get(
                 `( select "firstName" || ' ' || "lastName"  from "users" AS u where u.id = uservisitlocations."warehouseId")`),
             'salesAgentName'
           ],
-          'latitude', 'longitude'
+          'latitude', 'longitude', 'createdAt'
         ],
         where: whereStatement,
         //  order: [["updatedAt", "DESC"]],

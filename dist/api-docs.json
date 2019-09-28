@@ -4459,6 +4459,11 @@
           "required": true,
           "type": "array",
           "example": [1]
+        },
+        "outletNames": {
+          "required": true,
+          "type": "array",
+          "example": [""]
         }
       }
     },

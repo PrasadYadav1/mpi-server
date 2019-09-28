@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 module.exports = (sequelize, DataTypes) => {
-  var users = sequelize.define('users', {
+  var users = sequelize.define("users", {
     employeeId: DataTypes.STRING,
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     address: DataTypes.TEXT,
     warehouseId: DataTypes.INTEGER,
     branchId: DataTypes.INTEGER,
-    customerIds: DataTypes.ARRAY(DataTypes.INTEGER)
+    outletIds: DataTypes.ARRAY(DataTypes.INTEGER)
   });
 
   return users;

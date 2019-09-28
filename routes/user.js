@@ -147,9 +147,9 @@ router.get(
                 [sequelize.literal(`(select name from warehouses where id = users."warehouseId")`), 'warehouseName'],
                 "branchId",
                 [sequelize.literal(`(select name from warehouses where id = users."branchId")`), 'branchName'],
-                "customerIds",
-                [sequelize.literal(`(select Array(select name from customers where id = ANY (users."customerIds")))`), 'customerNames']
-            ],
+                "outletIds",
+                [sequelize.literal(`(select Array(select name from warehouses where id = ANY (users."outletIds")))`), 'outletNames']
+                ],
             where: whereStatement,
             order: [["createdAt", "DESC"]],
         });
@@ -495,6 +495,8 @@ router.get("/list",
             if (result) {
                 whereStatement = {
                     isActive: true,
+                    userRole: {$ne: 'admin'}
+                    /*
                     $or: [
                         {
                             id: {
@@ -529,6 +531,7 @@ router.get("/list",
                             }
                         }
                     ]
+                    */
                 };
             } else if (result1) {
                 {
@@ -583,8 +586,8 @@ router.get("/list",
                     [sequelize.literal(`(select name from warehouses where id = users."warehouseId")`), 'warehouseName'],
                     "branchId",
                     [sequelize.literal(`(select name from warehouses where id = users."branchId")`), 'branchName'],
-                    "customerIds",
-                    [sequelize.literal(`(select Array(select name from customers where id = ANY (users."customerIds")))`), 'customerNames']
+                    "outletIds",
+                    [sequelize.literal(`(select Array(select name from warehouses where id = ANY (users."outletIds")))`), 'outletNames']
                 ],
                 where: whereStatement,
                 order: [["createdAt", "DESC"]],
@@ -812,9 +815,9 @@ router.get(
                 'employeeId',
                 "warehouseId",
                 [sequelize.literal(`(select name from warehouses where id = users."warehouseId")`), 'branchName'],
-                "customerIds",
-                [sequelize.literal(`(select Array(select name from customers where id = ANY (users."customerIds")))`), 'customerNames']
-
+                "outletIds",
+                    [sequelize.literal(`(select Array(select name from warehouses where id = ANY (users."outletIds")))`), 'outletNames']
+           
             ],
             where: {
                 isActive: true,
@@ -954,14 +957,14 @@ router.put(
 );
 
 router.put(
-    '/:userId/assing/branch/customer',
+    '/:userId/assing/branch/outlet',
     [auth.authenticate()],
     asyncErrorHandlerMiddleWare(async (req, res, next) => {
         const upa = await users.update(
             {
                 warehouseId: req.body.warehouseId,
                 branchId: req.body.branchId,
-                customerIds: req.body.customerIds,
+                outletIds: req.body.outletIds,
                 updatedBy: req.user.userId,
             },
             {

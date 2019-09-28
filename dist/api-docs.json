@@ -37,6 +37,60 @@
         }
       }
     },
+    "/dashboard/list?{pageIndex}&{pageSize}/{propertyName}&{propertyValue}": {
+      "get": {
+        "tags": ["Dashboard"],
+        "summary": "Get list of user visit locations",
+        "description": "visit locations",
+        "operationId": "for the URL",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "bearer token",
+            "required": true
+          },
+          {
+            "name": "pageIndex",
+            "in": "query",
+            "description": "page index",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "page size",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "propertyName",
+            "in": "query",
+            "enum": ["warehouseId"],
+            "description": "PropertyName",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "propertyValue",
+            "in": "query",
+            "description": "propertyValue",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Users Visit response",
+            "schema": {
+              "$ref": "#/definitions/userVisitLocationPaginationResponse"
+            }
+          }
+        }
+      }
+    },
     "/dashboard": {
       "get": {
         "tags": ["Dashboard"],
@@ -719,10 +773,10 @@
         }
       }
     },
-    "/users/{userId}/assing/branch/customer": {
+    "/users/{userId}/assing/branch/outlet": {
       "put": {
         "tags": ["User"],
-        "summary": "assing Branch and customer by userId",
+        "summary": "assing Branch and outlet by userId",
         "description": "only accessible to Admin",
         "operationId": "for the URL",
         "produces": ["application/json"],
@@ -746,13 +800,13 @@
             "description": "",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/userAssingBranchCustomer"
+              "$ref": "#/definitions/userAssingBranchOutlet"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Assing Branch and customer",
+            "description": "Assing Branch and outlet",
             "schema": {
               "$ref": "#/definitions/successMessageResponse"
             }
@@ -760,6 +814,7 @@
         }
       }
     },
+
     "/user/visit/locations": {
       "post": {
         "tags": ["User Visit Location"],
@@ -4400,7 +4455,7 @@
           "type": "string",
           "example": "branchName"
         },
-        "customerIds": {
+        "outletIds": {
           "required": true,
           "type": "array",
           "example": [1]
@@ -4624,6 +4679,20 @@
         }
       }
     },
+    "userVisitLocationPaginationResponse": {
+      "properties": {
+        "count": {
+          "type": "integer",
+          "required": true
+        },
+        "rows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/userVisitLocationResult"
+          }
+        }
+      }
+    },
     "userVisitLocationResponse": {
       "type": "array",
       "items": {
@@ -4716,7 +4785,7 @@
         }
       }
     },
-    "userAssingBranchCustomer": {
+    "userAssingBranchOutlet": {
       "properties": {
         "warehouseId": {
           "required": true,
@@ -4728,7 +4797,7 @@
           "type": "number",
           "example": 1
         },
-        "customerIds": {
+        "outletIds": {
           "required": true,
           "type": "array",
           "example": [1, 2]

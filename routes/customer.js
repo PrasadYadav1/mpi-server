@@ -238,15 +238,19 @@ router.get(
         attributes: ['warehouseId'],
         where: {isActive: true, id: req.params.customerId}
       });
-      const warehouse = await warehouses.findAll({
-        attributes: ['id', 'name'],
-        where: {
-          warehouseType: 'Teritary',
-          isActive: true,
-          id: {$in: customer[0].dataValues.warehouseId}
-        }
-      });
-      return res.json(warehouse);
+      if (customer[0].dataValues.warehouseId != null) {
+        const warehouse = await warehouses.findAll({
+          attributes: ['id', 'name'],
+          where: {
+            warehouseType: 'Teritary',
+            isActive: true,
+            id: {$in: customer[0].dataValues.warehouseId}
+          }
+        });
+        return res.json(warehouse);
+      } else {
+        return res.json([])
+      }
     }));
 
 router.delete(

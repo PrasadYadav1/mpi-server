@@ -191,7 +191,7 @@ router.get(
 router.get(
   '/outlets',
   asyncErrorHandlerMiddleWare(async (req, res, next) => {
-    let selectLiteral = `select id from warehouses where ARRAY[id] <@ ( select "warehouseId" from customers)`;
+    let selectLiteral = `select id from warehouses where ARRAY[id] <@ ( select "warehouseId" from customers where "warehouseId" <> '{}')`;
     return res.status(200).json(
       await warehouses.findAll({
         attributes: ['id', 'name'],

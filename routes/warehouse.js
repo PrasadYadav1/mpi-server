@@ -1,40 +1,40 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const sequelize = require('sequelize');
-const auth = require('../authentication/auth')();
-const pagination = require('../dtos/pagination').Pagination;
-const warehouses = require('../models').warehouses;
-const reqBodyValidation = require('../utils/req_generic_validations')
+const sequelize = require("sequelize");
+const auth = require("../authentication/auth")();
+const pagination = require("../dtos/pagination").Pagination;
+const warehouses = require("../models").warehouses;
+const reqBodyValidation = require("../utils/req_generic_validations")
   .reqBodyValidation;
-const warehouseDTO = require('../dtos/warehouse');
-const reqQueryValidate = require('../utils/req_generic_validations')
+const warehouseDTO = require("../dtos/warehouse");
+const reqQueryValidate = require("../utils/req_generic_validations")
   .reqqueryvalidation;
-const asyncErrorHandlerMiddleWare = require('../utils/async_custom_handlers')
+const asyncErrorHandlerMiddleWare = require("../utils/async_custom_handlers")
   .asyncErrorHandler;
 
 router.get(
-  '/',
+  "/",
   [auth.authenticate(), reqQueryValidate(pagination)],
   asyncErrorHandlerMiddleWare(async (req, res, next) => {
     const propertyNameDefault =
       req.query.propertyName === undefined ||
-      req.query.propertyName === 'null' ||
-      req.query.propertyName === '';
+      req.query.propertyName === "null" ||
+      req.query.propertyName === "";
 
     const propertyValueDefault =
       req.query.propertyValue === undefined ||
-      req.query.propertyValue === 'null' ||
-      req.query.propertyValue === '';
+      req.query.propertyValue === "null" ||
+      req.query.propertyValue === "";
 
     const propertyNameData =
       req.query.propertyName != undefined &&
-      req.query.propertyName != 'null' &&
-      req.query.propertyName != '';
+      req.query.propertyName != "null" &&
+      req.query.propertyName != "";
 
     const propertyValueData =
       req.query.propertyValue != undefined &&
-      req.query.propertyValue != 'null' &&
-      req.query.propertyValue != '';
+      req.query.propertyValue != "null" &&
+      req.query.propertyValue != "";
 
     const propertyName = req.query.propertyName;
     const propertyValue = req.query.propertyValue;
@@ -60,31 +60,31 @@ router.get(
     return res.json(
       await warehouses.findAndCount({
         attributes: [
-          'id',
-          'name',
-          'email',
-          'phoneNumber',
-          'warehouseType',
-          'primaryWarehouseId',
+          "id",
+          "name",
+          "email",
+          "phoneNumber",
+          "warehouseType",
+          "primaryWarehouseId",
           [
             sequelize.literal(
               '(select name from warehouses AS wa where wa.id = "warehouses"."primaryWarehouseId")'
             ),
-            'primaryWarehouseName'
+            "primaryWarehouseName"
           ],
-          'province',
-          'address',
-          'latitude',
-          'longitude',
-          'areaCode',
-          'buildingName',
-          'city',
-          'description',
-          'updatedBy',
-          'createdAt'
+          "province",
+          "address",
+          "latitude",
+          "longitude",
+          "areaCode",
+          "buildingName",
+          "city",
+          "description",
+          "updatedBy",
+          "createdAt"
         ],
         where: whereStatement,
-        order: [['updatedAt', 'DESC']],
+        order: [["updatedAt", "DESC"]],
         limit: limit,
         offset: parseInt(limit * req.query.pageIndex)
       })
@@ -93,18 +93,18 @@ router.get(
 );
 
 router.get(
-  '/all',
+  "/all",
   asyncErrorHandlerMiddleWare(async (req, res, next) => {
     return res.status(200).json(
       await warehouses.findAll({
-        attributes: ['id', 'name'],
-        where: { warehouseType: 'Primary', isActive: true }
+        attributes: ["id", "name"],
+        where: { warehouseType: "Primary", isActive: true }
       })
     );
   })
 );
 router.post(
-  '/',
+  "/",
   [auth.authenticate(), reqBodyValidation(warehouseDTO.warehousePost)],
   asyncErrorHandlerMiddleWare(async (req, res, next) => {
     const warehouse = await warehouses.create({
@@ -118,33 +118,33 @@ router.post(
 );
 
 router.get(
-  '/:id/details',
+  "/:id/details",
   [auth.authenticate()],
   asyncErrorHandlerMiddleWare(async (req, res, next) => {
     const warehouse = await warehouses.findOne({
       attributes: [
-        'id',
-        'name',
-        'email',
-        'phoneNumber',
-        'warehouseType',
-        'primaryWarehouseId',
+        "id",
+        "name",
+        "email",
+        "phoneNumber",
+        "warehouseType",
+        "primaryWarehouseId",
         [
           sequelize.literal(
             '(select name from warehouses AS wa where wa.id = "warehouses"."primaryWarehouseId")'
           ),
-          'primaryWarehouseName'
+          "primaryWarehouseName"
         ],
-        'province',
-        'address',
-        'latitude',
-        'longitude',
-        'areaCode',
-        'buildingName',
-        'city',
-        'description',
-        'updatedBy',
-        'createdAt'
+        "province",
+        "address",
+        "latitude",
+        "longitude",
+        "areaCode",
+        "buildingName",
+        "city",
+        "description",
+        "updatedBy",
+        "createdAt"
       ],
       where: { isActive: true, id: req.params.id }
     });
@@ -153,19 +153,19 @@ router.get(
 );
 
 router.put(
-  '/:id',
+  "/:id",
   [auth.authenticate(), reqBodyValidation(warehouseDTO.warehousePost)],
   asyncErrorHandlerMiddleWare(async (req, res, next) => {
     const upa = await warehouses.update(
       { ...req.body, updatedBy: req.user.userId },
       { where: { id: { $eq: req.params.id } } }
     );
-    return res.status(200).json({ mesage: 'success' });
+    return res.status(200).json({ mesage: "success" });
   })
 );
 
 router.delete(
-  '/:warehouseId',
+  "/:warehouseId",
   [auth.authenticate()],
   asyncErrorHandlerMiddleWare(async (req, res, next) => {
     const de = await warehouses.update(
@@ -177,26 +177,26 @@ router.delete(
 );
 
 router.get(
-  '/branches',
+  "/branches",
   asyncErrorHandlerMiddleWare(async (req, res, next) => {
     return res.status(200).json(
       await warehouses.findAll({
-        attributes: ['id', 'name'],
-        where: { warehouseType: 'Secondary', isActive: true }
+        attributes: ["id", "name"],
+        where: { warehouseType: "Secondary", isActive: true }
       })
     );
   })
 );
 
 router.get(
-  '/outlets',
+  "/outlets",
   asyncErrorHandlerMiddleWare(async (req, res, next) => {
-    let selectLiteral = `select id from warehouses where ARRAY[id] <@ ( select "warehouseId" from customers where "warehouseId" <> '{}')`;
+    let selectLiteral = `select id from warehouses where id in ( select unnest("warehouseId") from customers where "warehouseId" <> '{}')`;
     return res.status(200).json(
       await warehouses.findAll({
-        attributes: ['id', 'name'],
+        attributes: ["id", "name"],
         where: {
-          warehouseType: 'Teritary',
+          warehouseType: "Teritary",
           isActive: true,
           id: { $notIn: [sequelize.literal(selectLiteral)] }
         }
@@ -206,37 +206,37 @@ router.get(
 );
 
 router.get(
-  '/:primaryWarehouseId/branches',
+  "/:primaryWarehouseId/branches",
   [auth.authenticate()],
   asyncErrorHandlerMiddleWare(async (req, res, next) => {
     const warehouse = await warehouses.findAll({
       attributes: [
-        'id',
-        'name',
-        'email',
-        'phoneNumber',
-        'warehouseType',
-        'primaryWarehouseId',
+        "id",
+        "name",
+        "email",
+        "phoneNumber",
+        "warehouseType",
+        "primaryWarehouseId",
         [
           sequelize.literal(
             `(select name from warehouses where id = ${req.params.primaryWarehouseId})`
           ),
-          'primaryWarehouseName'
+          "primaryWarehouseName"
         ],
-        'province',
-        'address',
-        'latitude',
-        'longitude',
-        'areaCode',
-        'buildingName',
-        'city',
-        'description',
-        'updatedBy',
-        'createdAt'
+        "province",
+        "address",
+        "latitude",
+        "longitude",
+        "areaCode",
+        "buildingName",
+        "city",
+        "description",
+        "updatedBy",
+        "createdAt"
       ],
       where: {
         isActive: true,
-        warehouseType: 'Secondary',
+        warehouseType: "Secondary",
         primaryWarehouseId: req.params.primaryWarehouseId
       }
     });
@@ -245,37 +245,37 @@ router.get(
 );
 
 router.get(
-  '/:secondaryWarehouseId/outlets',
+  "/:secondaryWarehouseId/outlets",
   [auth.authenticate()],
   asyncErrorHandlerMiddleWare(async (req, res, next) => {
     const warehouse = await warehouses.findAll({
       attributes: [
-        'id',
-        'name',
-        'email',
-        'phoneNumber',
-        'warehouseType',
-        'primaryWarehouseId',
+        "id",
+        "name",
+        "email",
+        "phoneNumber",
+        "warehouseType",
+        "primaryWarehouseId",
         [
           sequelize.literal(
             `(select name from warehouses where id = ${req.params.secondaryWarehouseId})`
           ),
-          'secondaryWarehouseName'
+          "secondaryWarehouseName"
         ],
-        'province',
-        'address',
-        'latitude',
-        'longitude',
-        'areaCode',
-        'buildingName',
-        'city',
-        'description',
-        'updatedBy',
-        'createdAt'
+        "province",
+        "address",
+        "latitude",
+        "longitude",
+        "areaCode",
+        "buildingName",
+        "city",
+        "description",
+        "updatedBy",
+        "createdAt"
       ],
       where: {
         isActive: true,
-        warehouseType: 'Teritary',
+        warehouseType: "Teritary",
         primaryWarehouseId: req.params.secondaryWarehouseId
       }
     });

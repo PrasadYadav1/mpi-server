@@ -70,7 +70,7 @@ router.get(
           "id",
           [
             sequelize.literal(
-              '(select name from customers AS cu where cu."warehouseId" = ARRAY[uservisitlocations."warehouseId"])'
+              '(select name from customers AS cu where cu."warehouseId" @> ARRAY[uservisitlocations."warehouseId"])'
             ),
             "customerName"
           ],
@@ -162,6 +162,12 @@ router.get(
     const uservisitlocation = await uservisitlocations.findAll({
       attributes: [
         "id",
+        [
+          sequelize.literal(
+            '(select name from customers AS cu where cu."warehouseId" @> ARRAY[uservisitlocations."warehouseId"])'
+          ),
+          "customerName"
+        ],
         "warehouseId",
         [
           sequelize.literal(
@@ -169,13 +175,6 @@ router.get(
           ),
           "outletName"
         ],
-        // [
-        //   sequelize.literal(
-        //     `(select Array(select name from customers where "warehouseId" =
-        //     ARRAY[uservisitlocations."warehouseId"]))`
-        //   ),
-        //   'customerName'
-        // ],
         "visit",
         "userId",
         [

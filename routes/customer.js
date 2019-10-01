@@ -38,14 +38,12 @@ router.get(
         if (result) {
           whereStatement = {
             isActive: true,
-            warehouseId: req.user.warehouseId,
-            id: {$in: req.user.outletIds}
+            warehouseId: {$contains: req.user.outletIds}
           };
         } else if (result1) {
           whereStatement = {
             isActive: true,
-            warehouseId: req.user.warehouseId,
-            id: {$in: req.user.outletIds},
+            warehouseId: {$contains: req.user.outletIds},
             [propertyName]: {$iLike: `%${req.query.propertyValue}%`}
           };
         }
@@ -249,7 +247,7 @@ router.get(
         });
         return res.json(warehouse);
       } else {
-        return res.json([])
+        return res.json([]);
       }
     }));
 

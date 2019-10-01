@@ -1,73 +1,73 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const sequelize = require('sequelize');
-const auth = require('../authentication/auth')();
-const pagination = require('../dtos/pagination').Pagination;
-const reqQueryValidate = require('../utils/req_generic_validations')
+const sequelize = require("sequelize");
+const auth = require("../authentication/auth")();
+const pagination = require("../dtos/pagination").Pagination;
+const reqQueryValidate = require("../utils/req_generic_validations")
   .reqqueryvalidation;
-const reqBodyValidate = require('../utils/req_generic_validations')
+const reqBodyValidate = require("../utils/req_generic_validations")
   .reqBodyValidation;
-const asyncErrorHandlerMiddleWare = require('../utils/async_custom_handlers')
+const asyncErrorHandlerMiddleWare = require("../utils/async_custom_handlers")
   .asyncErrorHandler;
-const orders = require('../models').orders;
-const orderProducts = require('../models').orderproducts;
-const users = require('../models').users;
+const orders = require("../models").orders;
+const orderProducts = require("../models").orderproducts;
+const users = require("../models").users;
 router.get(
-  '/',
+  "/",
   [auth.authenticate(), reqQueryValidate(pagination)],
   asyncErrorHandlerMiddleWare(async (req, res, next) => {
     const fromDateDefault =
-      req.query.fromDate === 'null' ||
-      req.query.fromDate === '' ||
+      req.query.fromDate === "null" ||
+      req.query.fromDate === "" ||
       req.query.fromDate === undefined;
     const toDateDefault =
-      req.query.toDate === 'null' ||
-      req.query.toDate === '' ||
+      req.query.toDate === "null" ||
+      req.query.toDate === "" ||
       req.query.toDate === undefined;
 
     const fromDateData =
-      req.query.fromDate != 'null' &&
-      req.query.fromDate != '' &&
+      req.query.fromDate != "null" &&
+      req.query.fromDate != "" &&
       req.query.fromDate != undefined;
 
     const toDateData =
-      req.query.toDate != 'null' &&
-      req.query.toDate != '' &&
+      req.query.toDate != "null" &&
+      req.query.toDate != "" &&
       req.query.toDate != undefined;
 
     const orderByDefault =
-      req.query.orderBy === 'null' &&
-      req.query.orderBy === '' &&
+      req.query.orderBy === "null" &&
+      req.query.orderBy === "" &&
       req.query.orderBy === undefined;
     const orderByData =
-      req.query.orderBy != 'null' &&
-      req.query.orderBy != '' &&
+      req.query.orderBy != "null" &&
+      req.query.orderBy != "" &&
       req.query.orderBy != undefined;
-    let orderBy = 'DESC';
+    let orderBy = "DESC";
     if (orderByDefault) {
       orderBy = req.query.orderBy;
     } else {
-      orderBy = 'DESC';
+      orderBy = "DESC";
     }
     const propertyNameDefault =
       req.query.propertyName === undefined ||
-      req.query.propertyName === 'null' ||
-      req.query.propertyName === '';
+      req.query.propertyName === "null" ||
+      req.query.propertyName === "";
 
     const propertyValueDefault =
       req.query.propertyValue === undefined ||
-      req.query.propertyValue === 'null' ||
-      req.query.propertyValue === '';
+      req.query.propertyValue === "null" ||
+      req.query.propertyValue === "";
 
     const propertyNameData =
       req.query.propertyName != undefined &&
-      req.query.propertyName != 'null' &&
-      req.query.propertyName != '';
+      req.query.propertyName != "null" &&
+      req.query.propertyName != "";
 
     const propertyValueData =
       req.query.propertyValue != undefined &&
-      req.query.propertyValue != 'null' &&
-      req.query.propertyValue != '';
+      req.query.propertyValue != "null" &&
+      req.query.propertyValue != "";
 
     const propertyName = req.query.propertyName;
     const propertyValue = req.query.propertyValue;
@@ -82,17 +82,12 @@ router.get(
       fromDateDefault && toDateDefault && propertyNameData && propertyValueData;
     let whereStatement = {};
     if (result) {
-      whereStatement = {
-        orderConfirmed: false,
-        isActive: true
-      };
+      whereStatement = { orderConfirmed: false, isActive: true };
     } else if (result1) {
       whereStatement = {
         orderConfirmed: false,
         $and: {
-          [propertyName]: {
-            $between: [req.query.fromDate, req.query.toDate]
-          },
+          [propertyName]: { $between: [req.query.fromDate, req.query.toDate] },
           isActive: true
         }
       };
@@ -101,11 +96,9 @@ router.get(
         orderConfirmed: false,
         isActive: true,
         [propertyName]:
-          propertyName === 'customerId'
+          propertyName === "customerId"
             ? { $eq: parseInt(propertyValue) }
-            : {
-                $iLike: `%${propertyValue}%`
-              }
+            : { $iLike: `%${propertyValue}%` }
       };
     }
 
@@ -113,45 +106,51 @@ router.get(
     return res.json(
       await orders.findAndCount({
         attributes: [
-          'id',
-          'orderConfirmed',
-          'orderNumber',
-          'dateOfDelivery',
-          'customerId',
+          "id",
+          "orderConfirmed",
+          "orderNumber",
+          "dateOfDelivery",
+          "customerId",
           [
             sequelize.literal(
               '(Select name from customers where customers.id = orders."customerId")'
             ),
-            'customerName'
+            "customerName"
           ],
-          'warehouseId',
+          "warehouseId",
           [
             sequelize.literal(
               '(Select name from warehouses where warehouses.id = orders."warehouseId")'
             ),
-            'outletName'
+            "outletName"
           ],
           [
             sequelize.literal(
               '(Select address from warehouses where warehouses.id = orders."warehouseId")'
             ),
-            'outletAddress'
+            "outletAddress"
           ],
-          'discount',
-          'amount',
-          'totalAmount',
+          "discount",
+          "amount",
+          "totalAmount",
           [
             sequelize.literal(
               '(Select "userRole" from users where users.id = orders."isApprovedBy")'
             ),
-            'isApprovedBy'
+            "isApprovedBy"
           ],
-          'updatedBy',
-          'updatedAt',
-          'createdAt'
+          [
+            sequelize.literal(
+              `( select "firstName" || ' ' || "lastName"  from "users" AS u where u.id = orders."createdBy")`
+            ),
+            "salesAgentName"
+          ],
+          "updatedBy",
+          "updatedAt",
+          "createdAt"
         ],
         where: whereStatement,
-        order: [[propertyName ? propertyName : 'updatedAt', orderBy]],
+        order: [[propertyName ? propertyName : "updatedAt", orderBy]],
         limit: limit,
         offset: parseInt(limit * req.query.pageIndex)
       })
@@ -159,14 +158,10 @@ router.get(
   })
 );
 router.post(
-  '/',
+  "/",
   [auth.authenticate()],
   asyncErrorHandlerMiddleWare(async (req, res, next) => {
-    const orderCount = await orders.count({
-      where: {
-        isActive: true
-      }
-    });
+    const orderCount = await orders.count({ where: { isActive: true } });
     const order = await orders.create({
       orderConfirmed: false,
       orderNumber: `ORD0000${(orderCount ? orderCount : 0) + 1}`,
@@ -191,55 +186,59 @@ router.post(
 
       const strceCreate = await orderProducts.bulkCreate(strc);
     }
-    return res.status(200).json({
-      mesage: 'success'
-    });
+    return res.status(200).json({ mesage: "success" });
   })
 );
 
 router.get(
-  '/:id/details',
+  "/:id/details",
   [auth.authenticate()],
   asyncErrorHandlerMiddleWare(async (req, res, next) => {
     const product = await orders.findOne({
       attributes: [
-        'id',
-        'orderConfirmed',
-        'orderNumber',
-        'dateOfDelivery',
-        'customerId',
+        "id",
+        "orderConfirmed",
+        "orderNumber",
+        "dateOfDelivery",
+        "customerId",
         [
           sequelize.literal(
             '(Select name from customers where customers.id = orders."customerId")'
           ),
-          'customerName'
+          "customerName"
         ],
-        'warehouseId',
+        "warehouseId",
         [
           sequelize.literal(
             '(Select name from warehouses where warehouses.id = orders."warehouseId")'
           ),
-          'outletName'
+          "outletName"
         ],
         [
           sequelize.literal(
             '(Select address from warehouses where warehouses.id = orders."warehouseId")'
           ),
-          'outletAddress'
+          "outletAddress"
         ],
-        'discount',
-        'amount',
-        'totalAmount',
-        'isApproved',
+        "discount",
+        "amount",
+        "totalAmount",
+        "isApproved",
         [
           sequelize.literal(
             '(Select "userRole" from users where users.id = orders."isApprovedBy")'
           ),
-          'isApprovedBy'
+          "isApprovedBy"
         ],
-        'updatedBy',
-        'updatedAt',
-        'createdAt'
+        [
+          sequelize.literal(
+            `( select "firstName" || ' ' || "lastName"  from "users" AS u where u.id = orders."createdBy")`
+          ),
+          "salesAgentName"
+        ],
+        "updatedBy",
+        "updatedAt",
+        "createdAt"
       ],
       where: {
         isActive: true,
@@ -248,31 +247,31 @@ router.get(
       include: [
         {
           model: orderProducts,
-          as: 'orderProducts',
+          as: "orderProducts",
           attributes: [
-            'id',
-            'orderId',
-            'productId',
+            "id",
+            "orderId",
+            "productId",
             [
               sequelize.literal(
                 '(Select name from products where products.id = "orderProducts"."productId")'
               ),
-              'productName'
+              "productName"
             ],
             [
               sequelize.literal(
                 '(Select "classificationName" from products where products.id = "orderProducts"."productId")'
               ),
-              'classificationName'
+              "classificationName"
             ],
-            'availableQuantity',
-            'batchNumber',
-            'orderQuantity',
-            'minSalePrice',
-            'discount',
-            'rate',
-            'mrp',
-            'totalAmount'
+            "availableQuantity",
+            "batchNumber",
+            "orderQuantity",
+            "minSalePrice",
+            "discount",
+            "rate",
+            "mrp",
+            "totalAmount"
           ]
         }
       ]
@@ -282,7 +281,7 @@ router.get(
 );
 
 router.put(
-  '/:id',
+  "/:id",
   [auth.authenticate()],
   asyncErrorHandlerMiddleWare(async (req, res, next) => {
     const order = await orders.update(
@@ -295,11 +294,7 @@ router.put(
         totalAmount: req.body.amount,
         updatedBy: req.user.userId
       },
-      {
-        where: {
-          id: req.params.id
-        }
-      }
+      { where: { id: req.params.id } }
     );
     if (req.body.orderProducts) {
       const data = req.body.orderProducts[0];
@@ -316,22 +311,16 @@ router.put(
           totalAmount: data.amount,
           updatedBy: req.user.userId
         },
-        {
-          where: {
-            id: data.id
-          }
-        }
+        { where: { id: data.id } }
       );
     }
 
-    return res.status(200).json({
-      mesage: 'success'
-    });
+    return res.status(200).json({ mesage: "success" });
   })
 );
 
 router.put(
-  '/isapproved/:id',
+  "/isapproved/:id",
   [auth.authenticate()],
   asyncErrorHandlerMiddleWare(async (req, res, next) => {
     const order = await orders.update(
@@ -340,20 +329,14 @@ router.put(
         isApprovedBy: req.user.userId,
         updatedBy: req.user.userId
       },
-      {
-        where: {
-          id: req.params.id
-        }
-      }
+      { where: { id: req.params.id } }
     );
-    return res.status(200).json({
-      mesage: 'success'
-    });
+    return res.status(200).json({ mesage: "success" });
   })
 );
 
 router.put(
-  '/:id/orderproducts',
+  "/:id/orderproducts",
   [auth.authenticate()],
   asyncErrorHandlerMiddleWare(async (req, res, next) => {
     const order = await orderProducts.update(
@@ -369,37 +352,24 @@ router.put(
         totalAmount: req.body.amount,
         updatedBy: req.user.userId
       },
-      {
-        where: {
-          id: req.params.id
-        }
-      }
+      { where: { id: req.params.id } }
     );
-    return res.status(200).json({
-      mesage: 'success'
-    });
+    return res.status(200).json({ mesage: "success" });
   })
 );
 router.delete(
-  '/:orderId',
+  "/:orderId",
   [auth.authenticate()],
   asyncErrorHandlerMiddleWare(async (req, res, next) => {
     const order = await orders.update(
-      {
-        isActive: false,
-        updatedBy: req.user.userId
-      },
-      {
-        where: {
-          id: req.params.orderId
-        }
-      }
+      { isActive: false, updatedBy: req.user.userId },
+      { where: { id: req.params.orderId } }
     );
     return res.sendStatus(200);
   })
 );
 router.post(
-  '/:orderId/orderproducts',
+  "/:orderId/orderproducts",
   [auth.authenticate()],
   asyncErrorHandlerMiddleWare(async (req, res, next) => {
     const order = await orderProducts.create({
@@ -417,14 +387,12 @@ router.post(
       updatedBy: req.user.userId,
       isActive: true
     });
-    return res.status(200).json({
-      mesage: 'success'
-    });
+    return res.status(200).json({ mesage: "success" });
   })
 );
 
 router.put(
-  '/:id/orderproducts',
+  "/:id/orderproducts",
   [auth.authenticate()],
   asyncErrorHandlerMiddleWare(async (req, res, next) => {
     const order = await orderProducts.update(
@@ -440,92 +408,71 @@ router.put(
         totalAmount: req.body.amount,
         updatedBy: req.user.userId
       },
-      {
-        where: {
-          id: req.params.id
-        }
-      }
+      { where: { id: req.params.id } }
     );
-    return res.status(200).json({
-      mesage: 'success'
-    });
+    return res.status(200).json({ mesage: "success" });
   })
 );
 
 router.delete(
-  '/:orderProductId/orderproducts',
+  "/:orderProductId/orderproducts",
   [auth.authenticate()],
   asyncErrorHandlerMiddleWare(async (req, res, next) => {
     const order = await orderProducts.update(
-      {
-        isActive: false,
-        updatedBy: req.user.userId
-      },
-      {
-        where: {
-          id: req.params.orderProductId
-        }
-      }
+      { isActive: false, updatedBy: req.user.userId },
+      { where: { id: req.params.orderProductId } }
     );
     return res.sendStatus(200);
   })
 );
 
 router.get(
-  '/:id/invoice',
+  "/:id/invoice",
   [auth.authenticate()],
   asyncErrorHandlerMiddleWare(async (req, res, next) => {
     const order = await orders.update(
-      {
-        orderConfirmed: true
-      },
-      {
-        where: {
-          id: req.params.id
-        }
-      }
+      { orderConfirmed: true },
+      { where: { id: req.params.id } }
     );
-    return res.status(200).json({
-      mesage: 'success'
-    });
+    return res.status(200).json({ mesage: "success" });
   })
 );
 
 router.get(
-  '/invoice/:id/details',
+  "/invoice/:id/details",
   asyncErrorHandlerMiddleWare(async (req, res, next) => {
     const product = await orders.findOne({
       attributes: [
-        'id',
-        'orderConfirmed',
-        'orderNumber',
-        'dateOfDelivery',
-        'customerId',
+        "id",
+        "orderConfirmed",
+        "orderNumber",
+        "dateOfDelivery",
+        "customerId",
         [
           sequelize.literal(
             '(Select name from customers where customers.id = orders."customerId")'
           ),
-          'customerName'
+          "customerName"
         ],
-        'warehouseId',
+        "warehouseId",
         [
           sequelize.literal(
             '(Select name from warehouses where warehouses.id = orders."warehouseId")'
           ),
-          'outletName'
+          "outletName"
         ],
         [
           sequelize.literal(
             '(Select address from warehouses where warehouses.id = orders."warehouseId")'
           ),
-          'outletAddress'
+          "outletAddress"
         ],
-        'discount',
-        'amount',
-        'totalAmount',
-        'updatedBy',
-        'updatedAt',
-        'createdAt'
+        "discount",
+        "amount",
+        "totalAmount",
+        "updatedBy",
+        "updatedAt",
+        "createdAt"
       ],
       where: {
         isActive: true,
@@ -534,25 +481,25 @@ router.get(
       include: [
         {
           model: orderProducts,
-          as: 'orderProducts',
+          as: "orderProducts",
           attributes: [
-            'id',
-            'orderId',
-            'productId',
+            "id",
+            "orderId",
+            "productId",
             [
               sequelize.literal(
                 '(Select name from products where products.id = "orderProducts"."productId")'
               ),
-              'productName'
+              "productName"
             ],
-            'availableQuantity',
-            'batchNumber',
-            'orderQuantity',
-            'minSalePrice',
-            'discount',
-            'rate',
-            'mrp',
-            'totalAmount'
+            "availableQuantity",
+            "batchNumber",
+            "orderQuantity",
+            "minSalePrice",
+            "discount",
+            "rate",
+            "mrp",
+            "totalAmount"
           ]
         }
       ]
@@ -562,61 +509,61 @@ router.get(
 );
 
 router.get(
-  '/invoice',
+  "/invoice",
   [auth.authenticate(), reqQueryValidate(pagination)],
   asyncErrorHandlerMiddleWare(async (req, res, next) => {
     const fromDateDefault =
-      req.query.fromDate === 'null' ||
-      req.query.fromDate === '' ||
+      req.query.fromDate === "null" ||
+      req.query.fromDate === "" ||
       req.query.fromDate === undefined;
     const toDateDefault =
-      req.query.toDate === 'null' ||
-      req.query.toDate === '' ||
+      req.query.toDate === "null" ||
+      req.query.toDate === "" ||
       req.query.toDate === undefined;
 
     const fromDateData =
-      req.query.fromDate != 'null' &&
-      req.query.fromDate != '' &&
+      req.query.fromDate != "null" &&
+      req.query.fromDate != "" &&
       req.query.fromDate != undefined;
 
     const toDateData =
-      req.query.toDate != 'null' &&
-      req.query.toDate != '' &&
+      req.query.toDate != "null" &&
+      req.query.toDate != "" &&
       req.query.toDate != undefined;
 
     const orderByDefault =
-      req.query.orderBy === 'null' &&
-      req.query.orderBy === '' &&
+      req.query.orderBy === "null" &&
+      req.query.orderBy === "" &&
       req.query.orderBy === undefined;
     const orderByData =
-      req.query.orderBy != 'null' &&
-      req.query.orderBy != '' &&
+      req.query.orderBy != "null" &&
+      req.query.orderBy != "" &&
       req.query.orderBy != undefined;
-    let orderBy = 'DESC';
+    let orderBy = "DESC";
     if (orderByDefault) {
       orderBy = req.query.orderBy;
     } else {
-      orderBy = 'DESC';
+      orderBy = "DESC";
     }
     const propertyNameDefault =
       req.query.propertyName === undefined ||
-      req.query.propertyName === 'null' ||
-      req.query.propertyName === '';
+      req.query.propertyName === "null" ||
+      req.query.propertyName === "";
 
     const propertyValueDefault =
       req.query.propertyValue === undefined ||
-      req.query.propertyValue === 'null' ||
-      req.query.propertyValue === '';
+      req.query.propertyValue === "null" ||
+      req.query.propertyValue === "";
 
     const propertyNameData =
       req.query.propertyName != undefined &&
-      req.query.propertyName != 'null' &&
-      req.query.propertyName != '';
+      req.query.propertyName != "null" &&
+      req.query.propertyName != "";
 
     const propertyValueData =
       req.query.propertyValue != undefined &&
-      req.query.propertyValue != 'null' &&
-      req.query.propertyValue != '';
+      req.query.propertyValue != "null" &&
+      req.query.propertyValue != "";
 
     const propertyName = req.query.propertyName;
     const propertyValue = req.query.propertyValue;
@@ -631,17 +578,12 @@ router.get(
       fromDateDefault && toDateDefault && propertyNameData && propertyValueData;
     let whereStatement = {};
     if (result) {
-      whereStatement = {
-        orderConfirmed: true,
-        isActive: true
-      };
+      whereStatement = { orderConfirmed: true, isActive: true };
     } else if (result1) {
       whereStatement = {
         orderConfirmed: true,
         $and: {
-          [propertyName]: {
-            $between: [req.query.fromDate, req.query.toDate]
-          },
+          [propertyName]: { $between: [req.query.fromDate, req.query.toDate] },
           isActive: true
         }
       };
@@ -650,11 +592,9 @@ router.get(
         orderConfirmed: true,
         isActive: true,
         [propertyName]:
-          propertyName === 'customerId'
+          propertyName === "customerId"
             ? { $eq: parseInt(propertyValue) }
-            : {
-                $iLike: `%${propertyValue}%`
-              }
+            : { $iLike: `%${propertyValue}%` }
       };
     }
 
@@ -662,39 +602,45 @@ router.get(
     return res.json(
       await orders.findAndCount({
         attributes: [
-          'id',
-          'orderConfirmed',
-          'orderNumber',
-          'dateOfDelivery',
-          'customerId',
+          "id",
+          "orderConfirmed",
+          "orderNumber",
+          "dateOfDelivery",
+          "customerId",
           [
             sequelize.literal(
               '(Select name from customers where customers.id = orders."customerId")'
             ),
-            'customerName'
+            "customerName"
           ],
-          'warehouseId',
+          "warehouseId",
           [
             sequelize.literal(
               '(Select name from warehouses where warehouses.id = orders."warehouseId")'
             ),
-            'outletName'
+            "outletName"
           ],
           [
             sequelize.literal(
               '(Select address from warehouses where warehouses.id = orders."warehouseId")'
             ),
-            'outletAddress'
+            "outletAddress"
           ],
-          'discount',
-          'amount',
-          'totalAmount',
-          'updatedBy',
-          'updatedAt',
-          'createdAt'
+          [
+            sequelize.literal(
+              `( select "firstName" || ' ' || "lastName"  from "users" AS u where u.id = orders."createdBy")`
+            ),
+            "salesAgentName"
+          ],
+          "discount",
+          "amount",
+          "totalAmount",
+          "updatedBy",
+          "updatedAt",
+          "createdAt"
         ],
         where: whereStatement,
-        order: [[propertyName ? propertyName : 'updatedAt', orderBy]],
+        order: [[propertyName ? propertyName : "updatedAt", orderBy]],
         limit: limit,
         offset: parseInt(limit * req.query.pageIndex)
       })
